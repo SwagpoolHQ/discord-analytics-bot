@@ -11,7 +11,7 @@ TBD
 - [ ] Check member permissions function  
 - [ ] Track reactions  
 - [ ] Members interaction score  
-- [ ] Community managers leaderboard  )
+- [ ] Community managers leaderboard  
 
 ## Contribute
 
