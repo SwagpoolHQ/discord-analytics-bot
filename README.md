@@ -1,5 +1,5 @@
 # Contribution tracker bot
-Open-source bot for Discord teams
+Open-source bot for Discord teams 
 
 ## Setup 
 TBD
