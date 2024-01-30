@@ -1,4 +1,4 @@
-![Github cover card](https://github.com/SwagpoolHQ/contribution-tracker/assets/112695921/94111f17-3e49-4ff3-9009-e007bd4ca91b)
+![Github Cover card](https://github.com/SwagpoolHQ/contribution-tracker/assets/112695921/1419baec-9034-4943-9ac8-71ec7596da3b)
 
 # Contribution tracker bot
 Open-source bot for Discord teams 
