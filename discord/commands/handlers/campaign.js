@@ -83,7 +83,7 @@ module.exports = {
                     { name: 'This month', value: `${campaignData.nbOfJoinersLast1m} joiners\n-----------------\n${'--'} % MoM\n`, inline: true },
 
                     { name: '\u200B', value: '\u200B' },
-                    { name: `Last referrals (total: ${campaignData.nbOfJoiners})`, value: lastCampaignJoinersUI( campaignData.joiners , 15 ) },
+                    { name: `Last joiners (total: ${campaignData.nbOfJoiners})`, value: lastCampaignJoinersUI( campaignData.joiners , 15 ) },
 
                     { name: '\u200B', value: '\u200B' },
                 )

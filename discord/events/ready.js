@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, ActivityType } = require('discord.js');
 const loadInvites = require('../scripts/loadInvites')
 
 // name defines for which event the file is for
@@ -15,7 +15,7 @@ module.exports = {
 		console.log('Discord client is ready since ',readyClient.readyTimestamp)
 
 		console.log(`Discord client is logged in as ${readyClient.user.tag}`);
-		readyClient.user.setActivity(`on ${readyClient.guilds.cache.size} servers`);
+		readyClient.user.setActivity(`11 329 servers`, { type: ActivityType.Listening });
     	console.log(`Ready to serve on ${readyClient.guilds.cache.size} servers, for ${readyClient.users.cache.size} users.`);
 
 		//Load the invites on server boot (as soon as discord client is ready)
