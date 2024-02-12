@@ -11,10 +11,22 @@ const saveGuildInvites = require('../../mongodb/utils/saveGuildInvites');
 async function loadGuildInvites(guild) {
 
       // Fetch Guild Invites
-      const firstInvites = await guild.invites.fetch();
+      let firstInvites;
+      try {
+        firstInvites = await guild.invites.fetch();
+      }        
+       catch (e) {
+        console.error(e);
+      }
+      
     
       // Set the key as Guild ID, and create a map which has the invite code, and the number of uses
-      guild.client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, { uses: invite.uses, maxUses: invite.maxUses , maxAge: invite.maxAge }])));
+      if(firstInvites){
+        guild.client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, { uses: invite.uses, maxUses: invite.maxUses , maxAge: invite.maxAge }])));
+      } else {
+        guild.client.invites.set(guild.id, new Collection());
+      }
+      
       
       // SAVING guild Invites in DB 
       try { 
