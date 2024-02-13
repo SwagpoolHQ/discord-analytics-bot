@@ -5,7 +5,7 @@ const wait = require('node:timers/promises').setTimeout;
 	const topMembersReactionsUI = (usersCollection, number = 3) => {
 
 		let message = '--';
-		if( usersCollection ){
+		if( usersCollection[0] ){
 
 			message = ''
 			for (const item of usersCollection.keys()){
