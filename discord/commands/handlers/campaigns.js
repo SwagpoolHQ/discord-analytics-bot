@@ -4,6 +4,9 @@ const wait = require('node:timers/promises').setTimeout;
 const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
 const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
 
+const checkBotPermissions = require('../../utils/checkBotPermissions');
+const permissionsRequired = require('../../config/permissionsRequired');
+
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
@@ -35,18 +38,32 @@ module.exports = {
         ,
 	async execute(interaction) {
 
-        // Get the parameters
-        const period = await interaction.options.getString('period') ?? { name: null } ;
+        // Checking bot permissions to track invites
+        const permissionsCheck = checkBotPermissions( interaction.guild, permissionsRequired.inviteTracker);
+        if( !permissionsCheck.result) {
 
-        // Get the guild icon URL
-        const guildIconURL = getGuildIconURL( interaction.guild.id, interaction.guild.icon );
-        // Get the swagpool icon URL
-        const swagpoolAvatarURL = getSwagpoolIconURL();
+            interaction.reply({ 
+                content: `WARNING: [${permissionsCheck.missing}] permissions are missing to track campaigns.`,
+                embeds: [],
+                components: [],
+                ephemeral: true,
+            });
 
-        if (interaction.options.getSubcommand() === 'traffic') {
+        } else {
 
-            await interaction.reply(`Coming soon. You will be able to view your most active campaigns.`);
+            // Get the parameters
+            const period = await interaction.options.getString('period') ?? { name: null } ;
 
-		}
+            // Get the guild icon URL
+            const guildIconURL = getGuildIconURL( interaction.guild.id, interaction.guild.icon );
+            // Get the swagpool icon URL
+            const swagpoolAvatarURL = getSwagpoolIconURL();
+
+            if (interaction.options.getSubcommand() === 'traffic') {
+
+                await interaction.reply(`Coming soon. You will be able to view your most active campaigns.`);
+
+            }
+        }
 	},
 };

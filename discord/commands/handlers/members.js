@@ -5,6 +5,9 @@ const topReferrersUI = require ('./leaderboard/topReferrersUI');
 const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
 const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
 
+const checkBotPermissions = require('../../utils/checkBotPermissions');
+const permissionsRequired = require('../../config/permissionsRequired');
+
 const commandChoices = [
         { name: 'Last 1D', value: '1' },
         { name: 'Last 7D', value: '7' },
@@ -48,6 +51,13 @@ module.exports = {
             )
         ,
 	async execute(interaction) {
+
+        // Checking bot permissions to track invites
+        const permissionsCheck = checkBotPermissions( interaction.guild, permissionsRequired.inviteTracker);
+        let warningMessage = '';
+        if( !permissionsCheck.result) {
+            warningMessage=`WARNING: [${permissionsCheck.missing}] permissions are missing to track member referrals.\n`;
+        };
 
         await interaction.deferReply({ ephemeral: true }); // answers within the 3s. Displays: "thinking" 
 
@@ -167,7 +177,7 @@ module.exports = {
                 } else {
                     activeEmbed =  await leaderboardForReferrals(clickedButton.customId);
                     newMessageSent = await clickedButton.update({ 
-                        content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n|`, 
+                        content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
                         embeds: [ activeEmbed ],
                         components: [ await actionRow(clickedButton.customId) ],
                     });
@@ -184,7 +194,7 @@ module.exports = {
         if (interaction.options.getSubcommand() === 'referrers') {
             activeEmbed =  await leaderboardForReferrals(period);
             messageSent = await interaction.editReply({
-                content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n|`,
+                content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
                 embeds: [ activeEmbed ],
                 components: [ await actionRow(period) ],
             }); // edit the 1st response message

@@ -23,7 +23,13 @@ async function loadInvites(client) {
       const guildFromDb = await saveGuild(guild)
 
       // LOADING all invite from guild
-      await loadGuildInvites(guild);
+      try{
+        await loadGuildInvites(guild);
+      } 
+      catch(e) {
+        console.error(e)
+      };
+      
     
     });
     

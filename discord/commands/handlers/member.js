@@ -6,6 +6,9 @@ const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
 const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
 const discordToCreatedAtTimestamp = require('../../../mongodb/utils/idConversion/discordToCreatedAtTimestamp');
 
+const checkBotPermissions = require('../../utils/checkBotPermissions');
+const permissionsRequired = require('../../config/permissionsRequired');
+
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
@@ -35,6 +38,13 @@ module.exports = {
                 )
         ,
 	async execute(interaction) {
+
+        // Checking bot permissions to track invites
+        const permissionsCheck = checkBotPermissions( interaction.guild, permissionsRequired.inviteTracker);
+        let warningMessage = '';
+        if( !permissionsCheck.result) {
+            warningMessage=`WARNING: [${permissionsCheck.missing}] permissions are missing to track member referrals.\n`;
+        };
 
         await interaction.deferReply({ ephemeral: true }); // answers within the 3s. Displays: "thinking" 
 
@@ -159,7 +169,7 @@ module.exports = {
                 activeEmbed = userProfile;
                 
                 messageSent = await interaction.editReply({ 
-                    content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n|`,
+                    content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
                     embeds: [activeEmbed],
                     components: [profileButtonsRow],
                     ephemeral: true,
@@ -170,7 +180,7 @@ module.exports = {
                 activeEmbed = userReferrals;
 
                 messageSent = await interaction.editReply({ 
-                    content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n|`,
+                    content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
                     embeds: [activeEmbed],
                     components: [referralsButtonsRow],
                     ephemeral: true,
@@ -187,7 +197,7 @@ module.exports = {
                     if (clickedButton.customId === 'referrals') {
                         activeEmbed = userReferrals;
                         newMessageSent = await clickedButton.update({ 
-                            content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n|`,
+                            content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
                             embeds: [activeEmbed],
                             components: [referralsButtonsRow],
                         });
@@ -195,7 +205,7 @@ module.exports = {
                     } else if (clickedButton.customId === 'profile') {
                         activeEmbed = userProfile;
                         newMessageSent = await clickedButton.update({ 
-                            content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n|`, 
+                            content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`, 
                             embeds: [activeEmbed],
                             components: [profileButtonsRow],
                         });

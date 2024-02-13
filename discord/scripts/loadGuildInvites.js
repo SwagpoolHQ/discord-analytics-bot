@@ -1,6 +1,8 @@
 const { Collection } = require('discord.js');
 
 const saveGuildInvites = require('../../mongodb/utils/saveGuildInvites');
+const checkBotPermissions = require('../utils/checkBotPermissions');
+const permissionsRequired = require('../config/permissionsRequired');
 
 //---------------------------------------------------------------//
 //
@@ -9,6 +11,12 @@ const saveGuildInvites = require('../../mongodb/utils/saveGuildInvites');
 //---------------------------------------------------------------//
 
 async function loadGuildInvites(guild) {
+
+      const permissionsCheck = checkBotPermissions( guild, permissionsRequired.inviteTracker);
+      if( !permissionsCheck.result) {
+        guild.client.invites.set(guild.id, new Collection());
+        throw new Error(`${guild.name} is missing permissions: ${permissionsCheck.missing}`);
+      };
 
       // Fetch Guild Invites
       let firstInvites;
@@ -25,7 +33,7 @@ async function loadGuildInvites(guild) {
         guild.client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, { uses: invite.uses, maxUses: invite.maxUses , maxAge: invite.maxAge }])));
       } else {
         guild.client.invites.set(guild.id, new Collection());
-      }
+      };
       
       
       // SAVING guild Invites in DB 

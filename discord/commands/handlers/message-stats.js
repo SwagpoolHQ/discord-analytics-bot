@@ -1,7 +1,10 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType, time, Collection, EmbedBuilder, ChannelSelectMenuBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const topMembersReactionsUI = require('./message-stats/topMembersReactionsUI');
 const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
-const getMessageURL = require ('../../imageURL/getMessageURL')
+const getMessageURL = require ('../../imageURL/getMessageURL');
+
+const checkBotPermissions = require('../../utils/checkBotPermissions');
+const permissionsRequired = require('../../config/permissionsRequired');
 
 module.exports = {
 	cooldown: 5,
@@ -9,6 +12,13 @@ module.exports = {
 		.setName('Message statistics')
 		.setType(ApplicationCommandType.Message),
 	async execute(interaction) {
+
+		// Checking bot permissions to access reactions
+		const permissionsCheck = checkBotPermissions( interaction.guild, permissionsRequired.messageStats);
+		let warningMessage = '';
+		if( !permissionsCheck.result) {
+			warningMessage=``;
+		};
 
 		await interaction.deferReply({ ephemeral: true }); // answers within the 3s. Displays: "thinking"
 		
@@ -18,15 +28,18 @@ module.exports = {
 
 		// Create an array of promises to fetch users for each reaction
 		for (const reaction of interaction.targetMessage.reactions.cache.values()) {
-			usersReactionsQuery.push( usersReactionsCollection.set(reaction._emoji.name, await reaction.users.fetch()) );
-		}
+				// MUST CHECK THIS - IT'S NOT A PROMISE !!
+				usersReactionsQuery.push( usersReactionsCollection.set(reaction._emoji.name, await reaction.users.fetch()) ); 
+		};
 
+		//console.log('before exec: ', usersReactionsCollection);
 		// Execute all the promises
 		try {
 			await Promise.all(usersReactionsQuery);
 		} catch (error) {
 			console.error(error);
 		}
+		//console.log('after exec: ', usersReactionsCollection);
 
 		// List reactions per User in new Collection
 		const usersCollection = new Collection();
@@ -40,6 +53,7 @@ module.exports = {
 			});
 		}
 
+
  		// Create the user reactions embed message
 
 			// Get the swagpool icon URL
@@ -51,17 +65,15 @@ module.exports = {
 		 .addFields(
 			 { name: '\u200B', value: topMembersReactionsUI( usersCollection , 15 ) },
 			 { name: '\u200B', value: '\u200B' },
-
 		 )
 		 .setTimestamp()
 		 .setFooter({ text: 'Powered by Swagpool', iconURL: swagpoolAvatarURL });
 
 		// Send the result
 		const sentMessage = await interaction.editReply({ 
-			content: 'Statistics for ' + getMessageURL(interaction.guild.id, interaction.targetMessage.channel.id, interaction.targetMessage.id) + '\n"' + interaction.targetMessage.content + '"',
+			content: `${warningMessage} Statistics for ${getMessageURL(interaction.guild.id, interaction.targetMessage.channel.id, interaction.targetMessage.id)}\n"${interaction.targetMessage.content}"`,
 			embeds: [usersReactions],
 			components: [],
 			ephemeral: true });
-
 		},
 };
