@@ -12,6 +12,9 @@ module.exports = {
       //
       //---------------------------------------------------------------------------------------------------------     
 
+      // CHECK BOT PERMISSIONS HERE
+
+
       // To compare, we need to load the current invite list.
       const newInvites = await member.guild.invites.fetch()
       // This is the *existing* invites for the guild.

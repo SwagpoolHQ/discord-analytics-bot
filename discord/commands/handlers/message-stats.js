@@ -28,18 +28,18 @@ module.exports = {
 
 		// Create an array of promises to fetch users for each reaction
 		for (const reaction of interaction.targetMessage.reactions.cache.values()) {
-				// MUST CHECK THIS - IT'S NOT A PROMISE !!
-				usersReactionsQuery.push( usersReactionsCollection.set(reaction._emoji.name, await reaction.users.fetch()) ); 
+				try {
+					usersReactionsCollection.set(reaction._emoji.name, await reaction.users.fetch())
+				} catch (error) {
+					console.error(`ERROR: ${interaction.guild.name} | message-stats not working in channel: "${interaction.channel.name}"`);
+					interaction.editReply({ 
+						content: `⚠️ Invite bot in channel to view message stats`,
+						embeds: [],
+						components: [],
+						ephemeral: true });
+					return
+				}
 		};
-
-		//console.log('before exec: ', usersReactionsCollection);
-		// Execute all the promises
-		try {
-			await Promise.all(usersReactionsQuery);
-		} catch (error) {
-			console.error(error);
-		}
-		//console.log('after exec: ', usersReactionsCollection);
 
 		// List reactions per User in new Collection
 		const usersCollection = new Collection();
