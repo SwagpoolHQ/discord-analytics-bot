@@ -18,4 +18,4 @@ TBD
 
 ## Contribute
 
-You can get in touch by joining our Discord : [Swagpool Discord](https://discord.gg/TesftE68Pg)
+You can get in touch by joining our Discord : [Swagpool Discord](https://discord.gg/2yu8ntg7Gz)
