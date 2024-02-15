@@ -5,6 +5,26 @@ const getReferrers = require('../mongodb/utils/getReferrers')
 const getMemberProfile = require('../mongodb/utils/getMemberProfile')
 const getCampaignData = require('../mongodb/utils/getCampaignData')
 
+const Campaign = require('../mongodb/models/campaigns');
+const discordClient = require('../discord/index');
+const createInviteRT = require('../mongodb/utils/createInviteRT')
+
+
+router.get('/:campaignId', async function(req, res, next) {
+
+
+  const campaignFromDb = await Campaign.findOne( {_id: req.params.campaignId} );
+  const newInviteFromDb = await createInviteRT( req.params.campaignId );
+  
+  console.log(req.params.campaignId);
+  console.log(campaignFromDb);
+  console.log(newInviteFromDb);
+
+  res.redirect(`https://discord.gg/${newInviteFromDb.code}`)
+});
+
+
+
 /*
 // GET inviters
 router.get('/inviters/:guildId', async function(req, res, next) {

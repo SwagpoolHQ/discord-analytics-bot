@@ -21,6 +21,11 @@ new mongodb.Schema(
 			ref: 'User',
 			required: false
 		},
+		channel: {
+			type: mongodb.Schema.Types.ObjectId,
+			ref: 'Channel',
+			required: false
+		},
 	}
 ));
 

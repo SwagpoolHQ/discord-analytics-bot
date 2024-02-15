@@ -30,6 +30,7 @@ async function createCampaign ( creatorMember, name, channel ) {
                     description: '',
                     guild: new ObjectId(discordToMongoId(creatorMember.guild.id)),
                     creator: memberFromDb._id,
+                    channel: new ObjectId(discordToMongoId(channel.id))
                 });
 
                 try {
