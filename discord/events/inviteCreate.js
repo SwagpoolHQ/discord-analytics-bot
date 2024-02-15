@@ -9,6 +9,6 @@ module.exports = {
         // Update cache on new invites
         invite.client.invites.get(invite.guild.id).set(invite.code, { uses: invite.uses, maxUses: invite.maxUses , maxAge: invite.maxAge });
 		// Save invite in DB
-		saveInvite(invite);
+		//saveInvite(invite); // NOT REQUIRED AND CAN DUPLICATE INVITE CREATION FROM createInviteForCampaign.js
 	},
 };
