@@ -12,15 +12,20 @@ const createInviteRT = require('../mongodb/utils/createInviteRT')
 
 router.get('/:campaignId', async function(req, res, next) {
 
-
-  const campaignFromDb = await Campaign.findOne( {_id: req.params.campaignId} );
-  const newInviteFromDb = await createInviteRT( req.params.campaignId );
+  try {
+    const campaignFromDb = await Campaign.findOne( {_id: req.params.campaignId} );
+    const newInviteFromDb = await createInviteRT( req.params.campaignId );
   
-  console.log(req.params.campaignId);
-  console.log(campaignFromDb);
-  console.log(newInviteFromDb);
+    console.log(req.params.campaignId);
+    console.log(campaignFromDb);
+    console.log(newInviteFromDb);
 
-  res.redirect(`https://discord.gg/${newInviteFromDb.code}`)
+    res.redirect(`https://discord.gg/${newInviteFromDb.code}`)
+  } catch (e) {
+    console.error(e)
+    res.json({error:404})
+  }
+    
 });
 
 
