@@ -11,7 +11,7 @@ const mongoToDiscordId = require('../../../../mongodb/utils/idConversion/mongoTo
 
 			message = `💡 You can copy and share this new invite for ${ channelMention( mongoToDiscordId( invite.channel.toString() )) }:\n`
 			message += '------------------------------------------------\n'
-			message += `|    ${ hideLinkEmbed( `https://discord.gg/${ invite.code }` ) }\n`
+			message += `|    ${ hideLinkEmbed( `https://safediscord.com/${ invite.campaign }` ) }\n`
 			message += '------------------------------------------------\n'
 		}
 		
