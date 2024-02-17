@@ -12,6 +12,16 @@ new mongodb.Schema(
 			type: String,
 			required: false
 		},
+		code: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		auth: {
+			type: Boolean,
+			default: false,
+			required: false,
+		},
 		guild: {
 			type: mongodb.Schema.Types.ObjectId,
 			ref: 'Guild',

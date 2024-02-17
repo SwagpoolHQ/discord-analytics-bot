@@ -6,6 +6,7 @@ import Invite from '../models/invites.js';
 //const mongodb = require('mongoose');
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
+import { nanoid } from 'nanoid'
 
 //const saveMember = require('./saveMember');
 import saveMember from './saveMember.js';
@@ -34,6 +35,7 @@ export default async function createCampaign ( creatorMember, name, channel ) {
                 const newCampaign = new Campaign({
                     name,
                     description: '',
+                    code: nanoid(8), //=> "R8_H-myT"
                     guild: new ObjectId(discordToMongoId(creatorMember.guild.id)),
                     creator: memberFromDb._id,
                     channel: new ObjectId(discordToMongoId(channel.id))

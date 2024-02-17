@@ -1,7 +1,7 @@
 //const express = require('express');
 import express from "express";
 //const { lucia, discordAuth } = require('../lucia/auth.js');
-import { lucia, discordAuth } from '../../lucia/auth.js';
+import { lucia, discordAuthForInvite } from '../../lucia/auth.js';
 //const { OAuth2RequestError, generateState } = require('arctic');
 import { OAuth2RequestError, generateState } from "arctic";
 //const { parseCookies, serializeCookie } = require('oslo/cookie');
@@ -24,8 +24,9 @@ import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.
 export const discordLoginRouter = express.Router();
 
 discordLoginRouter.get("/login/discord", async (_, res) => {
+	console.log("inside invite/login/discord");
 	const state = generateState();
-	const url = await discordAuth.createAuthorizationURL(
+	const url = await discordAuthForInvite.createAuthorizationURL(
         state,
         {
             scopes: ["identify"] 
@@ -40,22 +41,33 @@ discordLoginRouter.get("/login/discord", async (_, res) => {
 				httpOnly: true,
 				maxAge: 60 * 10,
 				sameSite: "lax"
-			})
-		)
+			}))
+		.appendHeader(
+			"Set-Cookie",
+			serializeCookie("invite_code", "ALPHA", { // I WANT TO SET THE COOKIE ON THE INDEX.JS PAGE
+				path: "/",
+				secure: process.env.NODE_ENV === "production",
+				httpOnly: true,
+				maxAge: 60 * 10,
+				sameSite: "lax"
+			}))
 		.redirect(url.toString());
 });
 
 discordLoginRouter.get("/login/discord/callback", async (req, res) => {
+	console.log("inside invite/login/discord/callback")
 	const code = req.query.code?.toString() ?? null;
 	const state = req.query.state?.toString() ?? null;
 	const storedState = parseCookies(req.headers.cookie ?? "").get("discord_oauth_state") ?? null;
+	const storedInvite = parseCookies(req.headers.cookie ?? "").get("invite_code") ?? null;
+	console.log('storedInvite:', storedInvite);
 	if (!code || !state || !storedState || state !== storedState) {
 		console.log(code, state, storedState);
 		res.status(400).end();
 		return;
 	}
 	try {
-		const tokens = await discordAuth.validateAuthorizationCode(code);
+		const tokens = await discordAuthForInvite.validateAuthorizationCode(code);
 		const discordUserResponse = await fetch("https://discord.com/api/users/@me", {
 			headers: {
 				Authorization: `Bearer ${tokens.accessToken}`
@@ -80,7 +92,7 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
 			console.log('session: ', session);
 			return res
 				.appendHeader("Set-Cookie", lucia.createSessionCookie(session.id).serialize())
-				.redirect("/");
+				.redirect(`/invite/${storedInvite}`);
 		}
 
 		const newUser = new User({
@@ -95,7 +107,7 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
 		const session = await lucia.createSession(userId, {});
 		return res
 			.appendHeader("Set-Cookie", lucia.createSessionCookie(session.id).serialize())
-			.redirect("/");
+			.redirect(`/invite/${storedInvite}`);
 	} catch (e) {
 		if (e instanceof OAuth2RequestError && e.message === "bad_verification_code") {
 			// invalid code

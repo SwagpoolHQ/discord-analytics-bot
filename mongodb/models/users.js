@@ -1,4 +1,3 @@
-//const mongodb = require("mongoose");
 import mongodb from 'mongoose';
 
 const User = mongodb.models.User || mongodb.model("User",
@@ -56,5 +55,4 @@ new mongodb.Schema(
 	{ _id: false }
 ));
 
-//module.exports = User;
 export default User;

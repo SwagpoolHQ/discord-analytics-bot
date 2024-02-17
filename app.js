@@ -1,40 +1,26 @@
-//var express = require('express');
 import express from 'express';
-//var path = require('path');
-import path from 'path';
-//var cookieParser = require('cookie-parser');
+//import path from 'path';
+//import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
-//var logger = require('morgan');
 import logger from 'morgan';
 
-//require('dotenv').config();
 import dotenv from 'dotenv';
 dotenv.config();
-//require('./mongodb/connection');
+
 import './mongodb/connection.js';
 
-//const { verifyRequestOrigin } = require('lucia');
 import { verifyRequestOrigin } from 'lucia';
-//const { lucia } = require('./lucia/auth');
 import { lucia } from './lucia/auth.js';
 
-//const mainRouter = require('./routes/index.js');
 import { mainRouter } from './routes/index.js';
-//const loginRouter = require('./routes/login/index.js');
 import { loginRouter } from "./routes/login/index.js";
-//const logoutRouter = require('./routes/logout.js');
 import { logoutRouter } from "./routes/logout.js";
-
-//const linkRouter = require('./routes/link.js');
-import { linkRouter } from './routes/link.js';
-//const usersRouter = require('./routes/users.js');
+import { inviteRouter } from './routes/invite/index.js';
 import { usersRouter } from './routes/users.js';
-//const populateRouter = require('./routes/populate.js');
 import { populateRouter } from './routes/populate.js';
 
 const app = express();
 
-//const cors = require('cors');
 import cors from 'cors';
 app.use(cors());
 
@@ -43,15 +29,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//Added for __dirname creation
-/*import { fileURLToPath } from 'url';
-
+//Added for __dirname creation - REQUIRED FOR PUBLIC FOLDER ACTIVATION
+/*
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, 'public')));
 */
 
+//1st middleware
 app.use((req, res, next) => {
 	if (req.method === "GET") {
 		console.log('inside 1st middleware GET test')
@@ -65,6 +51,7 @@ app.use((req, res, next) => {
 	return next();
 });
 
+//2nd middleware
 app.use(async (req, res, next) => {
 	console.log('inside 2nd middleware')
 	const sessionId = lucia.readSessionCookie(req.headers.cookie ?? "");
@@ -91,16 +78,11 @@ app.use(async (req, res, next) => {
 	return next();
 });
 
-app.use(loginRouter, logoutRouter); // NO ROUTES ?
-
-app.use('/', mainRouter);
-app.use('/link', linkRouter);
+app.use('/', mainRouter, loginRouter, logoutRouter);
+app.use('/invite', inviteRouter);
 app.use('/users', usersRouter);
 app.use('/populate', populateRouter);
 
-//require('./discord/index');
 import './discord/index.js';
-
-//module.exports = app;
 
 export default app;

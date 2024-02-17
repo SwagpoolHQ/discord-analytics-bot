@@ -16,5 +16,3 @@ mainRouter.get("/", async (_, res) => {
 	template = template.replaceAll("%user_id%", res.locals.user.id);
 	return res.setHeader("Content-Type", "text/html").status(200).send(template);
 });
-
-//module.exports = mainRouter;
