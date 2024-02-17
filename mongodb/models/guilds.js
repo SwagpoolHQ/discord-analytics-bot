@@ -1,4 +1,5 @@
-const mongodb = require("mongoose");
+//const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Guild = mongodb.models.Guild || mongodb.model("Guild",
 new mongodb.Schema(
@@ -31,4 +32,5 @@ new mongodb.Schema(
 	}
 ));
 
-module.exports = Guild;
+//module.exports = Guild;
+export default Guild;

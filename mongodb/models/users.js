@@ -1,9 +1,14 @@
-const mongodb = require("mongoose");
+//const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const User = mongodb.models.User || mongodb.model("User",
 new mongodb.Schema(
 	{
-        discordId: {
+        _id: {
+            type: mongodb.Schema.Types.ObjectId,
+            required: true
+        },
+		discordId: {
 			type: String,
 			required: false
 		},
@@ -47,7 +52,9 @@ new mongodb.Schema(
 			type: [String], // This specifies that "roles" is an array of strings
 			required: false
 		},
-	}
+	},
+	{ _id: false }
 ));
 
-module.exports = User;
+//module.exports = User;
+export default User;

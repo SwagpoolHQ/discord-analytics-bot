@@ -1,11 +1,14 @@
-const { Events } = require('discord.js');
-const User = require ('../../mongodb/models/users');
-const Member = require ('../../mongodb/models/members');
+//const { Events } = require('discord.js');
+import { Events } from 'discord.js';
+//const Member = require ('../../mongodb/models/members');
+import Member from '../../mongodb/models/members.js';
 
-const discordToMongoId = require('../../mongodb/utils/idConversion/discordToMongoId');
-const saveMessage = require ('../../mongodb/utils/saveMessage');
+//const discordToMongoId = require('../../mongodb/utils/idConversion/discordToMongoId');
+import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.js';
+//const saveMessage = require ('../../mongodb/utils/saveMessage');
+import saveMessage from '../../mongodb/utils/saveMessage.js';
 
-module.exports = {
+export const event = {
 	name: Events.MessageCreate,
 	async execute(message) {
 

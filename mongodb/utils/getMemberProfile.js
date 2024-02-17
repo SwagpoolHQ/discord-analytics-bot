@@ -1,12 +1,16 @@
-const Member = require('../models/members');
-const Message = require('../models/messages');
+//const Member = require('../models/members');
+import Member from '../models/members.js'
+//const Message = require('../models/messages');
+import Message from '../models/messages.js';
 
-const mongodb = require('mongoose');
+//const mongodb = require('mongoose');
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-async function getMemberProfile ( guildId, userId ) {
+export default async function getMemberProfile ( guildId, userId ) {
 
   if( !guildId || !userId ){
     console.log("Error - getMemberProfile : missing guildId or userId")
@@ -236,4 +240,4 @@ async function getMemberProfile ( guildId, userId ) {
   }
 }
 
-module.exports = getMemberProfile;
+//module.exports = getMemberProfile;

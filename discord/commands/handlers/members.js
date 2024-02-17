@@ -1,12 +1,28 @@
-const { time, userMention, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+//const { time, userMention, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+import {
+    time, 
+    userMention, 
+    SlashCommandBuilder, 
+    EmbedBuilder, 
+    ActionRowBuilder, 
+    ButtonBuilder, 
+    ButtonStyle, 
+    PermissionFlagsBits 
+} from 'discord.js';
 
-const getReferrers = require ('../../../mongodb/utils/getReferrers');
-const topReferrersUI = require ('./leaderboard/topReferrersUI');
-const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
-const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+//const getReferrers = require ('../../../mongodb/utils/getReferrers');
+import getReferrers from '../../../mongodb/utils/getReferrers.js';
+//const topReferrersUI = require ('./leaderboard/topReferrersUI.js');
+import topReferrersUI from './leaderboard/topReferrersUI.js';
+//const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
+import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
+//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
 
-const checkBotPermissions = require('../../utils/checkBotPermissions');
-const permissionsRequired = require('../../config/permissionsRequired');
+//const checkBotPermissions = require('../../utils/checkBotPermissions');
+import checkBotPermissions from '../../utils/checkBotPermissions.js';
+//const permissionsRequired = require('../../config/permissionsRequired');
+import permissionsRequired from '../../config/permissionsRequired.js';
 
 const commandChoices = [
         { name: 'Last 1D', value: '1' },
@@ -15,7 +31,7 @@ const commandChoices = [
         { name: 'Last 3M', value: '90' },
     ];
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
 		.setName('members')

@@ -1,9 +1,12 @@
-const Member = require('../models/members');
+//const Member = require('../models/members');
+import Member from '../models/members.js';
 
-const saveUser = require('./saveUser');
-const discordToMongoId = require('./idConversion/discordToMongoId');
+//const saveUser = require('./saveUser');
+import saveUser from './saveUser.js'
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-async function saveMember( member ) {
+export default async function saveMember( member ) {
 
     //---------------------------------------------------------------------------------------------------------
     //
@@ -51,4 +54,4 @@ async function saveMember( member ) {
 
 };
 
-module.exports = saveMember;
+//module.exports = saveMember;

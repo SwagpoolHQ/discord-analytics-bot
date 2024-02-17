@@ -1,4 +1,5 @@
-const mongodb = require("mongoose");
+//const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Invite = mongodb.models.Invite || mongodb.model("Invite",
 new mongodb.Schema(
@@ -47,4 +48,5 @@ new mongodb.Schema(
 	}
 ));
 
-module.exports = Invite;
+//module.exports = Invite;
+export default Invite;

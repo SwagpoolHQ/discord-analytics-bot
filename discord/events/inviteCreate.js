@@ -1,8 +1,10 @@
-const { Events } = require('discord.js');
+//const { Events } = require('discord.js');
+import { Events } from 'discord.js';
 
-const saveInvite = require('../../mongodb/utils/saveInvite');
+//const saveInvite = require('../../mongodb/utils/saveInvite');
+import saveInvite from '../../mongodb/utils/saveInvite.js';
 
-module.exports = {
+export const event = {
 	name: Events.InviteCreate,
 	execute(invite) {
 		console.log(`${invite.url} invitation created`);

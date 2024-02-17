@@ -1,8 +1,13 @@
-const { Collection } = require('discord.js');
+//const { Collection } = require('discord.js');
+import { Collection } from 'discord.js';
 
-const saveGuildInvites = require('../../mongodb/utils/saveGuildInvites');
-const checkBotPermissions = require('../utils/checkBotPermissions');
-const permissionsRequired = require('../config/permissionsRequired');
+//const saveGuildInvites = require('../../mongodb/utils/saveGuildInvites');
+import saveGuildInvites from '../../mongodb/utils/saveGuildInvites.js';
+
+//const checkBotPermissions = require('../utils/checkBotPermissions');
+import checkBotPermissions from '../utils/checkBotPermissions.js';
+//const permissionsRequired = require('../config/permissionsRequired');
+import permissionsRequired from '../config/permissionsRequired.js';
 
 //---------------------------------------------------------------//
 //
@@ -10,7 +15,7 @@ const permissionsRequired = require('../config/permissionsRequired');
 //
 //---------------------------------------------------------------//
 
-async function loadGuildInvites(guild) {
+export default async function loadGuildInvites(guild) {
 
       const permissionsCheck = checkBotPermissions( guild, permissionsRequired.inviteTracker);
       if( !permissionsCheck.result) {
@@ -44,4 +49,4 @@ async function loadGuildInvites(guild) {
       };
     }
     
-module.exports = loadGuildInvites;
+//module.exports = loadGuildInvites;

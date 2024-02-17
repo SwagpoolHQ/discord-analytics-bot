@@ -1,12 +1,30 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType, time, Collection, EmbedBuilder, ChannelSelectMenuBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
-const topMembersReactionsUI = require('./message-stats/topMembersReactionsUI');
-const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
-const getMessageURL = require ('../../imageURL/getMessageURL');
+//const { ContextMenuCommandBuilder, ApplicationCommandType, time, Collection, EmbedBuilder, ChannelSelectMenuBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+import { 
+	ContextMenuCommandBuilder, 
+	ApplicationCommandType, 
+	time, 
+	Collection, 
+	EmbedBuilder, 
+	ChannelSelectMenuBuilder, 
+	ButtonBuilder, 
+	ButtonStyle, 
+	ActionRowBuilder,
+} from 'discord.js';
 
-const checkBotPermissions = require('../../utils/checkBotPermissions');
-const permissionsRequired = require('../../config/permissionsRequired');
 
-module.exports = {
+//const topMembersReactionsUI = require('./message-stats/topMembersReactionsUI');
+import topMembersReactionsUI from './message-stats/topMembersReactionsUI.js';
+//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
+//const getMessageURL = require ('../../imageURL/getMessageURL');
+import getMessageURL from '../../imageURL/getMessageURL.js';
+
+//const checkBotPermissions = require('../../utils/checkBotPermissions');
+import checkBotPermissions from '../../utils/checkBotPermissions.js';
+//const permissionsRequired = require('../../config/permissionsRequired');
+import permissionsRequired from '../../config/permissionsRequired.js';
+
+export const command = {
 	cooldown: 5,
 	data: new ContextMenuCommandBuilder()
 		.setName('Message statistics')

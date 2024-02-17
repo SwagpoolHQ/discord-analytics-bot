@@ -1,8 +1,10 @@
-const { Events } = require('discord.js');
+//const { Events } = require('discord.js');
+import { Events } from 'discord.js';
 
-const saveMemberOnJoin = require('../../mongodb/utils/saveMemberOnJoin');
+//const saveMemberOnJoin = require('../../mongodb/utils/saveMemberOnJoin');
+import saveMemberOnJoin from '../../mongodb/utils/saveMemberOnJoin.js';
 
-module.exports = {
+export const event = {
 	name: Events.GuildMemberAdd,
 	async execute(member) {
 

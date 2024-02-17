@@ -1,6 +1,7 @@
-const { Events } = require('discord.js');
+//const { Events } = require('discord.js');
+import { Events } from 'discord.js';
 
-module.exports = {
+export const event = {
 	name: Events.GuildDelete,
 	execute(guild) {
       // We've been removed from a Guild. Let's delete all their invites

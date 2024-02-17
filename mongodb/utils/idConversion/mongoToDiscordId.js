@@ -1,6 +1,5 @@
-const mongodb = require('mongoose');
 
-function mongoToDiscordId(id) {
+export default function mongoToDiscordId(id) {
 
     const discordId = id.replace(/^0+/, ''); // remove pad 0000
 
@@ -8,4 +7,4 @@ function mongoToDiscordId(id) {
 
 };
 
-module.exports = mongoToDiscordId;
+//module.exports = mongoToDiscordId;

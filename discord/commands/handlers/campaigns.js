@@ -1,13 +1,17 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+//const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 
-const wait = require('node:timers/promises').setTimeout;
-const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
-const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+//const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
+import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
+//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
 
-const checkBotPermissions = require('../../utils/checkBotPermissions');
-const permissionsRequired = require('../../config/permissionsRequired');
+//const checkBotPermissions = require('../../utils/checkBotPermissions');
+import checkBotPermissions from '../../utils/checkBotPermissions.js';
+//const permissionsRequired = require('../../config/permissionsRequired');
+import permissionsRequired from '../../config/permissionsRequired.js';
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
 		.setName('campaigns')

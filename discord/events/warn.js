@@ -1,6 +1,7 @@
-const { Events } = require('discord.js');
+//const { Events } = require('discord.js');
+import { Events } from 'discord.js';
 
-module.exports = {
+export const event = {
 	name: Events.Warn,
 	execute(e) {
 		console.warn(e);

@@ -1,4 +1,4 @@
-function getMessageURL( guildId, channelId, messageId ) {
+export default function getMessageURL( guildId, channelId, messageId ) {
 
     if ( !guildId || !channelId || !messageId ){ return null}
 
@@ -8,4 +8,4 @@ function getMessageURL( guildId, channelId, messageId ) {
     return baseURL+path;
 };
 
-module.exports = getMessageURL;
+//module.exports = getMessageURL;

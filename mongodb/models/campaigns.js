@@ -1,4 +1,5 @@
-const mongodb = require("mongoose");
+//const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Campaign = mongodb.models.Campaign || mongodb.model("Campaign",
 new mongodb.Schema(
@@ -29,4 +30,5 @@ new mongodb.Schema(
 	}
 ));
 
-module.exports = Campaign;
+//module.exports = Campaign;
+export default Campaign;

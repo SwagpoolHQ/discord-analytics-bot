@@ -1,15 +1,31 @@
-const { time, userMention, channelMention, SlashCommandBuilder , EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, ChannelSelectMenuBuilder, ChannelSelectMenuOptionBuilder, ChannelType } = require('discord.js');
+//const { time, userMention, SlashCommandBuilder , EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, ChannelSelectMenuBuilder, ChannelSelectMenuOptionBuilder, ChannelType } = require('discord.js');
+import { 
+    time, 
+    userMention, 
+    SlashCommandBuilder, 
+    EmbedBuilder, 
+    ActionRowBuilder, 
+    ButtonBuilder, 
+    ButtonStyle, 
+} from 'discord.js';
 
-const getMemberProfile = require('../../../mongodb/utils/getMemberProfile');
-const lastReferralsUI = require('./member/lastReferralsUI');
-const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
-const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
-const discordToCreatedAtTimestamp = require('../../../mongodb/utils/idConversion/discordToCreatedAtTimestamp');
+//const getMemberProfile = require('../../../mongodb/utils/getMemberProfile');
+import getMemberProfile from '../../../mongodb/utils/getMemberProfile.js';
+//const lastReferralsUI = require('./member/lastReferralsUI');
+import lastReferralsUI from './member/lastReferralsUI.js';
+//const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
+import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
+//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
+//const discordToCreatedAtTimestamp = require('../../../mongodb/utils/idConversion/discordToCreatedAtTimestamp');
+import discordToCreatedAtTimestamp from '../../../mongodb/utils/idConversion/discordToCreatedAtTimestamp.js';
 
-const checkBotPermissions = require('../../utils/checkBotPermissions');
-const permissionsRequired = require('../../config/permissionsRequired');
+//const checkBotPermissions = require('../../utils/checkBotPermissions');
+import checkBotPermissions from '../../utils/checkBotPermissions.js';
+//const permissionsRequired = require('../../config/permissionsRequired');
+import permissionsRequired from '../../config/permissionsRequired.js';
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
 		.setName('member')

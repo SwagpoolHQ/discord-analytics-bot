@@ -1,4 +1,5 @@
-const mongodb = require("mongoose");
+//const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Message = mongodb.models.Message || mongodb.model("Message",
 new mongodb.Schema(
@@ -36,4 +37,5 @@ new mongodb.Schema(
 	}
 ));
 
-module.exports = Message;
+//module.exports = Message;
+export default Message;

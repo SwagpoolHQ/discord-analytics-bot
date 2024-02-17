@@ -4,9 +4,14 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('invite-tracker-2:server');
-var http = require('http');
+//var app = require('../app');
+import app from '../app.js'
+//var debug = require('debug')('invite-tracker-2:server');
+import debugImport from 'debug';
+const debug = debugImport('invite-tracker-2:server');
+//var http = require('http');
+import http from 'http';
+
 
 /**
  * Get port from environment and store in Express.

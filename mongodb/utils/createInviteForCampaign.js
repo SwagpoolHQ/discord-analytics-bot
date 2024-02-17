@@ -1,16 +1,21 @@
-const Invite = require('../models/invites');
-const Campaign = require('../models/campaigns');
+//const Invite = require('../models/invites');
+import Invite from '../models/invites.js';
 
-const mongodb = require('mongoose');
+//const mongodb = require('mongoose');
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 
-const saveMember = require('./saveMember');
-const saveInvite = require('./saveInvite');
+//const saveMember = require('./saveMember');
+import saveMember from './saveMember.js';
+//const saveInvite = require('./saveInvite');
+import saveInvite from './saveInvite.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-const mongoToDiscordId = require('./idConversion/mongoToDiscordId')
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
+//const mongoToDiscordId = require('./idConversion/mongoToDiscordId')
+import mongoToDiscordId from './idConversion/mongoToDiscordId.js';
 
-async function createInviteForCampaign ( creatorMember, campaignId ) {
+export default async function createInviteForCampaign ( creatorMember, campaignId ) {
 
   if( !campaignId ){
     console.log("Error - createInviteForCampaign : missing campaignId")
@@ -51,4 +56,4 @@ async function createInviteForCampaign ( creatorMember, campaignId ) {
   }
 }
 
-module.exports = createInviteForCampaign;
+//module.exports = createInviteForCampaign;

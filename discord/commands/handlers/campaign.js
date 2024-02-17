@@ -1,21 +1,42 @@
-const { userMention, PermissionFlagsBits, ChannelType, SlashCommandBuilder , EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, } = require('discord.js');
+//const { userMention, PermissionFlagsBits, ChannelType, SlashCommandBuilder , EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, } = require('discord.js');
+import { 
+    userMention, 
+    PermissionFlagsBits, 
+    ChannelType, 
+    SlashCommandBuilder, 
+    EmbedBuilder, 
+    ActionRowBuilder, 
+    ButtonBuilder, 
+    ButtonStyle, } from 'discord.js';
 
-const createCampaign = require('../../../mongodb/utils/createCampaign');
-const getCampaigns = require('../../../mongodb/utils/getCampaigns');
-const lastCampaignJoinersUI = require('./campaign/lastCampaignJoinersUI');
-const getCampaignData = require('../../../mongodb/utils/getCampaignData');
-const getCampaignInvites = require('../../../mongodb/utils/getCampaignInvites');
-const createInviteForCampaign = require('../../../mongodb/utils/createInviteForCampaign');
+//const createCampaign = require('../../../mongodb/utils/createCampaign');
+import createCampaign from '../../../mongodb/utils/createCampaign.js';
+//const getCampaigns = require('../../../mongodb/utils/getCampaigns');
+import getCampaigns from '../../../mongodb/utils/getCampaigns.js';
+//const lastCampaignJoinersUI = require('./campaign/lastCampaignJoinersUI');
+import lastCampaignJoinersUI from './campaign/lastCampaignJoinersUI.js';
+//const getCampaignData = require('../../../mongodb/utils/getCampaignData');
+import getCampaignData from '../../../mongodb/utils/getCampaignData.js';
+//const getCampaignInvites = require('../../../mongodb/utils/getCampaignInvites');
+import getCampaignInvites from '../../../mongodb/utils/getCampaignInvites.js';
+//const createInviteForCampaign = require('../../../mongodb/utils/createInviteForCampaign');
+import createInviteForCampaign from '../../../mongodb/utils/createInviteForCampaign.js';
 
-const invitesListUI = require('./campaign/invitesListUI');
-const newInviteUI = require('./campaign/newInviteUI');
-const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
-const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+//const invitesListUI = require('./campaign/invitesListUI');
+import invitesListUI from './campaign/invitesListUI.js';
+//const newInviteUI = require('./campaign/newInviteUI');
+import newInviteUI from './campaign/newInviteUI.js';
+//const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
+import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
+//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
+import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
 
-const checkBotPermissions = require('../../utils/checkBotPermissions');
-const permissionsRequired = require('../../config/permissionsRequired');
+//const checkBotPermissions = require('../../utils/checkBotPermissions');
+import checkBotPermissions from '../../utils/checkBotPermissions.js';
+//const permissionsRequired = require('../../config/permissionsRequired');
+import permissionsRequired from '../../config/permissionsRequired.js';
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
 		.setName('campaign')

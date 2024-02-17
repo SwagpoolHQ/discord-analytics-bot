@@ -1,7 +1,10 @@
-const { Collection } = require('discord.js');
+//const { Collection } = require('discord.js');
+import { Collection } from 'discord.js';
 
-const saveGuild = require('../../mongodb/utils/saveGuild');
-const loadGuildInvites = require('./loadGuildInvites');
+//const saveGuild = require('../../mongodb/utils/saveGuild');
+import saveGuild from '../../mongodb/utils/saveGuild.js';
+//const loadGuildInvites = require('./loadGuildInvites');$
+import loadGuildInvites from './loadGuildInvites.js';
 
 //------------------------------------------------------------------------------//
 //
@@ -9,7 +12,7 @@ const loadGuildInvites = require('./loadGuildInvites');
 //
 //-------------------------------------------------------------------------------//
 
-async function loadInvites(client) {
+export default async function loadInvites(client) {
 
     // KEEP OUT OF THE LOOP ON GUILDS - the invites collection is for all guilds
     client.invites = new Collection();
@@ -35,4 +38,4 @@ async function loadInvites(client) {
     
   }
     
-  module.exports = loadInvites;
+  //module.exports = loadInvites;

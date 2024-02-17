@@ -1,12 +1,9 @@
-const mongodb = require('mongoose');
-const Guild = require ('../models/guilds');
-const Invite = require('../models/invites');
-const Member = require('../models/members');
-const User = require ('../models/users');
-const Message = require ('../models/messages');
-const discordToMongoId = require('./idConversion/discordToMongoId');
+//const Message = require ('../models/messages');
+import Message from '../models/messages.js';
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-async function saveMessage(message) {
+export default async function saveMessage(message) {
 
   let savedMessage;
 
@@ -37,4 +34,4 @@ async function saveMessage(message) {
   return savedMessage
 };
 
-module.exports = saveMessage;
+//module.exports = saveMessage;

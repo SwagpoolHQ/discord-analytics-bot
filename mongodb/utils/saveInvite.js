@@ -1,9 +1,12 @@
-const Invite = require('../models/invites');
+//const Invite = require('../models/invites');
+import Invite from '../models/invites.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-const saveMember = require('./saveMember');
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
+//const saveMember = require('./saveMember');
+import saveMember from './saveMember.js';
 
-async function saveInvite(invite) {
+export default async function saveInvite(invite) {
 
     let inviteFromDb = await Invite.findOne({code: invite.code})
     
@@ -38,4 +41,4 @@ async function saveInvite(invite) {
 
 };
 
-module.exports = saveInvite;
+//module.exports = saveInvite;

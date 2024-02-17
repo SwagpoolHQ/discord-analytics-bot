@@ -1,7 +1,14 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-require('dotenv').config()
+//const fs = require('node:fs');
+import fs from 'fs';
+//const path = require('node:path');
+import path from 'path'
+//const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
+//require('dotenv').config()
+import dotenv from 'dotenv';
+dotenv.config();
+import { fileURLToPath } from 'url';
+
 
 // Bot installation DEV link
 // https://discord.com/api/oauth2/authorize?client_id=1191750743720464445&permissions=8&scope=bot
@@ -12,12 +19,15 @@ require('dotenv').config()
 
 let client;
 
-async function discordClient() {
+export default async function discordClient() {
 
 //returns the active client if already created to be used in routes or other modules
 if (client) {
 	return client;
 }
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const token = process.env.DISCORD_BOT_SECRET;
 
@@ -49,7 +59,8 @@ for (const folder of commandFolders) {
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
-		const command = require(filePath);
+		//const command = require(filePath);
+		const { command } = await import(filePath);
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
@@ -70,7 +81,8 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 
 for (const file of eventFiles) {
 	const filePath = path.join(eventsPath, file);
-	const event = require(filePath);
+	//const event = require(filePath);
+	const { event } = await import(filePath);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
@@ -96,4 +108,4 @@ return client;
 //calling connectToDiscord to launch client. This function returns "client" to be used to interact with discord using discordJS
 discordClient();
 
-module.exports = discordClient;
+//module.exports = discordClient;

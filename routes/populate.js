@@ -1,19 +1,23 @@
-var express = require('express');
-var router = express.Router();
+//const express = require('express');
+import express from "express";
 
-const Invite = require('../mongodb/models/invites');
-const User = require('../mongodb/models/users');
-const Member = require('../mongodb/models/members');
-const Message = require('../mongodb/models/messages');
+//const Invite = require('../mongodb/models/invites');
+//const User = require('../mongodb/models/users');
+//const Member = require('../mongodb/models/members');
+//const Message = require('../mongodb/models/messages');
 
-const mongodb = require('mongoose');
+//const mongodb = require('mongoose');
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 
-const discordToMongoId = require('../mongodb/utils/idConversion/discordToMongoId');
+//const discordToMongoId = require('../mongodb/utils/idConversion/discordToMongoId');
+import discordToMongoId from '../mongodb/utils/idConversion/discordToMongoId.js';
+
+export const populateRouter = express.Router();
 
 /*
 // POST /populate a guild's invite in db with mock data 
-router.post('/', async function(req, res, next) {
+populateRouter.post('/', async function(req, res, next) {
   
     if (req.body && req.body.inviteId){
       const invite = await Invite.findOne({_id: new ObjectId(discordToMongoId(req.body.inviteId))});
@@ -108,4 +112,4 @@ router.post('/', async function(req, res, next) {
   });
   */
 
-  module.exports = router;
+  //module.exports = populateRouter;

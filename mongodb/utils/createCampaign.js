@@ -1,15 +1,21 @@
-const Campaign = require('../models/campaigns');
-const Invite = require('../models/invites');
+//const Campaign = require('../models/campaigns');
+import Campaign from '../models/campaigns.js';
+//const Invite = require('../models/invites');
+import Invite from '../models/invites.js';
 
-const mongodb = require('mongoose');
+//const mongodb = require('mongoose');
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 
-const saveMember = require('./saveMember');
-const saveInvite = require('./saveInvite');
+//const saveMember = require('./saveMember');
+import saveMember from './saveMember.js';
+//const saveInvite = require('./saveInvite');
+import saveInvite from './saveInvite.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-async function createCampaign ( creatorMember, name, channel ) {
+export default async function createCampaign ( creatorMember, name, channel ) {
 
     if( await Campaign.findOne({ name }) ){
         return {
@@ -59,4 +65,4 @@ async function createCampaign ( creatorMember, name, channel ) {
         }
 }
 
-module.exports = createCampaign;
+//module.exports = createCampaign;

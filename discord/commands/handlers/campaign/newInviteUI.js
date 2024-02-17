@@ -1,7 +1,7 @@
-const { hideLinkEmbed, channelMention } = require('discord.js');
-const wait = require('node:timers/promises').setTimeout;
+//const { hideLinkEmbed, channelMention } = require('discord.js');
+import { hideLinkEmbed, channelMention } from 'discord.js';
 
-const mongoToDiscordId = require('../../../../mongodb/utils/idConversion/mongoToDiscordId')
+import mongoToDiscordId from '../../../../mongodb/utils/idConversion/mongoToDiscordId.js';
 
 
 	const newInviteUI = ( invite ) => {
@@ -11,7 +11,7 @@ const mongoToDiscordId = require('../../../../mongodb/utils/idConversion/mongoTo
 
 			message = `💡 You can copy and share this new invite for ${ channelMention( mongoToDiscordId( invite.channel.toString() )) }:\n`
 			message += '------------------------------------------------\n'
-			message += `|    ${ hideLinkEmbed( `https://safediscord.com/${ invite.campaign }` ) }\n`
+			message += `|    ${ hideLinkEmbed( `https://safediscord.com/link/${ invite.campaign }` ) }\n`
 			message += '------------------------------------------------\n'
 		}
 		
@@ -19,4 +19,6 @@ const mongoToDiscordId = require('../../../../mongodb/utils/idConversion/mongoTo
 		
 	};
 
-module.exports = newInviteUI;
+//module.exports = newInviteUI;
+
+export default newInviteUI;

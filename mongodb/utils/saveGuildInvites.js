@@ -1,10 +1,13 @@
-const Invite = require ('../models/invites')
+//const Invite = require ('../models/invites')
+import Invite from '../models/invites.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
 //const saveUserById = require('./saveUserById.exemple'); TO DELETE
-const saveMember = require('./saveMember');
+//const saveMember = require('./saveMember');
+import saveMember from './saveMember.js'
 
-async function saveGuildInvites( guild ) {
+export default async function saveGuildInvites( guild ) {
 
   // fetching invites in DB for the guild
   let invitesInDb = await Invite.find({ guild: discordToMongoId(guild.id) });
@@ -65,4 +68,4 @@ async function saveGuildInvites( guild ) {
   return invitesInDb;
 };
 
-module.exports = saveGuildInvites;
+//module.exports = saveGuildInvites;

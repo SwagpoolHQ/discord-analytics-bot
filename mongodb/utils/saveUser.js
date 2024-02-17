@@ -1,9 +1,12 @@
-const User = require ('../models/users');
+//const User = require ('../models/users');
+import User from '../models/users.js'
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-const discordToCreatedAtTimestamp = require('./idConversion/discordToCreatedAtTimestamp')
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
+//const discordToCreatedAtTimestamp = require('./idConversion/discordToCreatedAtTimestamp')
+import discordToCreatedAtTimestamp from './idConversion/discordToCreatedAtTimestamp.js';
 
-async function saveUser(user) {
+export default async function saveUser(user) {
 
     let userFromDb = await User.findById(discordToMongoId(user.id))
 
@@ -37,4 +40,4 @@ async function saveUser(user) {
     return userFromDb;
 };
 
-module.exports = saveUser;
+//module.exports = saveUser;

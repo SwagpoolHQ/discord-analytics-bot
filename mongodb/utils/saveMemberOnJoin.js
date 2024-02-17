@@ -1,12 +1,18 @@
-const Member = require('../models/members');
-const Invite = require('../models/invites');
+//const Member = require('../models/members');
+import Member from '../models/members.js';
+//const Invite = require('../models/invites');
+import Invite from '../models/invites.js';
 
-const saveUser = require('./saveUser');
-const saveGuild = require('./saveGuild');
-const discordToMongoId = require('./idConversion/discordToMongoId');
-const discordToCreatedAtTimestamp = require('./idConversion/discordToCreatedAtTimestamp');
+//const saveUser = require('./saveUser');
+import saveUser from './saveUser.js';
+//const saveGuild = require('./saveGuild');
+import saveGuild from './saveGuild.js';
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
+//const discordToCreatedAtTimestamp = require('./idConversion/discordToCreatedAtTimestamp');
+import discordToCreatedAtTimestamp from './idConversion/discordToCreatedAtTimestamp.js';
 
-async function saveMemberOnJoin(member, codeUsed) {
+export default async function saveMemberOnJoin(member, codeUsed) {
 
     //---------------------------------------------------------------------------------------------------------
     //
@@ -99,4 +105,4 @@ async function saveMemberOnJoin(member, codeUsed) {
     return memberFromDb;
 };
 
-module.exports = saveMemberOnJoin;
+//module.exports = saveMemberOnJoin;

@@ -1,66 +1,20 @@
-var express = require('express');
-var router = express.Router();
+import express from "express";
+import fs from "fs/promises";
 
-const getReferrers = require('../mongodb/utils/getReferrers')
-const getMemberProfile = require('../mongodb/utils/getMemberProfile')
-const getCampaignData = require('../mongodb/utils/getCampaignData')
+export const mainRouter = express.Router();
 
-const Campaign = require('../mongodb/models/campaigns');
-const discordClient = require('../discord/index');
-const createInviteRT = require('../mongodb/utils/createInviteRT')
-
-
-router.get('/:campaignId', async function(req, res, next) {
-
-  try {
-    const campaignFromDb = await Campaign.findOne( {_id: req.params.campaignId} );
-    const newInviteFromDb = await createInviteRT( req.params.campaignId );
-  
-    console.log(req.params.campaignId);
-    console.log(campaignFromDb);
-    console.log(newInviteFromDb);
-
-    res.redirect(`https://discord.gg/${newInviteFromDb.code}`)
-  } catch (e) {
-    console.error(e)
-    res.json({error:404})
-  }
-    
+mainRouter.get("/", async (_, res) => {
+	
+	if (!res.locals.user) {
+		console.log("redirecting to /login");
+		return res.redirect("/login");
+	}
+	console.log(res.locals.user);
+	const templateFile = await fs.readFile("routes/index.template.html");
+	let template = templateFile.toString("utf-8");
+	template = template.replaceAll("%username%", res.locals.user.username);
+	template = template.replaceAll("%user_id%", res.locals.user.id);
+	return res.setHeader("Content-Type", "text/html").status(200).send(template);
 });
 
-
-
-/*
-// GET inviters
-router.get('/inviters/:guildId', async function(req, res, next) {
-
-  const referralPeriod = await getReferrers( req.params.guildId );
-  res.json({
-    result : true,
-    guildId : req.params.guildId,
-    referralPeriod: referralPeriod,
-    });
-});
-
-// GET memberProfile
-router.get('/member/:guildId/:userId', async function(req, res, next) {
-
-  const memberProfile = await getMemberProfile( req.params.guildId, req.params.userId );
-  res.json({
-    result : true,
-    memberProfile,
-    });
-});
-
-// GET campaignData
-router.get('/campaign/:campaignId', async function(req, res, next) {
-
-  const campaignData = await getCampaignData( req.params.campaignId );
-  res.json({
-    result : true,
-    campaignData,
-    });
-});
-*/
-
-module.exports = router;
+//module.exports = mainRouter;
