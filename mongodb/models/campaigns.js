@@ -27,6 +27,11 @@ new mongodb.Schema(
 			ref: 'Guild',
 			required: true
 		},
+		mainInvite: {
+			type: String,
+			required: false,
+			unique: true,
+		},
 		creator: {
 			type: mongodb.Schema.Types.ObjectId,
 			ref: 'User',

@@ -11,6 +11,8 @@ import './mongodb/connection.js';
 
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from './lucia/auth.js';
+import { parseCookies, serializeCookie } from "oslo/cookie";
+import { nanoid } from 'nanoid';
 
 import { mainRouter } from './routes/index.js';
 import { loginRouter } from "./routes/login/index.js";
@@ -39,8 +41,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //1st middleware
 app.use((req, res, next) => {
+
+	const userCookieId = parseCookies(req.headers.cookie ?? "").get("id") ?? null;
+	if (!userCookieId) {
+		const id = nanoid(); //=> "R8_H-myT"
+		res.appendHeader(
+			"Set-Cookie",
+			serializeCookie("id", id, {
+			  path: "/",
+			  secure: process.env.NODE_ENV === "production",
+			  httpOnly: true,
+			  maxAge: 60 * 10,
+			  sameSite: "lax"
+			}))
+	}
+
 	if (req.method === "GET") {
-		console.log('inside 1st middleware GET test')
 		return next();
 	}
 	const originHeader = req.headers.origin ?? null;
@@ -53,7 +69,6 @@ app.use((req, res, next) => {
 
 //2nd middleware
 app.use(async (req, res, next) => {
-	console.log('inside 2nd middleware')
 	const sessionId = lucia.readSessionCookie(req.headers.cookie ?? "");
 	console.log('sessionId = ',sessionId);
 	if (!sessionId) {
@@ -63,9 +78,6 @@ app.use(async (req, res, next) => {
 	}
 
 	const { session, user } = await lucia.validateSession(sessionId);
-	
-	console.log('after validateSession session:', session)
-	console.log('after validateSession user:', user)
 
 	if (session && session.fresh) {
 		res.appendHeader("Set-Cookie", lucia.createSessionCookie(session.id).serialize());

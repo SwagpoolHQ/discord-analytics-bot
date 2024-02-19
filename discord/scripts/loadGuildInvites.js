@@ -29,7 +29,7 @@ export default async function loadGuildInvites(guild) {
         firstInvites = await guild.invites.fetch();
       }        
        catch (e) {
-        console.error(e);
+        console.error(`error while fetching invites for ${guild.name} from Discord:`, e);
       }
       
     
@@ -45,7 +45,7 @@ export default async function loadGuildInvites(guild) {
       try { 
         await saveGuildInvites( guild );
       } catch {
-        error => console.error('error while updating invites in mongoDB:', error)
+        error => console.error(`error while updating invites for ${guild.name} in mongoDB:`, error)
       };
     }
     

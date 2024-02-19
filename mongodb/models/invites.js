@@ -45,6 +45,15 @@ new mongodb.Schema(
 			ref: 'Channel',
 			required: false
 		},
+		_expiresTimestamp: {
+			type: Date,
+			required: false
+		},
+		forJoiner: {
+			type: mongodb.Schema.Types.ObjectId,
+			ref: 'User',
+			required: false
+		},
 	}
 ));
 

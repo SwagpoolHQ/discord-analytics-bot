@@ -29,6 +29,16 @@ new mongodb.Schema(
 			type: Date,
 			required: true
 		},
+		auth: {
+			type: Boolean,
+			default: false,
+			required: false,
+		},
+		channel: {
+			type: mongodb.Schema.Types.ObjectId,
+			ref: 'Channel',
+			required: false
+		},
 	}
 ));
 

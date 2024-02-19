@@ -45,6 +45,7 @@ export default async function saveGuildInvites( guild ) {
       const newInvite = new Invite({
         code: invite.code,
         name: invite.code,
+        _expiresTimestamp: invite._expiresTimestamp,
         description: "",
         guild: discordToMongoId(guild.id),
         creator: discordToMongoId(invite.inviterId),

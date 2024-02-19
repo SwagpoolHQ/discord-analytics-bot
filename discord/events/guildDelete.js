@@ -6,5 +6,7 @@ export const event = {
 	execute(guild) {
       // We've been removed from a Guild. Let's delete all their invites
       guild.client.invites.delete(guild.id);
+	  // UNLOAD joiners collection for guild
+      guild.client.joiners.delete(guild.id);
 	},
 };

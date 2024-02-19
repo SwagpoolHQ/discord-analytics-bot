@@ -1,11 +1,6 @@
-//const Campaign = require('../models/campaigns');
-import Campaign from '../models/campaigns.js';
-
-//const mongodb = require('mongoose');
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
-
-//const discordToMongoId = require('./idConversion/discordToMongoId');
+import Campaign from '../models/campaigns.js';
 import discordToMongoId from './idConversion/discordToMongoId.js';
 
 export default async function getCampaigns ( guildId ) {
@@ -14,5 +9,3 @@ export default async function getCampaigns ( guildId ) {
     return campaigns;
 
 }
-
-//module.exports = getCampaigns;
