@@ -1,4 +1,3 @@
-//const { userMention, time } = require('discord.js');
 import { userMention, time } from 'discord.js';
 
 
@@ -19,5 +18,4 @@ import { userMention, time } from 'discord.js';
 		
 	};
 
-//module.exports = lastReferralsUI;
 export default lastReferralsUI;

@@ -31,5 +31,3 @@ export default function discordToCreatedAtTimestamp(id) {
 
     return createdAtTimestamp;
 };
-
-//module.exports = discordToCreatedAtTimestamp;

@@ -1,6 +1,4 @@
-//const Message = require ('../models/messages');
 import Message from '../models/messages.js';
-//const discordToMongoId = require('./idConversion/discordToMongoId');
 import discordToMongoId from './idConversion/discordToMongoId.js';
 
 export default async function saveMessage(message) {
@@ -33,5 +31,3 @@ export default async function saveMessage(message) {
     
   return savedMessage
 };
-
-//module.exports = saveMessage;

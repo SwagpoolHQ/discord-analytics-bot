@@ -1,10 +1,6 @@
-//const fs = require('node:fs');
 import fs from 'fs';
-//const path = require('node:path');
 import path from 'path'
-//const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
-//require('dotenv').config()
 import dotenv from 'dotenv';
 dotenv.config();
 import { fileURLToPath } from 'url';
@@ -107,5 +103,3 @@ return client;
 
 //calling connectToDiscord to launch client. This function returns "client" to be used to interact with discord using discordJS
 discordClient();
-
-//module.exports = discordClient;

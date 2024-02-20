@@ -1,6 +1,4 @@
-//const mongodb = require("mongoose");
 import mongodb from 'mongoose';
-//require('dotenv').config();
 import dotenv from 'dotenv';
 dotenv.config();
 

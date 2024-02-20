@@ -1,3 +1,4 @@
+
 export default function getSwagpoolIconURL( format = 'png', size = '160' ) {
 
     const baseURL = 'https://cdn.discordapp.com/';
@@ -5,5 +6,3 @@ export default function getSwagpoolIconURL( format = 'png', size = '160' ) {
 
     return baseURL+path;
 };
-
-//module.exports = getSwagpoolIconURL;

@@ -1,9 +1,5 @@
-//const Guild = require ('../models/guilds');
 import Guild from '../models/guilds.js';
-
-//const discordToMongoId = require('./idConversion/discordToMongoId');
 import discordToMongoId from './idConversion/discordToMongoId.js';
-//const saveUser = require('./saveUser');
 import saveUser from './saveUser.js'
 
 export default async function saveGuild(guild) {
@@ -51,5 +47,3 @@ export default async function saveGuild(guild) {
     return guildFromDb;
 
 };
-
-//module.exports = saveGuild;

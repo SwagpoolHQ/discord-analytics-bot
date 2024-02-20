@@ -6,5 +6,3 @@ export default function discordToMongoId(id) {
 
     return mongoId;
 };
-
-//module.exports = discordToMongoId;

@@ -1,6 +1,6 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType, time, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ChannelSelectMenuBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+import { ContextMenuCommandBuilder, ApplicationCommandType, time, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ChannelSelectMenuBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } from 'discord.js';
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new ContextMenuCommandBuilder()
 		.setName('Schedule publication')

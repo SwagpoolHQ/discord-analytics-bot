@@ -1,9 +1,5 @@
-//const User = require ('../models/users');
 import User from '../models/users.js'
-
-//const discordToMongoId = require('./idConversion/discordToMongoId');
 import discordToMongoId from './idConversion/discordToMongoId.js';
-//const discordToCreatedAtTimestamp = require('./idConversion/discordToCreatedAtTimestamp')
 import discordToCreatedAtTimestamp from './idConversion/discordToCreatedAtTimestamp.js';
 
 export default async function saveUser(user) {
@@ -26,12 +22,10 @@ export default async function saveUser(user) {
             banner: user.banner,
         })
 
-        try {
-        await newUser.save();
-        } catch {
-            error => {
-            console.error('error while saving user in mongoDB:', error)
-            }
+        try { // REMOVE try/catch to put it on function call or replace by 
+            await newUser.save();
+        } catch (e) {
+            throw new Error(`error while saving user ${user.id} in mongoDB`, e)
         }
 
         userFromDb = await User.findById(discordToMongoId(user.id))
@@ -39,5 +33,3 @@ export default async function saveUser(user) {
 
     return userFromDb;
 };
-
-//module.exports = saveUser;

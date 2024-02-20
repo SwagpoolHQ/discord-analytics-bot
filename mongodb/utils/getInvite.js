@@ -1,11 +1,8 @@
 import { Collection } from 'discord.js';
 import discordClient from '../../discord/index.js';
-import mongodb from 'mongoose';
-const { ObjectId } = mongodb.Types;
 import Campaign from '../models/campaigns.js';
 import Guild from '../models/guilds.js'
 import Invite from '../models/invites.js';
-import discordToMongoId from './idConversion/discordToMongoId.js';
 import mongoToDiscordId from './idConversion/mongoToDiscordId.js';
 import saveInvite from './saveInvite.js';
 
@@ -49,7 +46,6 @@ export default async function getInvite ( campaignCode, authenticatedUser ) {
             const channel = await guild.channels.cache.find(channel => channel.id === mongoToDiscordId( guildFromDb.channel.toString() ));
             const newInvite = await channel.createInvite({ maxAge: 300, unique: true });
             const savedInvite = await saveInvite( newInvite, campaignFromDb.id );
-            console.log('saved invite:',savedInvite);
             mainInvite = { code: newInvite.code , _expiresTimestamp: newInvite._expiresTimestamp };
             client.campaigns
                 .get(guild.id)

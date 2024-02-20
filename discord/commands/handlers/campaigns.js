@@ -1,14 +1,7 @@
-//const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
-
-//const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
 import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
-//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
 import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
-
-//const checkBotPermissions = require('../../utils/checkBotPermissions');
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
-//const permissionsRequired = require('../../config/permissionsRequired');
 import permissionsRequired from '../../config/permissionsRequired.js';
 
 export const command = {

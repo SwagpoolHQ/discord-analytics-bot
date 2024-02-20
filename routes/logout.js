@@ -1,5 +1,3 @@
-//const express = require('express');
-//const { lucia } = require('../lucia/auth.js');
 import express from 'express';
 import { lucia } from '../lucia/auth.js';
 
@@ -14,5 +12,3 @@ logoutRouter.post("/", async (_, res) => {
 		.setHeader("Set-Cookie", lucia.createBlankSessionCookie().serialize())
 		.redirect("/login");
 });
-
-//module.exports = logoutRouter;

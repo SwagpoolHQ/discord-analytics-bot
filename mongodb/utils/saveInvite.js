@@ -1,11 +1,5 @@
-//const Invite = require('../models/invites');
 import Invite from '../models/invites.js';
-import mongodb from 'mongoose';
-const { ObjectId } = mongodb.Types;
-
-//const discordToMongoId = require('./idConversion/discordToMongoId');
 import discordToMongoId from './idConversion/discordToMongoId.js';
-//const saveMember = require('./saveMember');
 import saveMember from './saveMember.js';
 
 export default async function saveInvite(invite, campaignId, joinerId ) {

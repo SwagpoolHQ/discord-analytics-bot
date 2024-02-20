@@ -1,6 +1,6 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType, time } = require('discord.js');
+import { ContextMenuCommandBuilder, ApplicationCommandType, time } from 'discord.js';
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new ContextMenuCommandBuilder()
 		.setName('Message Information')

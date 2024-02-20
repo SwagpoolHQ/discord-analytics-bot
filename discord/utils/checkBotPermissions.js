@@ -1,4 +1,3 @@
-//const {PermissionsBitField} = require ('discord.js');
 import { PermissionsBitField } from 'discord.js';
 
 //---------------------------------------------------------------//
@@ -28,6 +27,4 @@ export default function checkBotPermissions(guild, permissionsRequired) {
           missing,
         };
       }
-    }
-    
-//module.exports = checkBotPermissions;
+    };

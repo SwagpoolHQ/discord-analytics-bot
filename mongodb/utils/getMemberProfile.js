@@ -1,13 +1,7 @@
-//const Member = require('../models/members');
 import Member from '../models/members.js'
-//const Message = require('../models/messages');
 import Message from '../models/messages.js';
-
-//const mongodb = require('mongoose');
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
-
-//const discordToMongoId = require('./idConversion/discordToMongoId');
 import discordToMongoId from './idConversion/discordToMongoId.js';
 
 export default async function getMemberProfile ( guildId, userId ) {
@@ -239,5 +233,3 @@ export default async function getMemberProfile ( guildId, userId ) {
   }
   }
 }
-
-//module.exports = getMemberProfile;

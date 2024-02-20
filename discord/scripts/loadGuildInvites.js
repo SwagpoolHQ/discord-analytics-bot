@@ -1,12 +1,6 @@
-//const { Collection } = require('discord.js');
 import { Collection } from 'discord.js';
-
-//const saveGuildInvites = require('../../mongodb/utils/saveGuildInvites');
 import saveGuildInvites from '../../mongodb/utils/saveGuildInvites.js';
-
-//const checkBotPermissions = require('../utils/checkBotPermissions');
 import checkBotPermissions from '../utils/checkBotPermissions.js';
-//const permissionsRequired = require('../config/permissionsRequired');
 import permissionsRequired from '../config/permissionsRequired.js';
 
 //---------------------------------------------------------------//
@@ -35,7 +29,18 @@ export default async function loadGuildInvites(guild) {
     
       // Set the key as Guild ID, and create a map which has the invite code, and the number of uses
       if(firstInvites){
-        guild.client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, { uses: invite.uses, maxUses: invite.maxUses , maxAge: invite.maxAge }])));
+        guild.client.invites
+          .set(
+            guild.id, 
+            new Collection(
+              firstInvites.map((invite) => [invite.code, { 
+                uses: invite.uses, 
+                maxUses: invite.maxUses, 
+                maxAge: invite.maxAge,
+                _expiresTimestamp: invite._expiresTimestamp,
+              }])
+            )
+          );
       } else {
         guild.client.invites.set(guild.id, new Collection());
       };
@@ -47,6 +52,4 @@ export default async function loadGuildInvites(guild) {
       } catch {
         error => console.error(`error while updating invites for ${guild.name} in mongoDB:`, error)
       };
-    }
-    
-//module.exports = loadGuildInvites;
+    };

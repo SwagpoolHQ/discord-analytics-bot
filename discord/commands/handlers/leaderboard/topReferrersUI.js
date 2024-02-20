@@ -1,6 +1,4 @@
-//const { userMention } = require('discord.js');
 import { userMention } from 'discord.js';
-
 
 	const topReferrersUI = (referrers) => {
 
@@ -21,5 +19,4 @@ import { userMention } from 'discord.js';
 		
 	};
 
-//module.exports = topReferrersUI;
 export default topReferrersUI;

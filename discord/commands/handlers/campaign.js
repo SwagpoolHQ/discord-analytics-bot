@@ -1,4 +1,3 @@
-//const { userMention, PermissionFlagsBits, ChannelType, SlashCommandBuilder , EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, } = require('discord.js');
 import { 
     userMention, 
     PermissionFlagsBits, 
@@ -9,31 +8,16 @@ import {
     ButtonBuilder, 
     ButtonStyle, } from 'discord.js';
 
-//const createCampaign = require('../../../mongodb/utils/createCampaign');
 import createCampaign from '../../../mongodb/utils/createCampaign.js';
-//const getCampaigns = require('../../../mongodb/utils/getCampaigns');
 import getCampaigns from '../../../mongodb/utils/getCampaigns.js';
-//const lastCampaignJoinersUI = require('./campaign/lastCampaignJoinersUI');
 import lastCampaignJoinersUI from './campaign/lastCampaignJoinersUI.js';
-//const getCampaignData = require('../../../mongodb/utils/getCampaignData');
 import getCampaignData from '../../../mongodb/utils/getCampaignData.js';
-//const getCampaignInvites = require('../../../mongodb/utils/getCampaignInvites');
-import getCampaignInvites from '../../../mongodb/utils/getCampaignInvites.js';
-//const createInviteForCampaign = require('../../../mongodb/utils/createInviteForCampaign');
-import createInviteForCampaign from '../../../mongodb/utils/createInviteForCampaign.js';
 
-//const invitesListUI = require('./campaign/invitesListUI');
-import invitesListUI from './campaign/invitesListUI.js';
-//const newInviteUI = require('./campaign/newInviteUI');
-import newInviteUI from './campaign/newInviteUI.js';
-//const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
+import campaignMessageTemplate from './campaign/campaignMessageTemplate.js';
 import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
-//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
 import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
 
-//const checkBotPermissions = require('../../utils/checkBotPermissions');
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
-//const permissionsRequired = require('../../config/permissionsRequired');
 import permissionsRequired from '../../config/permissionsRequired.js';
 
 export const command = {
@@ -132,7 +116,7 @@ export const command = {
             }
 
             // Create the buttons
-            const addInviteButton = new ButtonBuilder()
+            /*const addInviteButton = new ButtonBuilder()
                 .setCustomId('add-invite')
                 .setLabel('Add invite')
                 .setStyle(ButtonStyle.Secondary);
@@ -140,7 +124,7 @@ export const command = {
             const getInvitesButton = new ButtonBuilder()
                 .setCustomId('get-invites')
                 .setLabel('View invites')
-                .setStyle(ButtonStyle.Secondary);
+                .setStyle(ButtonStyle.Secondary);*/
 
             const cancelButton = new ButtonBuilder()
                 .setCustomId('cancel')
@@ -154,7 +138,7 @@ export const command = {
 
             // Create the buttons command row for campaign stats
             const campaignStatsButtonsRow = new ActionRowBuilder()
-                .addComponents(cancelButton, addInviteButton, getInvitesButton, publishButton);
+                .addComponents(cancelButton, publishButton);
 
 
             // Create function to react to clicks
@@ -164,8 +148,8 @@ export const command = {
                     const clickedButton = await messageSent.awaitMessageComponent({ filter: collectorFilter, time: 60_000 });
 
                     let newMessageSent;
-                    if (clickedButton.customId === 'add-invite') {
-
+                    if (clickedButton.customId === 'add-invite') { // DELETED BUTTON
+                        /*
                         const invite = await createInviteForCampaign( interaction.member , campaignData.campaign._id );
                         newMessageSent = await clickedButton.update({ 
                             content: `👌 ${campaignData.campaign.name} campaign\n${ newInviteUI( invite ) }`,
@@ -173,9 +157,9 @@ export const command = {
                             components: [campaignStatsButtonsRow],
                         });
                         await waitingForClick(newMessageSent);
-
-                    } else if (clickedButton.customId === 'get-invites') {
-
+                        */
+                    } else if (clickedButton.customId === 'get-invites') { // DELETED BUTTON
+                        /*
                         const invites = await getCampaignInvites( campaignData.campaign._id );
                         newMessageSent = await clickedButton.update({ 
                             content: `👌 ${campaignData.campaign.name} campaign\n${ invitesListUI( invites, 20) }`,
@@ -183,7 +167,7 @@ export const command = {
                             components: [campaignStatsButtonsRow],
                         });
                         await waitingForClick(newMessageSent);
-
+                        */
                     } else if (clickedButton.customId === 'publish') {
 
                         const channel = await interaction.client.channels.fetch(clickedButton.channelId);
@@ -222,24 +206,25 @@ export const command = {
                 const campaignName = interaction.options.getString('name') ?? null;
                 const channel = interaction.options.getChannel('channel') ?? null;
 
-                const response = await createCampaign (interaction.member, campaignName, channel);
+                const campaignFromDB = await createCampaign (interaction.member, campaignName, channel);
+                console.log(campaignFromDB.campaign.id);
 
-                if(response.status == 200){
+                if(campaignFromDB.status == 200){
                     // Get the campaign data
-                    const campaignId = response.invite.campaign;
+                    const campaignId = campaignFromDB.campaign.id;
                     campaignData = await getCampaignData( campaignId );
                     campaignEmbed = await createCampaignAnalyticsEmbed( campaignData );
-
+                    
                     messageSent = await interaction.editReply({ 
-                        content: `👌 ${campaignData.campaign.name} campaign\n${ newInviteUI( response.invite ) }`,
+                        content: campaignMessageTemplate( campaignData.campaign, interaction.client.user.id ),
                         embeds: [campaignEmbed],
                         components: [campaignStatsButtonsRow],
                     }); // edit the 1st response message
                     // Start listening to clicks
                     await waitingForClick(messageSent);
-                } else if (response.status == 500) {
+                } else if (campaignFromDB.status == 500) {
                     messageSent = await interaction.editReply({ 
-                        content: response.message,
+                        content: campaignFromDB.message,
                         embeds: [],
                         components: [],
                     }); // edit the 1st response message
@@ -260,7 +245,7 @@ export const command = {
                 if ( campaignData ){
                     campaignEmbed = await createCampaignAnalyticsEmbed( campaignData );
                     messageSent = await interaction.editReply({ 
-                        content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n|`,
+                        content: campaignMessageTemplate( campaignData.campaign, interaction.client.user.id ),
                         embeds: [campaignEmbed],
                         components: [campaignStatsButtonsRow],
                     }); // edit the 1st response message

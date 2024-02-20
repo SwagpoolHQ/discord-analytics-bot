@@ -1,16 +1,13 @@
-//const express = require('express');
 import express from "express";
+
+import mongodb from 'mongoose';
+const { ObjectId } = mongodb.Types;
 
 //const Invite = require('../mongodb/models/invites');
 //const User = require('../mongodb/models/users');
 //const Member = require('../mongodb/models/members');
 //const Message = require('../mongodb/models/messages');
 
-//const mongodb = require('mongoose');
-import mongodb from 'mongoose';
-const { ObjectId } = mongodb.Types;
-
-//const discordToMongoId = require('../mongodb/utils/idConversion/discordToMongoId');
 import discordToMongoId from '../mongodb/utils/idConversion/discordToMongoId.js';
 
 export const populateRouter = express.Router();
@@ -111,5 +108,3 @@ populateRouter.post('/', async function(req, res, next) {
     
   });
   */
-
-  //module.exports = populateRouter;

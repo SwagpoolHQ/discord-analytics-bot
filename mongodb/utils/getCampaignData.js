@@ -1,20 +1,13 @@
-//const Invite = require('../models/invites');
 import Invite from '../models/invites.js';
-//const Campaign = require('../models/campaigns');
 import Campaign from '../models/campaigns.js';
-
-//const mongodb = require('mongoose');
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
-
-//const discordToMongoId = require('./idConversion/discordToMongoId');
 import discordToMongoId from './idConversion/discordToMongoId.js';
 
 export default async function getCampaignData ( campaignId ) {
 
   if( !campaignId || !ObjectId.isValid(campaignId) ){
-    console.log("Error - getCampaignData : missing campaignId")
-    return null;
+    throw new Error(`getCampaignData : missing campaignId`)
   } else {
     
     // Computing the start timestamps for the required period
@@ -99,5 +92,3 @@ export default async function getCampaignData ( campaignId ) {
     }
   }
 }
-
-//module.exports = getCampaignData;

@@ -1,9 +1,5 @@
-//const { Collection } = require('discord.js');
 import { Collection } from 'discord.js';
-
-//const saveGuild = require('../../mongodb/utils/saveGuild');
 import saveGuild from '../../mongodb/utils/saveGuild.js';
-//const loadGuildInvites = require('./loadGuildInvites');$
 import loadGuildInvites from './loadGuildInvites.js';
 
 //------------------------------------------------------------------------------//
@@ -40,6 +36,4 @@ export default async function loadInvites(client) {
       
     });
     
-  }
-    
-  //module.exports = loadInvites;
+  };

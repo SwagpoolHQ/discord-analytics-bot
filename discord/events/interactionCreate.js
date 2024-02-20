@@ -1,4 +1,3 @@
-//const { Events, Collection } = require('discord.js');
 import { Events, Collection } from 'discord.js'
 
 export const event = {

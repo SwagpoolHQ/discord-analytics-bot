@@ -1,4 +1,3 @@
-//const { time, userMention, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
 import {
     time, 
     userMention, 
@@ -7,21 +6,13 @@ import {
     ActionRowBuilder, 
     ButtonBuilder, 
     ButtonStyle, 
-    PermissionFlagsBits 
 } from 'discord.js';
 
-//const getReferrers = require ('../../../mongodb/utils/getReferrers');
 import getReferrers from '../../../mongodb/utils/getReferrers.js';
-//const topReferrersUI = require ('./leaderboard/topReferrersUI.js');
 import topReferrersUI from './leaderboard/topReferrersUI.js';
-//const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
 import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
-//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
 import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
-
-//const checkBotPermissions = require('../../utils/checkBotPermissions');
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
-//const permissionsRequired = require('../../config/permissionsRequired');
 import permissionsRequired from '../../config/permissionsRequired.js';
 
 const commandChoices = [

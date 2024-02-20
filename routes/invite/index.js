@@ -5,7 +5,6 @@ import { parseCookies, serializeCookie } from "oslo/cookie";
 
 import Campaign from "../../mongodb/models/campaigns.js";
 import Guild from '../../mongodb/models/guilds.js'
-import createInviteRT from "../../mongodb/utils/createInviteRT.js";
 import getInvite from "../../mongodb/utils/getInvite.js";
 
 export const inviteRouter = express.Router();
@@ -47,7 +46,7 @@ inviteRouter.get('/:code', async function(req, res, next) {
         await getInvite(req.params.code);
         await getInvite();
       } catch(e) {
-        console.log(e)
+        console.error(e)
       }
 
     return res

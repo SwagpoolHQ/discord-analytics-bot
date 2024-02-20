@@ -1,6 +1,4 @@
-//const { userMention, time } = require('discord.js');
 import { userMention, time } from 'discord.js';
-
 
 	const lastCampaignJoinersUI = (joiners, number) => {
 
@@ -18,7 +16,5 @@ import { userMention, time } from 'discord.js';
 		return message;
 		
 	};
-
-//module.exports = lastCampaignJoinersUI;
 
 export default lastCampaignJoinersUI;

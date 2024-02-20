@@ -1,27 +1,14 @@
-//const { ContextMenuCommandBuilder, ApplicationCommandType, time, Collection, EmbedBuilder, ChannelSelectMenuBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 import { 
 	ContextMenuCommandBuilder, 
-	ApplicationCommandType, 
-	time, 
+	ApplicationCommandType,
 	Collection, 
 	EmbedBuilder, 
-	ChannelSelectMenuBuilder, 
-	ButtonBuilder, 
-	ButtonStyle, 
-	ActionRowBuilder,
 } from 'discord.js';
 
-
-//const topMembersReactionsUI = require('./message-stats/topMembersReactionsUI');
 import topMembersReactionsUI from './message-stats/topMembersReactionsUI.js';
-//const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
 import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
-//const getMessageURL = require ('../../imageURL/getMessageURL');
 import getMessageURL from '../../imageURL/getMessageURL.js';
-
-//const checkBotPermissions = require('../../utils/checkBotPermissions');
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
-//const permissionsRequired = require('../../config/permissionsRequired');
 import permissionsRequired from '../../config/permissionsRequired.js';
 
 export const command = {

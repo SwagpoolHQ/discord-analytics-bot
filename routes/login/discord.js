@@ -1,20 +1,12 @@
-//const express = require('express');
 import express from "express";
-//const { lucia, discordAuth } = require('../lucia/auth.js');
 import { lucia, discordAuth } from '../../lucia/auth.js';
-//const { OAuth2RequestError, generateState } = require('arctic');
 import { OAuth2RequestError, generateState } from "arctic";
-//const { parseCookies, serializeCookie } = require('oslo/cookie');
 import { parseCookies, serializeCookie } from "oslo/cookie";
-//const { generateId } = require('lucia');
-import { generateId } from "lucia";
 
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 
-//const User = require('../../mongodb/models/users.js');
 import User from '../../mongodb/models/users.js';
-//const Session =  require('../../mongodb/models/sessions.js');
 import Session from '../../mongodb/models/sessions.js';
 
 import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.js';
@@ -106,5 +98,3 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
 		return;
 	}
 });
-
-//module.exports = discordLoginRouter;

@@ -1,4 +1,3 @@
-//const mongodb = require("mongoose");
 import mongodb from 'mongoose';
 
 const Guild = mongodb.models.Guild || mongodb.model("Guild",
@@ -42,5 +41,4 @@ new mongodb.Schema(
 	}
 ));
 
-//module.exports = Guild;
 export default Guild;

@@ -1,19 +1,10 @@
-//const Campaign = require('../models/campaigns');
 import Campaign from '../models/campaigns.js';
-//const Invite = require('../models/invites');
-import Invite from '../models/invites.js';
-
-//const mongodb = require('mongoose');
+import Guild from '../models/guilds.js'
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 import { nanoid } from 'nanoid'
-
-//const saveMember = require('./saveMember');
 import saveMember from './saveMember.js';
-//const saveInvite = require('./saveInvite');
 import saveInvite from './saveInvite.js';
-
-//const discordToMongoId = require('./idConversion/discordToMongoId');
 import discordToMongoId from './idConversion/discordToMongoId.js';
 
 export default async function createCampaign ( creatorMember, name, channel ) {
@@ -23,6 +14,13 @@ export default async function createCampaign ( creatorMember, name, channel ) {
             status : 500,
             message : "This campaign name already exists"
         }
+    }
+
+    if (channel){
+        await Guild.updateOne(
+            { _id: discordToMongoId(channel.guild.id) },
+            { channel: discordToMongoId(channel.id) }
+        );
     }
 
     try {
@@ -44,12 +42,13 @@ export default async function createCampaign ( creatorMember, name, channel ) {
                 try {
                     const savedCampaign = await newCampaign.save()
                     
-                    await Invite.updateOne( {code: inviteFromDb.code} , {campaign: savedCampaign._id, referrer: null} );
-                    const updatedInviteFromDb = await Invite.findOne( {code: inviteFromDb.code} );
+                    //await Invite.updateOne( {code: inviteFromDb.code} , {campaign: savedCampaign._id, referrer: null} );
+                    //const updatedInviteFromDb = await Invite.findOne( {code: inviteFromDb.code} );
 
                     return {
                         status : 200,
-                        invite: updatedInviteFromDb,
+                        campaign: savedCampaign,
+                        //invite: updatedInviteFromDb,
                     }
 
                 } catch (e) {
@@ -66,5 +65,3 @@ export default async function createCampaign ( creatorMember, name, channel ) {
             console.error(e)
         }
 }
-
-//module.exports = createCampaign;

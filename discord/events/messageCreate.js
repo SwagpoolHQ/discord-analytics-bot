@@ -1,11 +1,6 @@
-//const { Events } = require('discord.js');
 import { Events } from 'discord.js';
-//const Member = require ('../../mongodb/models/members');
 import Member from '../../mongodb/models/members.js';
-
-//const discordToMongoId = require('../../mongodb/utils/idConversion/discordToMongoId');
 import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.js';
-//const saveMessage = require ('../../mongodb/utils/saveMessage');
 import saveMessage from '../../mongodb/utils/saveMessage.js';
 
 export const event = {

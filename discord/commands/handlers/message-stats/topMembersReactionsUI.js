@@ -1,4 +1,3 @@
-//const { userMention, time } = require('discord.js');
 import { userMention, time } from 'discord.js';
 
 	const topMembersReactionsUI = (usersCollection, number = 3) => {
@@ -17,5 +16,4 @@ import { userMention, time } from 'discord.js';
 		
 	};
 
-//module.exports = topMembersReactionsUI;
 export default topMembersReactionsUI;

@@ -1,29 +1,13 @@
-//require('dotenv').config();
 import dotenv from 'dotenv';
 dotenv.config();
 
-//const { Lucia } = require("lucia");
 import { Lucia } from 'lucia';
-//const { MongodbAdapter } = require("@lucia-auth/adapter-mongodb");
 import { MongodbAdapter } from '@lucia-auth/adapter-mongodb';
-//const mongodb = require("mongoose");
-
-// CONNECTION TO MONGO DB HERE
-
-//const User = require('../mongodb/models/users.js');
-import User from '../mongodb/models/users.js';
-//const Session =  require('../mongodb/models/sessions.js');
-import Session from '../mongodb/models/sessions.js';
 import mongodb from "mongoose";
-
-//const { webcrypto } = require('node:crypto');
 import { webcrypto } from "crypto";
 globalThis.crypto = webcrypto;
-
-//const { Discord } = require("arctic");
 import { Discord } from 'arctic';
 
-//const adapter = new MongodbAdapter( Session, User );
 const adapter = new MongodbAdapter( 
 	mongodb.connection.collection("sessions"), 
 	mongodb.connection.collection("users") 

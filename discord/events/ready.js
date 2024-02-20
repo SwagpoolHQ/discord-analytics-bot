@@ -1,6 +1,4 @@
-//const { Events, ActivityType } = require('discord.js');
 import { Events, ActivityType } from 'discord.js';
-//const loadInvites = require('../scripts/loadInvites')
 import loadInvites from '../scripts/loadInvites.js';
 
 // name defines for which event the file is for

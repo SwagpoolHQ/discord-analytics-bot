@@ -6,6 +6,7 @@ import { parseCookies, serializeCookie } from "oslo/cookie";
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 import User from '../../mongodb/models/users.js';
+import saveUser from "../../mongodb/utils/saveUser.js";
 
 import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.js';
 
@@ -70,13 +71,7 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
 				.redirect(`/invite/${storedInvite}`);
 		}
 
-		const newUser = new User({ // ENRICH USER SAVED IN DB HERE // MAYBE USE SaveUser function(user)
-			_id: userId,
-			discordId: discordUser.id,
-            //createdAtTimestamp: discordToCreatedAtTimestamp(discordUser.id),
-            username: discordUser.username,
-		})
-		await newUser.save();
+		await saveUser( discordUser ); /// Add try/catch
 
 		const session = await lucia.createSession(userId, {});
 		return res
