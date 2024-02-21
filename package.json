@@ -19,6 +19,7 @@
     "mongoose": "^8.0.3",
     "morgan": "~1.9.1",
     "nanoid": "^5.0.5",
-    "oslo": "^1.1.1"
+    "oslo": "^1.1.1",
+    "rate-limiter-flexible": "^5.0.0"
   }
 }

@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import './mongodb/connection.js';
+import rateLimiterMiddleware from './middlewares/rateLimiterMiddleware.js'
 
 import { verifyRequestOrigin } from 'lucia';
 import { lucia } from './lucia/auth.js';
@@ -38,6 +39,9 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, 'public')));
 */
+
+// apply rate limiter to all requests
+app.use(rateLimiterMiddleware);
 
 //1st middleware
 app.use((req, res, next) => {
