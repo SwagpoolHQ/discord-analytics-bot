@@ -74,8 +74,6 @@ export default async function getInvite ( campaignCode, authenticatedUser ) {
         }
 
         let joinerInvite = client.campaigns.get(guild.id).get( campaignCode ).get( mongoToDiscordId( authenticatedUser.id.toString() ))
-        console.log('joinerInvite', joinerInvite)
-
         
         const in1minTimestamp = (new Date()).getTime() + 60000 ;
         if ( joinerInvite?._expiresTimestamp > in1minTimestamp ){

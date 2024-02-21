@@ -2,13 +2,11 @@ import express from "express";
 import { lucia, discordAuth } from '../../lucia/auth.js';
 import { OAuth2RequestError, generateState } from "arctic";
 import { parseCookies, serializeCookie } from "oslo/cookie";
+import debug from "../../mongodb/utils/debug.js";
 
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
-
 import User from '../../mongodb/models/users.js';
-import Session from '../../mongodb/models/sessions.js';
-
 import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.js';
 
 //import type { DatabaseUser } from "../../lib/db.js"; TYPESCRIPT
@@ -55,21 +53,21 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
 		});
 		const discordUser = await discordUserResponse.json();
 		/// CAN FETCH OTHER @me DISCORD API HERE
-		console.log('discordUser: ', discordUser);
+		debug('discordUser: ', discordUser);
 		
 		const existingUser = await User.findOne({ discordId: discordUser.id }); // SWITCH TO findById HERE
-		console.log('existingUser', existingUser)
+		debug('existingUser', existingUser);
 
 		//const userId = generateId(15); 
 		const userId = new ObjectId(discordToMongoId( discordUser.id ));
-		console.log('userId: ', userId)
+		debug('userId: ', userId);
 
 		if (existingUser) {
-			console.log('creating session for: ', userId)
+			debug('creating session for: ', userId);
 			
 			const session = await lucia.createSession(userId, {});		
 			
-			console.log('session: ', session);
+			debug('session: ', session);
 			return res
 				.appendHeader("Set-Cookie", lucia.createSessionCookie(session.id).serialize())
 				.redirect("/");

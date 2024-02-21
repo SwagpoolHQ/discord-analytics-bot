@@ -34,8 +34,6 @@ export default async function saveMemberOnJoin(member, codeUsed) {
 
     if( memberFromDb?.invite ){
 
-      console.log('Member already exists')
-
       if(memberFromDb.leftAtTimestamp){
         console.log(`removing leftAtTimestamp from ${member.user.username} Member`)
         try {

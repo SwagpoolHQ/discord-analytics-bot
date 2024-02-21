@@ -6,6 +6,7 @@ import logger from 'morgan';
 
 import dotenv from 'dotenv';
 dotenv.config();
+import debug from './mongodb/utils/debug.js';
 
 import './mongodb/connection.js';
 import rateLimiterMiddleware from './middlewares/rateLimiterMiddleware.js'
@@ -74,7 +75,7 @@ app.use((req, res, next) => {
 //2nd middleware
 app.use(async (req, res, next) => {
 	const sessionId = lucia.readSessionCookie(req.headers.cookie ?? "");
-	console.log('sessionId = ',sessionId);
+	debug('sessionId = ',sessionId);
 	if (!sessionId) {
 		res.locals.user = null;
 		res.locals.session = null;
