@@ -1,12 +1,10 @@
-const Member = require('../models/members');
-const Invite = require('../models/invites');
+import Member from '../models/members.js';
+import Invite from '../models/invites.js';
+import saveUser from './saveUser.js';
+import saveGuild from './saveGuild.js';
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-const saveUser = require('./saveUser');
-const saveGuild = require('./saveGuild');
-const discordToMongoId = require('./idConversion/discordToMongoId');
-const discordToCreatedAtTimestamp = require('./idConversion/discordToCreatedAtTimestamp');
-
-async function saveMemberOnJoin(member, codeUsed) {
+export default async function saveMemberOnJoin(member, codeUsed) {
 
     //---------------------------------------------------------------------------------------------------------
     //
@@ -34,7 +32,20 @@ async function saveMemberOnJoin(member, codeUsed) {
     
     //console.log(`member ${member.user.username} joined with invite ${codeUsed ? codeUsed : null}`);
 
-    if( memberFromDb ){
+    if( memberFromDb?.invite ){
+
+      if(memberFromDb.leftAtTimestamp){
+        console.log(`removing leftAtTimestamp from ${member.user.username} Member`)
+        try {
+          await Member.findByIdAndUpdate( memberFromDb._id, {leftAtTimestamp: null} )
+          memberFromDb = await Member.findOne({user: discordToMongoId(member.user.id), guild: discordToMongoId(member.guild.id)});
+        } catch {
+          error => {
+          console.error('error while updating existing Member with existing leftAtTimestamp in mongoDB:', error)
+          }
+        }
+      }
+    } else if( memberFromDb ){ // LINK TO INVITE
 
       console.log('Member already exists')
 
@@ -76,10 +87,6 @@ async function saveMemberOnJoin(member, codeUsed) {
           
       console.log(`Saving Member ${member.user.username} with invite ${inviteIdFromDb} in DB`)
 
-      /// HERE
-      await discordToCreatedAtTimestamp(member.user.id);
-      //////////////
-
       const newMember = await new Member({
         joinedAtTimestamp,
         guild: discordToMongoId(member.guild.id),
@@ -98,5 +105,3 @@ async function saveMemberOnJoin(member, codeUsed) {
 
     return memberFromDb;
 };
-
-module.exports = saveMemberOnJoin;

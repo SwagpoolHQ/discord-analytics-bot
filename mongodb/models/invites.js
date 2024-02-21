@@ -1,4 +1,4 @@
-const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Invite = mongodb.models.Invite || mongodb.model("Invite",
 new mongodb.Schema(
@@ -44,7 +44,16 @@ new mongodb.Schema(
 			ref: 'Channel',
 			required: false
 		},
+		_expiresTimestamp: {
+			type: Date,
+			required: false
+		},
+		forJoiner: {
+			type: mongodb.Schema.Types.ObjectId,
+			ref: 'User',
+			required: false
+		},
 	}
 ));
 
-module.exports = Invite;
+export default Invite;

@@ -1,4 +1,4 @@
-const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Member = mongodb.models.Member || mongodb.model("Member",
 new mongodb.Schema(
@@ -30,4 +30,4 @@ new mongodb.Schema(
 	}
 ));
 
-module.exports = Member;
+export default Member;

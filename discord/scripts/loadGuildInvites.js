@@ -1,8 +1,7 @@
-const { Collection } = require('discord.js');
-
-const saveGuildInvites = require('../../mongodb/utils/saveGuildInvites');
-const checkBotPermissions = require('../utils/checkBotPermissions');
-const permissionsRequired = require('../config/permissionsRequired');
+import { Collection } from 'discord.js';
+import saveGuildInvites from '../../mongodb/utils/saveGuildInvites.js';
+import checkBotPermissions from '../utils/checkBotPermissions.js';
+import permissionsRequired from '../config/permissionsRequired.js';
 
 //---------------------------------------------------------------//
 //
@@ -10,7 +9,7 @@ const permissionsRequired = require('../config/permissionsRequired');
 //
 //---------------------------------------------------------------//
 
-async function loadGuildInvites(guild) {
+export default async function loadGuildInvites(guild) {
 
       const permissionsCheck = checkBotPermissions( guild, permissionsRequired.inviteTracker);
       if( !permissionsCheck.result) {
@@ -24,13 +23,24 @@ async function loadGuildInvites(guild) {
         firstInvites = await guild.invites.fetch();
       }        
        catch (e) {
-        console.error(e);
+        console.error(`error while fetching invites for ${guild.name} from Discord:`, e);
       }
       
     
       // Set the key as Guild ID, and create a map which has the invite code, and the number of uses
       if(firstInvites){
-        guild.client.invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, { uses: invite.uses, maxUses: invite.maxUses , maxAge: invite.maxAge }])));
+        guild.client.invites
+          .set(
+            guild.id, 
+            new Collection(
+              firstInvites.map((invite) => [invite.code, { 
+                uses: invite.uses, 
+                maxUses: invite.maxUses, 
+                maxAge: invite.maxAge,
+                _expiresTimestamp: invite._expiresTimestamp,
+              }])
+            )
+          );
       } else {
         guild.client.invites.set(guild.id, new Collection());
       };
@@ -40,8 +50,6 @@ async function loadGuildInvites(guild) {
       try { 
         await saveGuildInvites( guild );
       } catch {
-        error => console.error('error while updating invites in mongoDB:', error)
+        error => console.error(`error while updating invites for ${guild.name} in mongoDB:`, error)
       };
-    }
-    
-module.exports = loadGuildInvites;
+    };

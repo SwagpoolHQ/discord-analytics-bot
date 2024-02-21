@@ -1,7 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const wait = require('node:timers/promises').setTimeout;
+import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
         .setName('echo')

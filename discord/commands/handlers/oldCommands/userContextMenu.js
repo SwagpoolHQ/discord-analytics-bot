@@ -1,7 +1,7 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
-const discordToCreatedAtTimestamp = require('../../../../mongodb/utils/idConversion/discordToCreatedAtTimestamp');
+import { ContextMenuCommandBuilder, ApplicationCommandType } from 'discord.js';
+import discordToCreatedAtTimestamp from '../../../../mongodb/utils/idConversion/discordToCreatedAtTimestamp';
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new ContextMenuCommandBuilder()
 		.setName('User Information')

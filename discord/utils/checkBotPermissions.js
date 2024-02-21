@@ -1,4 +1,4 @@
-const {PermissionsBitField} = require ('discord.js');
+import { PermissionsBitField } from 'discord.js';
 
 //---------------------------------------------------------------//
 //
@@ -7,7 +7,7 @@ const {PermissionsBitField} = require ('discord.js');
 //---------------------------------------------------------------//
 
 
-function checkBotPermissions(guild, permissionsRequired) {
+export default function checkBotPermissions(guild, permissionsRequired) {
       // check if permissionsRequired active
       if (guild.members.me.permissions.has(permissionsRequired)){
         return {
@@ -27,6 +27,4 @@ function checkBotPermissions(guild, permissionsRequired) {
           missing,
         };
       }
-    }
-    
-module.exports = checkBotPermissions;
+    };

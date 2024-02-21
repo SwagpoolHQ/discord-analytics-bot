@@ -1,5 +1,4 @@
-const { userMention, time } = require('discord.js');
-const wait = require('node:timers/promises').setTimeout;
+import { userMention, time } from 'discord.js';
 
 
 	const lastReferralsUI = (referrals, number = 3) => {
@@ -19,4 +18,4 @@ const wait = require('node:timers/promises').setTimeout;
 		
 	};
 
-module.exports = lastReferralsUI;
+export default lastReferralsUI;

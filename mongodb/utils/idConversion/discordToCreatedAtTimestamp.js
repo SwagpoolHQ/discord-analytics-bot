@@ -1,6 +1,6 @@
 
 // WORKS FOR USERS/CHANNELS/GUILDS/MESSAGE
-function discordToCreatedAtTimestamp(id) {
+export default function discordToCreatedAtTimestamp(id) {
 
     if ( !id ){ return null};
 
@@ -31,5 +31,3 @@ function discordToCreatedAtTimestamp(id) {
 
     return createdAtTimestamp;
 };
-
-module.exports = discordToCreatedAtTimestamp;

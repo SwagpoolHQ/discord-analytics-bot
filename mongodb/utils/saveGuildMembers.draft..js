@@ -1,7 +1,7 @@
 
 // OLD DRAFT...NOT FUNCTIONNAL, TO BE CLEANED.
 
-async function saveGuildMembers(guild) {
+export default async function saveGuildMembers(guild) {
     
     const members = new Map();
 
@@ -34,5 +34,3 @@ async function saveGuildMembers(guild) {
     return members;
 
 };
-
-module.exports = saveGuildMembers;

@@ -1,4 +1,4 @@
-const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Guild = mongodb.models.Guild || mongodb.model("Guild",
 new mongodb.Schema(
@@ -28,7 +28,17 @@ new mongodb.Schema(
 			type: Date,
 			required: true
 		},
+		auth: {
+			type: Boolean,
+			default: false,
+			required: false,
+		},
+		channel: {
+			type: mongodb.Schema.Types.ObjectId,
+			ref: 'Channel',
+			required: false
+		},
 	}
 ));
 
-module.exports = Guild;
+export default Guild;

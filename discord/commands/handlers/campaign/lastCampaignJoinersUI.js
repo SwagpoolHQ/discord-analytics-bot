@@ -1,6 +1,4 @@
-const { userMention, time } = require('discord.js');
-const wait = require('node:timers/promises').setTimeout;
-
+import { userMention, time } from 'discord.js';
 
 	const lastCampaignJoinersUI = (joiners, number) => {
 
@@ -19,4 +17,4 @@ const wait = require('node:timers/promises').setTimeout;
 		
 	};
 
-module.exports = lastCampaignJoinersUI;
+export default lastCampaignJoinersUI;

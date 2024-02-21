@@ -1,15 +1,22 @@
-const Invite = require('../models/invites');
-const Campaign = require('../models/campaigns');
+//const Invite = require('../models/invites');
+import Invite from '../models/invites.js';
+//const Campaign = require('../models/campaigns');
+import Campaign from '../models/campaigns.js';
 
-const mongodb = require('mongoose');
+//const mongodb = require('mongoose');
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
 
-const discordClient = require('../../discord/index');
-const saveMember = require('./saveMember');
-const saveInvite = require('./saveInvite');
+//const discordClient = require('../../discord/index');
+import discordClient from '../../discord/index.js';
+//const saveMember = require('./saveMember');
+//const saveInvite = require('./saveInvite');
+import saveInvite from './saveInvite.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-const mongoToDiscordId = require('./idConversion/mongoToDiscordId')
+//const discordToMongoId = require('./idConversion/discordToMongoId');
+import discordToMongoId from './idConversion/discordToMongoId.js';
+//const mongoToDiscordId = require('./idConversion/mongoToDiscordId')
+import mongoToDiscordId from './idConversion/mongoToDiscordId.js';
 
 async function createInviteRT ( campaignId ) {
 
@@ -57,4 +64,5 @@ async function createInviteRT ( campaignId ) {
   }
 }
 
-module.exports = createInviteRT;
+//module.exports = createInviteRT;
+export default createInviteRT;

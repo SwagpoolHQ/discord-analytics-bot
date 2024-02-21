@@ -1,12 +1,9 @@
-const Invite = require('../models/invites');
-const Campaign = require('../models/campaigns');
-
-const mongodb = require('mongoose');
+import Invite from '../models/invites.js';
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-
-async function getCampaignInvites ( campaignId ) {
+export default async function getCampaignInvites ( campaignId ) {
 
   if( !campaignId ){
     console.log("Error - getCampaignData : missing campaignId")
@@ -31,5 +28,3 @@ async function getCampaignInvites ( campaignId ) {
     }
   }
 }
-
-module.exports = getCampaignInvites;

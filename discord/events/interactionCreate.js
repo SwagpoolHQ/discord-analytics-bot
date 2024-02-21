@@ -1,6 +1,6 @@
-const { Events, Collection } = require('discord.js');
+import { Events, Collection } from 'discord.js'
 
-module.exports = {
+export const event = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		if (interaction.isChatInputCommand() || interaction.isContextMenuCommand()){

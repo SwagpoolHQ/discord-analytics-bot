@@ -1,9 +1,8 @@
-const Guild = require ('../models/guilds');
+import Guild from '../models/guilds.js';
+import discordToMongoId from './idConversion/discordToMongoId.js';
+import saveUser from './saveUser.js'
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-const saveUser = require('./saveUser');
-
-async function saveGuild(guild) {
+export default async function saveGuild(guild) {
     
     // Updating the guild in DB 
     let guildFromDb = await Guild.findById(discordToMongoId(guild.id));
@@ -48,5 +47,3 @@ async function saveGuild(guild) {
     return guildFromDb;
 
 };
-
-module.exports = saveGuild;

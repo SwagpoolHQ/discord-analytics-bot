@@ -4,22 +4,24 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('invite-tracker-2:server');
-var http = require('http');
+import app from '../app.js'
+import debugImport from 'debug';
+const debug = debugImport('invite-tracker-2:server'); // RENAME Contribution tracker
+import http from 'http';
+
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3000'); // Const
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(app); // const
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -34,7 +36,7 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  var port = parseInt(val, 10); // const
 
   if (isNaN(port)) {
     // named pipe

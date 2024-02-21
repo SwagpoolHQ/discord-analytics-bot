@@ -1,14 +1,23 @@
-const { Events } = require('discord.js');
+import { Events } from 'discord.js';
+import saveInvite from '../../mongodb/utils/saveInvite.js';
 
-const saveInvite = require('../../mongodb/utils/saveInvite');
-
-module.exports = {
+export const event = {
 	name: Events.InviteCreate,
 	execute(invite) {
 		console.log(`${invite.url} invitation created`);
         // Update cache on new invites
-        invite.client.invites.get(invite.guild.id).set(invite.code, { uses: invite.uses, maxUses: invite.maxUses , maxAge: invite.maxAge });
-		// Save invite in DB
-		//saveInvite(invite); // NOT REQUIRED AND CAN DUPLICATE INVITE CREATION FROM createInviteForCampaign.js
+        invite.client.invites
+			.get(invite.guild.id)
+			.set(
+				invite.code, 
+				{	uses: invite.uses, 
+					maxUses: invite.maxUses, 
+					maxAge: invite.maxAge,
+					_expiresTimestamp: invite._expiresTimestamp,
+				});
+		// Save invite in DB if not created by the bot (to avoid duplicates with campaign invites)
+		if( invite.inviterId != invite.guild.members.me.id ){
+			saveInvite(invite); 
+		}	
 	},
 };

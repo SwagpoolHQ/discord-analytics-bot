@@ -1,4 +1,5 @@
-function getGuildIconURL( guildId, iconId, format = 'png', size = '160' ) {
+
+export default function getGuildIconURL( guildId, iconId, format = 'png', size = '160' ) {
 
     if (!guildId || !iconId){ return null}
 
@@ -7,5 +8,3 @@ function getGuildIconURL( guildId, iconId, format = 'png', size = '160' ) {
 
     return baseURL+path;
 };
-
-module.exports = getGuildIconURL;

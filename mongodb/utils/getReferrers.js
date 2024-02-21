@@ -1,11 +1,9 @@
-const Member = require('../models/members');
-
-const mongodb = require('mongoose');
+import Member from '../models/members.js';
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-
-async function getReferrers ( guildId, startTimestamp, endTimestamp ) {
+export default async function getReferrers ( guildId, startTimestamp, endTimestamp ) {
 
   if( !startTimestamp ){
     try {
@@ -208,5 +206,3 @@ async function getReferrers ( guildId, startTimestamp, endTimestamp ) {
   }
   }
 }
-
-module.exports = getReferrers;

@@ -1,4 +1,4 @@
-const mongodb = require("mongoose");
+import mongodb from 'mongoose';
 
 const Campaign = mongodb.models.Campaign || mongodb.model("Campaign",
 new mongodb.Schema(
@@ -11,10 +11,25 @@ new mongodb.Schema(
 			type: String,
 			required: false
 		},
+		code: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		auth: {
+			type: Boolean,
+			default: false,
+			required: false,
+		},
 		guild: {
 			type: mongodb.Schema.Types.ObjectId,
 			ref: 'Guild',
 			required: true
+		},
+		mainInvite: {
+			type: String,
+			required: false,
+			unique: true,
 		},
 		creator: {
 			type: mongodb.Schema.Types.ObjectId,
@@ -29,4 +44,4 @@ new mongodb.Schema(
 	}
 ));
 
-module.exports = Campaign;
+export default Campaign;

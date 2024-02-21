@@ -1,12 +1,19 @@
-const { time, userMention, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+import {
+    time, 
+    userMention, 
+    SlashCommandBuilder, 
+    EmbedBuilder, 
+    ActionRowBuilder, 
+    ButtonBuilder, 
+    ButtonStyle, 
+} from 'discord.js';
 
-const getReferrers = require ('../../../mongodb/utils/getReferrers');
-const topReferrersUI = require ('./leaderboard/topReferrersUI');
-const getGuildIconURL = require ('../../imageURL/getGuildIconURL');
-const getSwagpoolIconURL = require('../../imageURL/getSwagpoolIconURL');
-
-const checkBotPermissions = require('../../utils/checkBotPermissions');
-const permissionsRequired = require('../../config/permissionsRequired');
+import getReferrers from '../../../mongodb/utils/getReferrers.js';
+import topReferrersUI from './leaderboard/topReferrersUI.js';
+import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
+import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
+import checkBotPermissions from '../../utils/checkBotPermissions.js';
+import permissionsRequired from '../../config/permissionsRequired.js';
 
 const commandChoices = [
         { name: 'Last 1D', value: '1' },
@@ -15,7 +22,7 @@ const commandChoices = [
         { name: 'Last 3M', value: '90' },
     ];
 
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
 		.setName('members')

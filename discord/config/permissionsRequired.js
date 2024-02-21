@@ -1,4 +1,4 @@
-const {PermissionsBitField} = require ('discord.js')
+import { PermissionsBitField } from 'discord.js';
 
 //---------------------------------------------------------------//
 //
@@ -16,5 +16,5 @@ const permissionsRequired = {
     PermissionsBitField.Flags.Administrator,
   ],
 };
-    
-module.exports = permissionsRequired;
+
+export default permissionsRequired;

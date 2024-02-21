@@ -1,21 +1,26 @@
-const Campaign = require('../models/campaigns');
-const Invite = require('../models/invites');
-
-const mongodb = require('mongoose');
+import Campaign from '../models/campaigns.js';
+import Guild from '../models/guilds.js'
+import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
+import { nanoid } from 'nanoid'
+import saveMember from './saveMember.js';
+import saveInvite from './saveInvite.js';
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-const saveMember = require('./saveMember');
-const saveInvite = require('./saveInvite');
-
-const discordToMongoId = require('./idConversion/discordToMongoId');
-
-async function createCampaign ( creatorMember, name, channel ) {
+export default async function createCampaign ( creatorMember, name, channel ) {
 
     if( await Campaign.findOne({ name }) ){
         return {
             status : 500,
             message : "This campaign name already exists"
         }
+    }
+
+    if (channel){
+        await Guild.updateOne(
+            { _id: discordToMongoId(channel.guild.id) },
+            { channel: discordToMongoId(channel.id) }
+        );
     }
 
     try {
@@ -28,6 +33,7 @@ async function createCampaign ( creatorMember, name, channel ) {
                 const newCampaign = new Campaign({
                     name,
                     description: '',
+                    code: nanoid(8), //=> "R8_H-myT"
                     guild: new ObjectId(discordToMongoId(creatorMember.guild.id)),
                     creator: memberFromDb._id,
                     channel: new ObjectId(discordToMongoId(channel.id))
@@ -36,12 +42,13 @@ async function createCampaign ( creatorMember, name, channel ) {
                 try {
                     const savedCampaign = await newCampaign.save()
                     
-                    await Invite.updateOne( {code: inviteFromDb.code} , {campaign: savedCampaign._id, referrer: null} );
-                    const updatedInviteFromDb = await Invite.findOne( {code: inviteFromDb.code} );
+                    //await Invite.updateOne( {code: inviteFromDb.code} , {campaign: savedCampaign._id, referrer: null} );
+                    //const updatedInviteFromDb = await Invite.findOne( {code: inviteFromDb.code} );
 
                     return {
                         status : 200,
-                        invite: updatedInviteFromDb,
+                        campaign: savedCampaign,
+                        //invite: updatedInviteFromDb,
                     }
 
                 } catch (e) {
@@ -58,5 +65,3 @@ async function createCampaign ( creatorMember, name, channel ) {
             console.error(e)
         }
 }
-
-module.exports = createCampaign;

@@ -1,10 +1,8 @@
-const Invite = require ('../models/invites')
+import Invite from '../models/invites.js';
+import discordToMongoId from './idConversion/discordToMongoId.js';
+import saveMember from './saveMember.js';
 
-const discordToMongoId = require('./idConversion/discordToMongoId');
-//const saveUserById = require('./saveUserById.exemple'); TO DELETE
-const saveMember = require('./saveMember');
-
-async function saveGuildInvites( guild ) {
+export default async function saveGuildInvites( guild ) {
 
   // fetching invites in DB for the guild
   let invitesInDb = await Invite.find({ guild: discordToMongoId(guild.id) });
@@ -42,6 +40,7 @@ async function saveGuildInvites( guild ) {
       const newInvite = new Invite({
         code: invite.code,
         name: invite.code,
+        _expiresTimestamp: invite._expiresTimestamp,
         description: "",
         guild: discordToMongoId(guild.id),
         creator: discordToMongoId(invite.inviterId),
@@ -64,5 +63,3 @@ async function saveGuildInvites( guild ) {
 
   return invitesInDb;
 };
-
-module.exports = saveGuildInvites;

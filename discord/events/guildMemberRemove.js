@@ -1,9 +1,8 @@
-const { Events } = require('discord.js');
-const Member = require('../../mongodb/models/members');
+import { Events } from 'discord.js';
+import Member from '../../mongodb/models/members.js';
+import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.js';
 
-const discordToMongoId = require('../../mongodb/utils/idConversion/discordToMongoId');
-
-module.exports = {
+export const event = {
 	name: Events.GuildMemberRemove,
 	async execute(member) {
 

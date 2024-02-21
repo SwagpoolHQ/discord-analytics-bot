@@ -1,9 +1,8 @@
-const { SlashCommandBuilder } = require('discord.js');
+import { SlashCommandBuilder } from 'discord.js';
+import getInviters from '../../../../mongodb/utils/getReferrers';
+import wait from ('node:timers/promises').setTimeout;
 
-const getInviters = require ('../../../../mongodb/utils/getReferrers')
-const wait = require('node:timers/promises').setTimeout;
-
-module.exports = {
+export const command = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
 		.setName('inviters')

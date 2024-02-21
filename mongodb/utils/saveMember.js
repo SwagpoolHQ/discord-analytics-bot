@@ -1,9 +1,8 @@
-const Member = require('../models/members');
+import Member from '../models/members.js';
+import saveUser from './saveUser.js'
+import discordToMongoId from './idConversion/discordToMongoId.js';
 
-const saveUser = require('./saveUser');
-const discordToMongoId = require('./idConversion/discordToMongoId');
-
-async function saveMember( member ) {
+export default async function saveMember( member ) {
 
     //---------------------------------------------------------------------------------------------------------
     //
@@ -50,5 +49,3 @@ async function saveMember( member ) {
   return memberFromDb;
 
 };
-
-module.exports = saveMember;
