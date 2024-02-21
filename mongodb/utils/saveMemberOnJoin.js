@@ -3,6 +3,7 @@ import Invite from '../models/invites.js';
 import saveUser from './saveUser.js';
 import saveGuild from './saveGuild.js';
 import discordToMongoId from './idConversion/discordToMongoId.js';
+import debug from './debug.js';
 
 export default async function saveMemberOnJoin(member, codeUsed) {
 
@@ -35,7 +36,7 @@ export default async function saveMemberOnJoin(member, codeUsed) {
     if( memberFromDb?.invite ){
 
       if(memberFromDb.leftAtTimestamp){
-        console.log(`removing leftAtTimestamp from ${member.user.username} Member`)
+        debug(`removing leftAtTimestamp from ${member.user.username} Member`)
         try {
           await Member.findByIdAndUpdate( memberFromDb._id, {leftAtTimestamp: null} )
           memberFromDb = await Member.findOne({user: discordToMongoId(member.user.id), guild: discordToMongoId(member.guild.id)});
@@ -47,7 +48,7 @@ export default async function saveMemberOnJoin(member, codeUsed) {
       }
     } else if( memberFromDb ){ // LINK TO INVITE
 
-      console.log('Member already exists')
+      debug('Member already exists')
 
       if(memberFromDb.leftAtTimestamp){
         console.log(`removing leftAtTimestamp from ${member.user.username} Member`)
@@ -67,7 +68,7 @@ export default async function saveMemberOnJoin(member, codeUsed) {
       // Get the timestamp (UNIX timestamp) from the Date object
       const joinedAtTimestamp = joinedAtDate.getTime();
 
-      console.log(`saveMemberOnJoin: ${member.user.username} joined at ${joinedAtTimestamp}`);
+      debug(`saveMemberOnJoin: ${member.user.username} joined at ${joinedAtTimestamp}`);
 
       //---------------------------------------------------------------------------------------------------------
       //

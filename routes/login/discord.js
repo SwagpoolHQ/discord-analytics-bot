@@ -18,7 +18,7 @@ discordLoginRouter.get("/login/discord", async (_, res) => {
 	const url = await discordAuth.createAuthorizationURL(
         state,
         {
-            scopes: ["identify"] 
+            scopes: ["identify","email","guilds","connections",] 
         }
     );
 	res

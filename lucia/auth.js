@@ -25,7 +25,7 @@ export const lucia = new Lucia(
 	},
 	getUserAttributes: (attributes) => {
 		return {
-            discordId: attributes.discord_id,
+            discordId: attributes.discordId,
             username: attributes.username,
 		};
 	}
