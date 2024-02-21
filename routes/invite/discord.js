@@ -2,6 +2,7 @@ import express from "express";
 import { lucia, discordAuthForInvite } from '../../lucia/auth.js';
 import { OAuth2RequestError, generateState } from "arctic";
 import { parseCookies, serializeCookie } from "oslo/cookie";
+import debug from "../../mongodb/utils/debug.js";
 
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
@@ -44,7 +45,7 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
 	const storedInvite = parseCookies(req.headers.cookie ?? "").get("invite_code") ?? null;
 
 	if (!code || !state || !storedState || state !== storedState) {
-		console.log(code, state, storedState);
+		debug('%s',code, state, storedState);
 		res.status(400).end();
 		return;
 	}

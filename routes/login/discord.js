@@ -40,7 +40,7 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
 	const state = req.query.state?.toString() ?? null;
 	const storedState = parseCookies(req.headers.cookie ?? "").get("discord_oauth_state") ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
-		console.log(code, state, storedState);
+		debug('%s',code, state, storedState);
 		res.status(400).end();
 		return;
 	}
@@ -79,7 +79,7 @@ discordLoginRouter.get("/login/discord/callback", async (req, res) => {
             //createdAtTimestamp: discordToCreatedAtTimestamp(discordUser.id),
             username: discordUser.username,
 		})
-		console.log('newUser: ', newUser)
+		debug('newUser: ', newUser)
 		await newUser.save();
 
 		const session = await lucia.createSession(userId, {});
