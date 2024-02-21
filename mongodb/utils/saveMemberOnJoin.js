@@ -33,7 +33,7 @@ export default async function saveMemberOnJoin(member, codeUsed) {
     
     //console.log(`member ${member.user.username} joined with invite ${codeUsed ? codeUsed : null}`);
 
-    if( memberFromDb?.invite ){
+    if( memberFromDb ){
 
       if(memberFromDb.leftAtTimestamp){
         debug(`removing leftAtTimestamp from ${member.user.username} Member`)

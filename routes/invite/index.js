@@ -43,8 +43,7 @@ inviteRouter.get('/:code', async function(req, res, next) {
 
       try {
         invite = await getInvite(req.params.code, res.locals.user);
-        await getInvite(req.params.code);
-        await getInvite();
+        await getInvite(req.params.code, res.locals.user);
       } catch(e) {
         console.error(e)
       }
