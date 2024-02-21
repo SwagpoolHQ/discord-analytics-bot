@@ -2,7 +2,7 @@ import express from "express";
 import { lucia, discordAuthForInvite } from '../../lucia/auth.js';
 import { OAuth2RequestError, generateState } from "arctic";
 import { parseCookies, serializeCookie } from "oslo/cookie";
-import debug from "../../mongodb/utils/debug.js";
+import debug from "../../utils/debug.js";
 
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;

@@ -1,5 +1,5 @@
 import { RateLimiterMemory } from "rate-limiter-flexible";
-import debug from "../mongodb/utils/debug.js";
+import debug from "../utils/debug.js";
 
 const opts = {
   points: 8, // 3 points

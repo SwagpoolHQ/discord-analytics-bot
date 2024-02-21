@@ -9,9 +9,9 @@ import {
 } from 'discord.js';
 
 import getReferrers from '../../../mongodb/utils/getReferrers.js';
-import topReferrersUI from './leaderboard/topReferrersUI.js';
-import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
-import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
+import topReferrersUI from './messages/topReferrersUI.js';
+import getGuildIconURL from '../../utils/getGuildIconURL.js';
+import getSwagpoolIconURL from '../../utils/getSwagpoolIconURL.js';
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
 import permissionsRequired from '../../config/permissionsRequired.js';
 

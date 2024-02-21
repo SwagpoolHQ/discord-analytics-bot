@@ -1,6 +1,6 @@
 import { userMention, time } from 'discord.js';
 
-	const lastCampaignJoinersUI = (joiners, number) => {
+	const lastCampaignJoinersTemplate = (joiners, number) => {
 
 		let message = '--';
 		if( joiners[0] ){
@@ -17,4 +17,4 @@ import { userMention, time } from 'discord.js';
 		
 	};
 
-export default lastCampaignJoinersUI;
+export default lastCampaignJoinersTemplate;

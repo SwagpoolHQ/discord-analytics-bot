@@ -1,13 +1,17 @@
-const { REST, Routes } = require('discord.js');
-require('dotenv').config()
+import { REST, Routes } from 'discord.js';
+//require('dotenv').config()
 
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const token = process.env.DISCORD_BOT_SECRET;
 const clientId = process.env.DISCORD_CLIENT_ID;
 
 const commands = [];
+//Create __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // Grab all the command folders from the commands directory you created earlier
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
@@ -19,7 +23,7 @@ for (const folder of commandFolders) {
 	// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
-		const command = require(filePath);
+		const { command } = await import(filePath);
 		if ('data' in command && 'execute' in command) {
 			commands.push(command.data.toJSON());
 		} else {

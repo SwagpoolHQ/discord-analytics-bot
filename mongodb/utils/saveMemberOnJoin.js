@@ -3,7 +3,7 @@ import Invite from '../models/invites.js';
 import saveUser from './saveUser.js';
 import saveGuild from './saveGuild.js';
 import discordToMongoId from './idConversion/discordToMongoId.js';
-import debug from './debug.js';
+import debug from '../../utils/debug.js';
 
 export default async function saveMemberOnJoin(member, codeUsed) {
 

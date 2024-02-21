@@ -5,9 +5,9 @@ import {
 	EmbedBuilder, 
 } from 'discord.js';
 
-import topMembersReactionsUI from './message-stats/topMembersReactionsUI.js';
-import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
-import getMessageURL from '../../imageURL/getMessageURL.js';
+import topMembersReactionsUI from './messages/topMembersReactionsUI.js';
+import getSwagpoolIconURL from '../../utils/getSwagpoolIconURL.js';
+import getMessageURL from '../../utils/getMessageURL.js';
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
 import permissionsRequired from '../../config/permissionsRequired.js';
 

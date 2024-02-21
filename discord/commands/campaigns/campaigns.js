@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
-import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
-import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
+import getGuildIconURL from '../../utils/getGuildIconURL.js';
+import getSwagpoolIconURL from '../../utils/getSwagpoolIconURL.js';
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
 import permissionsRequired from '../../config/permissionsRequired.js';
 

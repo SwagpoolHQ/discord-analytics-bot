@@ -10,12 +10,11 @@ import {
 
 import createCampaign from '../../../mongodb/utils/createCampaign.js';
 import getCampaigns from '../../../mongodb/utils/getCampaigns.js';
-import lastCampaignJoinersUI from './campaign/lastCampaignJoinersUI.js';
 import getCampaignData from '../../../mongodb/utils/getCampaignData.js';
-
-import campaignMessageTemplate from './campaign/campaignMessageTemplate.js';
-import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
-import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
+import lastCampaignJoinersTemplate from './messages/lastCampaignJoinersTemplate.js';
+import campaignMessageTemplate from './messages/campaignMessageTemplate.js';
+import getGuildIconURL from '../../utils/getGuildIconURL.js';
+import getSwagpoolIconURL from '../../utils/getSwagpoolIconURL.js';
 
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
 import permissionsRequired from '../../config/permissionsRequired.js';
@@ -104,7 +103,7 @@ export const command = {
                         { name: 'This month', value: `${campaignData.nbOfJoinersLast1m} joiners\n-----------------\n${'--'} % MoM\n`, inline: true },
 
                         { name: '\u200B', value: '\u200B' },
-                        { name: `Last joiners (total: ${campaignData.nbOfJoiners})`, value: lastCampaignJoinersUI( campaignData.joiners , 15 ) },
+                        { name: `Last joiners (total: ${campaignData.nbOfJoiners})`, value: lastCampaignJoinersTemplate( campaignData.joiners , 15 ) },
 
                         { name: '\u200B', value: '\u200B' },
                     )

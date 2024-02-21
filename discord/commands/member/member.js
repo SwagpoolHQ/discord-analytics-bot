@@ -9,9 +9,9 @@ import {
 } from 'discord.js';
 
 import getMemberProfile from '../../../mongodb/utils/getMemberProfile.js';
-import lastReferralsUI from './member/lastReferralsUI.js';
-import getGuildIconURL from '../../imageURL/getGuildIconURL.js';
-import getSwagpoolIconURL from '../../imageURL/getSwagpoolIconURL.js';
+import lastReferralsUI from './messages/lastReferralsUI.js';
+import getGuildIconURL from '../../utils/getGuildIconURL.js';
+import getSwagpoolIconURL from '../../utils/getSwagpoolIconURL.js';
 import discordToCreatedAtTimestamp from '../../../mongodb/utils/idConversion/discordToCreatedAtTimestamp.js';
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
 import permissionsRequired from '../../config/permissionsRequired.js';
