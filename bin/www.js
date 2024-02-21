@@ -6,7 +6,7 @@
 
 import app from '../app.js'
 import debugImport from 'debug';
-const debug = debugImport('invite-tracker-2:server'); // RENAME Contribution tracker
+const debug = debugImport('invite-tracker-2:server'); // RENAME Contribution tracker and config for prod
 import http from 'http';
 
 
