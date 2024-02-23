@@ -3,6 +3,40 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Discordlinks</title>
+		<script>
+			// Polyfill process.
+			// **Note**: Because `import`s are hoisted, we need a separate, prior <script> block.
+			window.process = window.process || { env: { NODE_ENV: 'production' } }
+		  </script>
+		  <script type="module">
+			import Analytics from 'https://unpkg.com/analytics/lib/analytics.browser.es.js?module'
+			import googleAnalytics from 'https://unpkg.com/@analytics/google-analytics/lib/analytics-plugin-ga.browser.es.js?module'
+			//import googleTagManager from 'https://unpkg.com/@analytics/google-tag-manager/lib/analytics-plugin-google-tag-manager.browser.es.js?module'
+
+			/* Initialize analytics */
+			const analytics = Analytics({
+				app: 'discordlinks',
+				debug: true,
+				plugins: [
+					googleAnalytics({
+						measurementIds: 'G-2RSPNCH2FD',
+					}),
+					//googleTagManager({
+					//	containerId: 'G-2RSPNCH2FD'
+					//}),
+					// ... more analytics integrations here
+				]
+				})
+	  
+			/* Track a page view */
+			analytics.page()
+	  
+			/* Track a custom event */
+			//analytics.track('cartCheckout', {
+			//  item: 'pink socks',
+			//  price: 20
+			//})
+		  </script>
 	</head>
 	<body>
 		<h1>Hi, %username%!</h1>
