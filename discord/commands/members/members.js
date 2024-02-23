@@ -75,7 +75,7 @@ export const command = {
         // Get the swagpool icon URL
         const swagpoolAvatarURL = getSwagpoolIconURL();
 
-        // Create function to create the user profile embed message
+        // Create function to create the top referrers leaderboard's embed message
         const leaderboardForReferrals = async (periodNbOfDays) => {
 
             const periodName = commandChoices.find( item => item.value == periodNbOfDays ).name;
