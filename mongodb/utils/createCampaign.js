@@ -2,7 +2,7 @@ import Campaign from '../models/campaigns.js';
 import Guild from '../models/guilds.js'
 import mongodb from 'mongoose';
 const { ObjectId } = mongodb.Types;
-import { nanoid } from 'nanoid'
+import createCampaignCode from './idConversion/createCampaignCode.js'
 import saveMember from './saveMember.js';
 import saveInvite from './saveInvite.js';
 import discordToMongoId from './idConversion/discordToMongoId.js';
@@ -12,7 +12,7 @@ export default async function createCampaign ( creatorMember, name, channel ) {
     if( await Campaign.findOne({ name }) ){
         return {
             status : 500,
-            message : "This campaign name already exists"
+            message : "⚠️ This campaign name already exists"
         }
     }
 
@@ -33,7 +33,7 @@ export default async function createCampaign ( creatorMember, name, channel ) {
                 const newCampaign = new Campaign({
                     name,
                     description: '',
-                    code: nanoid(8), //=> "R8_H-myT"
+                    code: await createCampaignCode(), //=> "R8_H-myT"
                     guild: new ObjectId(discordToMongoId(creatorMember.guild.id)),
                     creator: memberFromDb._id,
                     channel: new ObjectId(discordToMongoId(channel.id))

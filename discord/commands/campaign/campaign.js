@@ -201,39 +201,49 @@ export const command = {
             let campaignData
             if (interaction.options.getSubcommand() === 'new') {
 
-                // Get the parameters
-                const campaignName = interaction.options.getString('name') ?? null;
-                const channel = interaction.options.getChannel('channel') ?? null;
+                try {
+                    // Get the parameters
+                    const campaignName = interaction.options.getString('name') ?? null;
+                    const channel = interaction.options.getChannel('channel') ?? null;
 
-                const campaignFromDB = await createCampaign (interaction.member, campaignName, channel);
-                console.log(campaignFromDB.campaign.id);
+                    const campaignFromDB = await createCampaign (interaction.member, campaignName, channel);
 
-                if(campaignFromDB.status == 200){
-                    // Get the campaign data
-                    const campaignId = campaignFromDB.campaign.id;
-                    campaignData = await getCampaignData( campaignId );
-                    campaignEmbed = await createCampaignAnalyticsEmbed( campaignData );
-                    
+                    if(campaignFromDB.status == 200){
+                        // Get the campaign data
+                        const campaignId = campaignFromDB.campaign.id;
+                        campaignData = await getCampaignData( campaignId );
+                        campaignEmbed = await createCampaignAnalyticsEmbed( campaignData );
+                        
+                        messageSent = await interaction.editReply({ 
+                            content: campaignMessageTemplate( campaignData.campaign, interaction.client.user.id ),
+                            embeds: [campaignEmbed],
+                            components: [campaignStatsButtonsRow],
+                        }); // edit the 1st response message
+                        // Start listening to clicks
+                        await waitingForClick(messageSent);
+                    } else if (campaignFromDB.status == 500) {
+                        messageSent = await interaction.editReply({ 
+                            content: campaignFromDB.message,
+                            embeds: [],
+                            components: [],
+                        }); // edit the 1st response message
+                    } else {
+                        messageSent = await interaction.editReply({ 
+                            content: `an error happened `,
+                            embeds: [],
+                            components: [],
+                        }); // edit the 1st response message
+                    }
+                } catch (e) {
+                    console.error('Campaign creation failed', e)
                     messageSent = await interaction.editReply({ 
-                        content: campaignMessageTemplate( campaignData.campaign, interaction.client.user.id ),
-                        embeds: [campaignEmbed],
-                        components: [campaignStatsButtonsRow],
-                    }); // edit the 1st response message
-                    // Start listening to clicks
-                    await waitingForClick(messageSent);
-                } else if (campaignFromDB.status == 500) {
-                    messageSent = await interaction.editReply({ 
-                        content: campaignFromDB.message,
+                        content: `⚠️ Campaign creation failed`,
                         embeds: [],
                         components: [],
                     }); // edit the 1st response message
-                } else {
-                    messageSent = await interaction.editReply({ 
-                        content: `an error happened `,
-                        embeds: [],
-                        components: [],
-                    }); // edit the 1st response message
+                    return
                 }
+                
             } else if (interaction.options.getSubcommand() === 'stats') {
 
                 // Get the parameters
