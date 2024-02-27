@@ -7,7 +7,7 @@ const analytics = Analytics({
   debug: true,
   plugins: [
     googleAnalytics({
-        trackingId: 'G-2RSPNCH2FD',
+        measurementIds: 'G-2RSPNCH2FD',
       }),
       googleTagManager({
         containerId: 'G-2RSPNCH2FD'
