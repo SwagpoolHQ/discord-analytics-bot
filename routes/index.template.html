@@ -10,26 +10,28 @@
 		  </script>
 		  <script type="module">
 			import Analytics from 'https://unpkg.com/analytics/lib/analytics.browser.es.js?module'
-			import googleAnalytics from 'https://unpkg.com/@analytics/google-analytics/lib/analytics-plugin-ga.browser.es.js?module'
-			//import googleTagManager from 'https://unpkg.com/@analytics/google-tag-manager/lib/analytics-plugin-google-tag-manager.browser.es.js?module'
+			//import googleAnalytics from 'https://unpkg.com/@analytics/google-analytics/lib/analytics-plugin-ga.browser.es.js?module'
+			import googleTagManager from 'https://unpkg.com/@analytics/google-tag-manager/lib/analytics-plugin-google-tag-manager.browser.es.js?module'
 
 			/* Initialize analytics */
 			const analytics = Analytics({
 				app: 'discordlinks',
 				debug: true,
 				plugins: [
-					googleAnalytics({
-						measurementIds: 'G-2RSPNCH2FD',
-					}),
-					//googleTagManager({
-					//	containerId: 'G-2RSPNCH2FD'
+					//googleAnalytics({
+					//	measurementIds: 'G-2RSPNCH2FD',
 					//}),
+					googleTagManager({
+						containerId: 'G-2RSPNCH2FD'
+					}),
 					// ... more analytics integrations here
 				]
 				})
 	  
 			/* Track a page view */
-			analytics.page()
+			analytics.page(() => {
+			console.log(`/home page view for %username%`)
+			})
 	  
 			/* Track a custom event */
 			//analytics.track('cartCheckout', {
