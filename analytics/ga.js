@@ -1,5 +1,9 @@
+import { createHash } from 'crypto'
 
-export default async function ga ( measurementId, apiSecret, events, debug = false ) {
+export default async function ga ( guildId, measurementId, apiSecret, clientId, userId, events, debug = false ) {
+
+    const memberIdforGA = createHash("sha256").update( guildId + userId ).digest('base64') // Add a salt ...guild or bot level ?
+    console.log("memberIdforGA", memberIdforGA)
 
     const queryParams = `?measurement_id=${measurementId}&api_secret=${apiSecret}`; 
     const queryUrl = debug 
@@ -10,10 +14,8 @@ export default async function ga ( measurementId, apiSecret, events, debug = fal
         fetch( queryUrl + queryParams, {
             method: "POST",
             body: JSON.stringify({
-                client_id: `${crypto.randomUUID()}`, // testing vs nanoId
-                //client_id: "1908161148.1586721292",
-                //user_engagement: "1",
-                //user_id: null,
+                client_id: clientId ? clientId : memberIdforGA,
+                user_id: memberIdforGA,
                 /*user_properties: {
                     member_status: {
                       value: "OG"
@@ -28,8 +30,8 @@ export default async function ga ( measurementId, apiSecret, events, debug = fal
         const response = await fetch( queryUrl + queryParams, {
             method: "POST",
             body: JSON.stringify({
-                client_id: "RandomUserIdHash",
-                user_id: null,
+                client_id: clientId ? clientId : memberIdforGA,
+                user_id: memberIdforGA,
                 user_properties: {
                     member_status: {
                       value: "OG"

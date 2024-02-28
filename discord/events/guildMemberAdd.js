@@ -1,6 +1,7 @@
 import { Events } from 'discord.js';
 import cleanCampaignsCache from '../utils/cleanCampaignsCache.js'
 import saveMemberOnJoin from '../../mongodb/utils/saveMemberOnJoin.js';
+import gaGuildMemberJoin from '../../analytics/gaGuildMemberJoin.js'
 
 export const event = {
 	name: Events.GuildMemberAdd,
@@ -113,7 +114,13 @@ export const event = {
       // the invites forJoiner are single use => they will be missing from newInvites if used.
 
 
+      //---------------------------------------------------------------------------------------------------------
+      //
+      //              FIRING A GUILD_MEMBER_JOIN GOOGLE ANALYTICS EVENT 
+      //
+      //---------------------------------------------------------------------------------------------------------
 
+      gaGuildMemberJoin( member, codesUsed[0] );
 
       //---------------------------------------------------------------------------------------------------------
       //

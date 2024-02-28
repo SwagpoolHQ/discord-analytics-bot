@@ -2,10 +2,15 @@ import { Events } from 'discord.js';
 import Member from '../../mongodb/models/members.js';
 import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.js';
 import saveMessage from '../../mongodb/utils/saveMessage.js';
+import ga from '../../analytics/ga.js';
+import gaMessageSent from '../../analytics/gaMessageSent.js'
 
 export const event = {
 	name: Events.MessageCreate,
 	async execute(message) {
+
+    // Sending a message_sent event to Google Analytics
+    gaMessageSent( message );
 
     // Only save messages when Member is saved in DB
     const memberFromDb = await Member.findOne({ user: discordToMongoId(message.author.id), guild: discordToMongoId(message.guild.id) })

@@ -3,43 +3,15 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Discordlinks - login</title>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-2RSPNCH2FD"></script>
 		<script>
-			// Polyfill process.
-			// **Note**: Because `import`s are hoisted, we need a separate, prior <script> block.
-			window.process = window.process || { env: { NODE_ENV: 'production' } }
-		  </script>
-		  <script type="module">
-			import Analytics from 'https://unpkg.com/analytics/lib/analytics.browser.es.js?module'
-			//import googleAnalytics from 'https://unpkg.com/@analytics/google-analytics/lib/analytics-plugin-ga.browser.es.js?module'
-			import googleTagManager from 'https://unpkg.com/@analytics/google-tag-manager/lib/analytics-plugin-google-tag-manager.browser.es.js?module'
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-			/* Initialize analytics */
-			const analytics = Analytics({
-				app: 'discordlinks',
-				debug: true,
-				plugins: [
-					//googleAnalytics({
-					//	measurementIds: 'G-2RSPNCH2FD',
-					//}),
-					googleTagManager({
-						containerId: 'G-2RSPNCH2FD'
-					}),
-					// ... more analytics integrations here
-				]
-				})
-	  
-			/* Track a page view */
-			// Fire callback with 1st, 2nd or 3rd argument
-			analytics.page(() => {
-			console.log(`/login page view`)
-			})
-	  
-			/* Track a custom event */
-			//analytics.track('cartCheckout', {
-			//  item: 'pink socks',
-			//  price: 20
-			//})
-		  </script>
+		gtag('config', 'G-2RSPNCH2FD');
+		</script>
 	</head>
 	<body>
 		<h1>Sign in</h1>

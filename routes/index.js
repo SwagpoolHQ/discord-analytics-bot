@@ -1,6 +1,7 @@
 import express from "express";
 import fs from "fs/promises";
 import ga from '../analytics/ga.js'
+import gaBrowser from "../analytics/gaBrowser.js";
 
 export const mainRouter = express.Router();
 
@@ -24,11 +25,14 @@ mainRouter.get("/analytics", async (req, res, next) => {
 
 	// Let's push some events 
 	events.push({
+		//name: 'message_sent',
 		name: 'page_view',
 		params: {
-			page_location: "https://discordlinks.com/ZZZ", // WARNING => GA might process the IP address from the backend server for view map
-        	page_title: "Campaign_ZZZ",
-			//user_engagement: "1",
+			page_location: "https://discordlinks.com/CCC", // WARNING => GA might process the IP address from the backend server for view map
+        	page_title: "Campaign_CCC",
+			//language: "en",
+			page_referrer: "apple.com",
+			//screen_resolution: ""
 			engagement_time_msec: "1" // Needed for non-zero user count
 		},
 	});
@@ -49,13 +53,14 @@ mainRouter.get("/analytics", async (req, res, next) => {
 	*/
 
 
-	const debug = await ga ( 'G-2RSPNCH2FD', process.env.GA_SECRET_KEY , events, false )
+	//gaBrowser ( 'G-2RSPNCH2FD', events );
+	const debug = await ga ( 'test_guild_id', 'G-2RSPNCH2FD', process.env.GA_SECRET_KEY, `${crypto.randomUUID()}`, null, events, false )
 
 	res.json({
 		result: true,
 		container: 'G-2RSPNCH2FD',
 		events,
-		debug,
+		//debug,
 	})
 
 });

@@ -1,6 +1,6 @@
 
 
-export default async function gaBrowser ( measurementIds, events ) {
+export default async function gaBrowser ( measurementIds, eventsRawModel ) {
     // 	console.log(props);
     // APP+WEB Endpoint
 	const endPoint = 'https://www.google-analytics.com/g/collect';
@@ -13,27 +13,27 @@ export default async function gaBrowser ( measurementIds, events ) {
 		//sr: screen.width + 'x' + screen.height,
 		_dbg: 1,
 		//ul: (navigator.language || "").toLowerCase(), 
-		cid: '1908161148.1586721292',
-		dl: 'https://discordlinks.com/YYY',
-		dr: '',
-		dt: 'APP + WEB Measurement Protocol version2 DEMO',
+		cid: '1908161148.1586721333',
+		dl: 'https://discordlinks.com/gaBrowser - test',
+		dr: 'https://apple.com',
+		dt: 'gaBrowser - test',
 		//sid: new Date() * 1,
-		sid: '2121',
+		sid: '2223',
 		_s: 1,
 		//_nsi:  '2121', // Non-interactive
-		_ss:   1,    // Session number in the current
+		_ss: 1,    // Session number in the current
 		_fv: false,
 		seg: '1',
 	}
-	/*
+	
 	// A queue to batch our events
 	const events = [];
 
 	// Let's push some events 
 	events.push({
-		'en': 'pageview'
+		'en': 'page_view'
 	});
-
+	/*
 	
 	// Second Event
 	events.push({
