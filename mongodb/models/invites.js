@@ -48,9 +48,8 @@ new mongodb.Schema(
 			type: Date,
 			required: false
 		},
-		forJoiner: {
-			type: mongodb.Schema.Types.ObjectId,
-			ref: 'User',
+		clientId: {
+			type: String,
 			required: false
 		},
 	}

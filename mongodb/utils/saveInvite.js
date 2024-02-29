@@ -2,7 +2,7 @@ import Invite from '../models/invites.js';
 import discordToMongoId from './idConversion/discordToMongoId.js';
 import saveMember from './saveMember.js';
 
-export default async function saveInvite(invite, campaignId, joinerId ) {
+export default async function saveInvite(invite, campaignId, clientId ) {
 
     let inviteFromDb = await Invite.findOne({code: invite.code})
 
@@ -38,7 +38,7 @@ export default async function saveInvite(invite, campaignId, joinerId ) {
             }
         }
     } else if (campaignId) {
-        if (joinerId){
+        if (clientId){
             // create new invite to save in db
             const newInvite = new Invite({
                 code: invite.code,
@@ -49,7 +49,7 @@ export default async function saveInvite(invite, campaignId, joinerId ) {
                 referrer: null,
                 channel: discordToMongoId(invite.channel.id),
                 campaign: campaignId,
-                forJoiner: joinerId,
+                clientId: clientId,
             });
 
             // saving new invite in db

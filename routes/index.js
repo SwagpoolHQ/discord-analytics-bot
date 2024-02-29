@@ -7,14 +7,15 @@ export const mainRouter = express.Router();
 
 mainRouter.get("/", async (_, res) => {
 	
-	if (!res.locals.user) {
+	if (!res.locals.user.discordId) {
 		return res.redirect("/login");
 	}
 
 	const templateFile = await fs.readFile("routes/index.template.html");
 	let template = templateFile.toString("utf-8");
+    template = template.replaceAll("%measurementId%", process.env.GA_MEASUREMENT_ID );
 	template = template.replaceAll("%username%", res.locals.user.username);
-	template = template.replaceAll("%user_id%", res.locals.user.id);
+	template = template.replaceAll("%user_id%", res.locals.user.discordId);
 	return res.setHeader("Content-Type", "text/html").status(200).send(template);
 });
 
@@ -54,7 +55,7 @@ mainRouter.get("/analytics", async (req, res, next) => {
 
 
 	//gaBrowser ( 'G-2RSPNCH2FD', events );
-	const debug = await ga ( 'test_guild_id', 'G-2RSPNCH2FD', process.env.GA_SECRET_KEY, `${crypto.randomUUID()}`, null, events, false )
+	const debug = await ga ( 'test_guild_id', `${crypto.randomUUID()}`, null, events, false )
 
 	res.json({
 		result: true,

@@ -6,7 +6,7 @@ export default async function authMiddleware (req, res, next) {
 		const sessionId = lucia.readSessionCookie(req.headers.cookie ?? "");
 		debug('sessionId = ',sessionId);
 		if (!sessionId) {
-			res.locals.user = null;
+			res.locals.user = {};
 			res.locals.session = null;
 			return next();
 		}

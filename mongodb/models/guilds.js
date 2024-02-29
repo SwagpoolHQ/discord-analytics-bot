@@ -38,6 +38,10 @@ new mongodb.Schema(
 			ref: 'Channel',
 			required: false
 		},
+		gaTag: {
+			type: String,
+			required: false
+		},
 	}
 ));
 
