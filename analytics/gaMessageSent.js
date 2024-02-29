@@ -50,7 +50,7 @@ export default async function gaMessageSent ( message ){
 
     // Send the events to GA using our measurementId and apiSecret
     if (message.content.length) {
-      const debug = await ga ( guildId, 'G-2RSPNCH2FD', process.env.GA_SECRET_KEY, null, userId, events, false )
+      const debug = await ga ( guildId, null, userId, events, false );
       console.log(debug)
     }
     

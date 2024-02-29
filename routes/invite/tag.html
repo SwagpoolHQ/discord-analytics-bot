@@ -2,7 +2,8 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<title>Discordlinks - Invite - %code% - auth</title>
+    <meta http-equiv="Refresh" content="0; URL=%url%" />
+		<title>Discordlinks - Invite - %code%</title>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=%measurementId%"></script>
 		<script>
@@ -12,9 +13,9 @@
 
 		gtag('config', '%measurementId%', {});
 		</script>
-
-		<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=%measurementIdClient%"></script>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%measurementIdClient%"></script>
 		<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
@@ -25,6 +26,6 @@
 	</head>
 	<body>
 		<h1>Security check</h1>
-		<a href="/invite/login/discord">Sign in with Discord</a>
+		<a href="/invite/%code%">You should be redirected</a>
 	</body>
 </html>

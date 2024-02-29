@@ -7,10 +7,7 @@
     "start": "node ./bin/www.js"
   },
   "dependencies": {
-    "@analytics/google-analytics": "^1.0.7",
-    "@analytics/google-tag-manager": "^0.5.5",
     "@lucia-auth/adapter-mongodb": "^1.0.2",
-    "analytics": "^0.8.11",
     "arctic": "^1.1.6",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
