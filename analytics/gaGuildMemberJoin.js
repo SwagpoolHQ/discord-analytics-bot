@@ -15,7 +15,7 @@ export default async function gaGuildMemberJoin ( member, inviteCode ){
   console.log('guildId', guildId)
 
   // clientId is mandatory for GA to work properly
-  const clientId = invite?.clientId ? invite?.clientId : "unknown";
+  const clientId = invite?.clientId ? invite?.clientId : null ;
 
   // A queue to batch our events
 	const events = [];
