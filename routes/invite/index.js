@@ -56,6 +56,8 @@ inviteRouter.get('/:code', async function(req, res, next) {
 
     } else {
 
+      // WARNING => Should I redirect user in frontend or backend here ?
+
       console.log('gaTag: ', guildFromDb.gaTag )
       // INIT GOOGLE ANALYTIC IF NO GOOGLE ANALYTICS CLIENT_ID FOUND IN COOKIES
       const gaClientCookieCode = guildFromDb.gaTag?.replace(/^G\-/, ''); //enlever le prefix G- de guildFromDb.gaTag 

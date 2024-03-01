@@ -95,7 +95,6 @@ await client.login(token);
 
 //returns the client created to be used in routes or other modules
 return client;
-// ACCESSING THE CLIENT BY CALLING THIS FUNCTION DOESN'T SEEM TO BE WORKING !!! TO CHECK
 
 }
 

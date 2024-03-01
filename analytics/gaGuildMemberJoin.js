@@ -4,15 +4,10 @@ import Invite from '../mongodb/models/invites.js'
 export default async function gaGuildMemberJoin ( member, inviteCode ){
 
   console.log( 'member: ', member );
-  const userId = member.user.id;
-  const guildId = member.guild.id;
 
   // SHOULD BE RETRIEVED FROM CACHE
   const invite = await Invite.findOne({ code : inviteCode });
-
   console.log('invite: ', invite)
-  console.log('userId', userId)
-  console.log('guildId', guildId)
 
   // clientId is mandatory for GA to work properly
   const clientId = invite?.clientId ? invite?.clientId : null ;
@@ -25,12 +20,12 @@ export default async function gaGuildMemberJoin ( member, inviteCode ){
     //name: 'message_sent',
     name: 'page_view',
     params: {
-      page_title: `discord-landing-${guildId}`, // GET THE LANDING CHANNEL ID
+      page_title: `discord-landing-${member.guild.id}`, // GET THE LANDING CHANNEL ID
       //page_location: `https://discordlinks.com/discord/channel/${message.channelId}`, 
-      page_location: `https://discord.com/landing/${guildId}/${'to-be-defined'}`,
-      guild_id: guildId,
+      page_location: `https://discord.com/landing/${member.guild.id}/${'to-be-defined'}`,
+      guild_id: member.guild.id,
       channel_id:  'to-be-defined', // GET THE LANDING CHANNEL ID
-      //raw_url: `https://discord.com/channels/${guildId}/${channelId}`,
+      //raw_url: `https://discord.com/channels/${member.guild.id}/${channelId}`,
       //language: "en",
       //page_referrer: "apple.com",
       //screen_resolution: ""
@@ -43,9 +38,9 @@ export default async function gaGuildMemberJoin ( member, inviteCode ){
     //name: 'message_sent',
     name: 'guild_member_join',
     params: {
-      page_title: `discord-landing-${guildId}`, // GET THE LANDING CHANNEL ID
-      page_location: `https://discord.com/landing/${guildId}/${'to-be-defined'}`, 
-      guild_id: guildId,
+      page_title: `discord-landing-${member.guild.id}`, // GET THE LANDING CHANNEL ID
+      page_location: `https://discord.com/landing/${member.guild.id}/${'to-be-defined'}`, 
+      guild_id: member.guild.id,
       channel_id:  'to-be-defined', // GET THE LANDING CHANNEL ID
       //language: "en",
       //page_referrer: "apple.com",
@@ -57,7 +52,7 @@ export default async function gaGuildMemberJoin ( member, inviteCode ){
   console.log("events: ", events);
 
   // Send the events to GA using our measurementId and apiSecret
-  const debug = await ga ( guildId, clientId, userId, events, false )
+  const debug = await ga ( member.guild.id , clientId, member.user, events, false )
   console.log(debug)
     
 }

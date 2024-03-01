@@ -42,6 +42,10 @@ new mongodb.Schema(
 			type: String,
 			required: false
 		},
+		gaApiKey: {
+			type: String,
+			required: false
+		},
 	}
 ));
 

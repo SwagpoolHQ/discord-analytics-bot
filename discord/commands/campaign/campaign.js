@@ -30,17 +30,16 @@ export const command = {
 			subcommand
                 .setName('new')
 				.setDescription("Create a new campaign")
-                .addChannelOption( option =>
-                    option
-                        .setName('channel')
-                        .setDescription('Select the onboarding channel')
-                        .addChannelTypes(ChannelType.GuildText)
-                        .setRequired(true))
                 .addStringOption( option =>
                     option
                         .setName('name')
                         .setDescription('Set new campaign name')
                         .setRequired(true))
+                .addStringOption( option =>
+                    option
+                        .setName('desc')
+                        .setDescription('Set new campaign description')
+                        .setRequired(false))
                 )
         .addSubcommand( subcommand =>
 			subcommand
@@ -201,17 +200,17 @@ export const command = {
             let campaignData
             if (interaction.options.getSubcommand() === 'new') {
 
-                try {
                     // Get the parameters
                     const campaignName = interaction.options.getString('name') ?? null;
-                    const channel = interaction.options.getChannel('channel') ?? null;
+                    const campaignDesc = interaction.options.getString('desc') ?? null;
 
-                    const campaignFromDB = await createCampaign (interaction.member, campaignName, channel);
+                    // Create the campaign
+                    const campaignFromDB = await createCampaign (interaction.member, campaignName, campaignDesc );
 
-                    if(campaignFromDB.status == 200){
+                    // Display the result
+                    if( campaignFromDB ){
                         // Get the campaign data
-                        const campaignId = campaignFromDB.campaign.id;
-                        campaignData = await getCampaignData( campaignId );
+                        campaignData = await getCampaignData( campaignFromDB.id );
                         campaignEmbed = await createCampaignAnalyticsEmbed( campaignData );
                         
                         messageSent = await interaction.editReply({ 
@@ -221,29 +220,13 @@ export const command = {
                         }); // edit the 1st response message
                         // Start listening to clicks
                         await waitingForClick(messageSent);
-                    } else if (campaignFromDB.status == 500) {
-                        messageSent = await interaction.editReply({ 
-                            content: campaignFromDB.message,
-                            embeds: [],
-                            components: [],
-                        }); // edit the 1st response message
                     } else {
                         messageSent = await interaction.editReply({ 
-                            content: `an error happened `,
+                            content: "⚠️ Error - Campaign creation failed",
                             embeds: [],
                             components: [],
                         }); // edit the 1st response message
                     }
-                } catch (e) {
-                    console.error('Campaign creation failed', e)
-                    messageSent = await interaction.editReply({ 
-                        content: `⚠️ Campaign creation failed`,
-                        embeds: [],
-                        components: [],
-                    }); // edit the 1st response message
-                    return
-                }
-                
             } else if (interaction.options.getSubcommand() === 'stats') {
 
                 // Get the parameters
