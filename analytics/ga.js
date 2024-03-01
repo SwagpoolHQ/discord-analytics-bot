@@ -1,6 +1,7 @@
 import { createHash } from 'crypto'
 import Guild from '../mongodb/models/guilds.js'
 import discordToMongoId from '../mongodb/utils/idConversion/discordToMongoId.js';
+import getUserRoles from '../discord/utils/getUserRoles.js';
 
 export default async function ga ( guildId, clientId, user, events, debug = false ) {
 
@@ -10,6 +11,16 @@ export default async function ga ( guildId, clientId, user, events, debug = fals
 
     // HASH user.id for privacy protection => SHOULD ADD: Salt at bot level !
     const memberIdforGA = createHash("sha256").update( user?.id ).digest('base64');
+
+    // GET member roles
+    const memberRoles = await getUserRoles( guildId, user.id );
+    const roles = {};
+    for ( let i = 0; i < Math.min(memberRoles.length, 20); i++ ){
+        const gaRole = `role_${memberRoles[i]}`;
+        const cleanedGaRole = gaRole.replace(/[^a-zA-Z0-9_]/g, '');
+        roles[ cleanedGaRole ] = { value: true };
+    }
+    console.log('roles: ', roles)
 
     // SET core & client analytics parameters
     const measurementId = process.env.GA_MEASUREMENT_ID;
@@ -31,6 +42,7 @@ export default async function ga ( guildId, clientId, user, events, debug = fals
                 body: JSON.stringify({
                     client_id: clientId ? clientId : memberIdforGA,
                     user_id: memberIdforGA,
+                    user_properties: { ...roles },
                     /*user_properties: {
                         member_status: {
                         value: "OG"
@@ -39,7 +51,7 @@ export default async function ga ( guildId, clientId, user, events, debug = fals
                     events
                 })
             });
-            console.log('ga fired', queryUrl + queryParams);
+            console.log('ga fired for', measurementId);
         } else {
             console.error(`GA parameters missing from .ENV => GA_MEASUREMENT_ID: ${ !!measurementId ? '✅' : '❌' }, GA_SECRET_KEY: ${ !!apiSecret ? '✅' : '❌' }.`)
         }
@@ -50,6 +62,7 @@ export default async function ga ( guildId, clientId, user, events, debug = fals
                 body: JSON.stringify({
                     client_id: clientId ? clientId : memberIdforGA,
                     user_id: memberIdforGA,
+                    user_properties: { ...roles },
                     /*user_properties: {
                         member_status: {
                           value: "OG"
@@ -58,7 +71,7 @@ export default async function ga ( guildId, clientId, user, events, debug = fals
                     events
                 })
             });
-        console.log('ga fired', queryUrl + queryParamsClient);
+        console.log('ga fired for', guildFromDb?.gaTag );
         } else {
             console.error(`GA parameters missing for guildId: ${guildId} => gaTag: ${ !!guildFromDb?.gaTag ? '✅' : '❌' }, gaApiKey: ${ !!guildFromDb?.gaApiKey ? '✅' : '❌' }.`)
         }
@@ -69,16 +82,17 @@ export default async function ga ( guildId, clientId, user, events, debug = fals
             body: JSON.stringify({
                 client_id: clientId ? clientId : memberIdforGA,
                 user_id: memberIdforGA,
-                user_properties: {
-                    member_status: {
-                      value: "OG"
+                user_properties: { ...roles },
+                /*user_properties: {
+                    property: {
+                      value: value
                     }
-                  },
+                  },*/
                 events
             })
         });
         const jsonResponse = await response.json();
-        console.log('ga fired in debug', queryUrl + queryParams)
+        console.log('ga fired in debug for', measurementId)
         return jsonResponse
     }
 }

@@ -5,7 +5,7 @@ import discordToMongoId from '../../mongodb/utils/idConversion/discordToMongoId.
 export const event = {
 	name: Events.GuildMemberRemove,
 	async execute(member) {
-
+    try {
         const memberFromDb = await Member.findOne({ guild: discordToMongoId(member.guild.id), user: discordToMongoId(member.user.id) })
         if (memberFromDb){
   
@@ -25,5 +25,8 @@ export const event = {
         }
   
         console.log(`${member.user.username} left ${member.guild.name}`)
+    } catch (e) {
+      console.warn('Error on guildMemberRemove event: ', e);
+    }
 	},
 };

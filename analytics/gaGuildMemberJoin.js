@@ -49,8 +49,6 @@ export default async function gaGuildMemberJoin ( member, inviteCode ){
     },
   });
 
-  console.log("events: ", events);
-
   // Send the events to GA using our measurementId and apiSecret
   const debug = await ga ( member.guild.id , clientId, member.user, events, false )
   console.log(debug)

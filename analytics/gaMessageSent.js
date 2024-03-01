@@ -45,13 +45,9 @@ export default async function gaMessageSent ( message ){
       },
     });
 
-    console.log(message)
-    console.log("events: ", events);
-
     // Send the events to GA using our measurementId and apiSecret
     if (message.content.length) {
       const debug = await ga ( guildId, null, message.author, events, false );
-      console.log(debug)
+      console.log('debug: ', debug)
     }
-    
 }

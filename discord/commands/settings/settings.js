@@ -115,6 +115,7 @@ export const command = {
             // Get the parameters
             const gaTag = interaction.options.getString('tag-id') ?? null;
             const apiSecret = interaction.options.getString('api-secret') ?? null;
+            const apiSecretMasked = apiSecret ? `${apiSecret.slice(0, 2)}...${apiSecret.slice(-3)}` : null;
             
             /// UPDATE ONBOARDING CHANNEL IN DB
             if (gaTag && apiSecret){
@@ -126,7 +127,7 @@ export const command = {
                 if (guildUpdate?.modifiedCount) {
 
                     interaction.editReply({
-                        content: `✅ Google Analytics config for ${interaction.guild.name} updated. ga-tag: ${gaTag} - api-secret: ${apiSecret}`,
+                        content: `✅ Google Analytics config for ${interaction.guild.name} updated. ga-tag: ${gaTag} - api-secret: ${apiSecretMasked}`,
                         embeds: [ ],
                         components: [ ],
                     }); // edit the 1st response message

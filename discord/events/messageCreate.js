@@ -8,22 +8,25 @@ import gaMessageSent from '../../analytics/gaMessageSent.js'
 export const event = {
 	name: Events.MessageCreate,
 	async execute(message) {
+    try {
+      // Sending a message_sent event to Google Analytics
+      gaMessageSent( message );
 
-    // Sending a message_sent event to Google Analytics
-    gaMessageSent( message );
-
-    // Only save messages when Member is saved in DB
-    const memberFromDb = await Member.findOne({ user: discordToMongoId(message.author.id), guild: discordToMongoId(message.guild.id) })
-       
-    if(memberFromDb){
-
-      const savedMessage = await saveMessage(message);
-
-      // To delete later
-      console.log('saved message: ', savedMessage._id)
+      // Only save messages when Member is saved in DB
+      const memberFromDb = await Member.findOne({ user: discordToMongoId(message.author.id), guild: discordToMongoId(message.guild.id) })
         
-    } else {
-        console.log(`Author NOT found in db for message: ${message.content}`)
+      if(memberFromDb){
+
+        const savedMessage = await saveMessage(message);
+
+        // To delete later
+        console.log('saved message: ', savedMessage._id)
+          
+      } else {
+          console.log(`Author NOT found in db for message: ${message.content}`)
+      }
+    } catch (e) {
+      console.warn('Error on messageCreate event: ', e);
     }
 	},
 };
