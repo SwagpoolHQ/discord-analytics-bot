@@ -20,9 +20,6 @@ export const event = {
       // Sending a message_sent event to Google Analytics
       gaMessageReactionAdd( messageReaction, user );
 
-      console.log( 'messageReaction', messageReaction );
-      console.log( 'user', user)
-
     } catch (e) {
       console.warn('Error on messageReactionAdd event: ', e);
     }
