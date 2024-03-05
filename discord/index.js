@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path'
-import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
+import { Client, Collection, Partials, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
 dotenv.config();
 import { fileURLToPath } from 'url';
@@ -28,12 +28,21 @@ const __dirname = path.dirname(__filename);
 const token = process.env.DISCORD_BOT_SECRET;
 
 client = new Client({
+	partials: [
+		Partials.Message,
+		//Partials.Channel,
+		Partials.Reaction,
+		//Partials.User,
+		// Add partials here
+	],
     intents: [
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildMessages,
       GatewayIntentBits.MessageContent,
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildInvites,
+	  GatewayIntentBits.GuildMessageReactions,
+	  GatewayIntentBits.GuildPresences,
       // Add intents here
     ],
   });

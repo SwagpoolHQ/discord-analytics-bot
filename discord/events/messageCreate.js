@@ -9,6 +9,9 @@ export const event = {
 	name: Events.MessageCreate,
 	async execute(message) {
     try {
+
+      if (message.partial) { await message.fetch() }; // Make sure the message is fully loaded
+
       // Sending a message_sent event to Google Analytics
       gaMessageSent( message );
 
