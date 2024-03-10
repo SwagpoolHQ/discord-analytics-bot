@@ -2,7 +2,7 @@
 ![Github Cover - GA - card](https://github.com/SwagpoolHQ/Google-analytics-bot/assets/112695921/4a691ab9-cced-4618-a024-b8653c58ea6d)
 
 # About
-A bot to connect Google Analytics to your Discord server.
+A bot to add Google Analytics on your Discord server.
 
 
 ## Documentation
