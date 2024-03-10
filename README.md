@@ -1,11 +1,12 @@
-![Github Cover card](https://github.com/SwagpoolHQ/contribution-tracker/assets/112695921/1419baec-9034-4943-9ac8-71ec7596da3b)
 
-# Contribution tracker bot
-Open-source bot for Discord teams 
+![Github Cover card](https://github.com/SwagpoolHQ/Google-analytics-for-Discord/assets/112695921/1ad6a0df-21a2-4adc-bcaf-8c4ae2c05b2b)
+
+# About
+A bot to connect Google Analytics to your Discord server.
 
 
-## Setup 
-TBD
+## Documentation
+https://docs.discordlinks.com
 
 ## Todo
 
@@ -16,6 +17,6 @@ TBD
 - [ ] Members interaction score  
 - [ ] Community managers leaderboard  
 
-## Contribute
+## Contact
 
-You can get in touch by joining our Discord : [Swagpool Discord](https://discordlinks.me/gSojUYBK)
+Support and feedback : [join our Discord](https://discordlinks.me/gSojUYBK)
