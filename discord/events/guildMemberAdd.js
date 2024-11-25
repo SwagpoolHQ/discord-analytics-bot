@@ -1,11 +1,11 @@
 import { Events } from 'discord.js';
 import cleanCampaignsCache from '../utils/cleanCampaignsCache.js'
 import saveMemberOnJoin from '../../mongodb/utils/saveMemberOnJoin.js';
-import gaGuildMemberJoin from '../../analytics/gaGuildMemberJoin.js'
+import debug from 'debug';
 
 export const event = {
-	name: Events.GuildMemberAdd,
-	async execute(member) {
+      name: Events.GuildMemberAdd,
+      async execute(member) {
 
             try {
                   //---------------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ export const event = {
                   const oldInvites = member.client.invites.get(member.guild.id);
                   // Look through the invites, find the one for which the uses went up.
                   const inviteUsed = newInvites.find(i => i.uses > oldInvites.get(i.code)?.uses); // <-- InvitedUsed should be managed with a filter to get an Array and manage the case of multiple matches
-                  
+
                   const codesUsed = [];
                   const deletedInvites = [];
 
@@ -31,18 +31,18 @@ export const event = {
                         codesUsed.push(inviteUsed.code);
 
                         // Update cache on new invites
-                        oldInvites.set(inviteUsed.code, { uses: inviteUsed.uses, maxUses: inviteUsed.maxUses , maxAge: inviteUsed.maxAge });
+                        oldInvites.set(inviteUsed.code, { uses: inviteUsed.uses, maxUses: inviteUsed.maxUses, maxAge: inviteUsed.maxAge });
 
                         // If oldInvite is flagged "deleted", add to deletedInvites array for hard deletion
-                        for (const code of oldInvites.keys()){
+                        for (const code of oldInvites.keys()) {
                               const deletedAtTimestamp = oldInvites.get(code).deletedAtTimestamp;
-                              if ( deletedAtTimestamp ){
-                                    deletedInvites.push({ code , deletedAtTimestamp });
+                              if (deletedAtTimestamp) {
+                                    deletedInvites.push({ code, deletedAtTimestamp });
                               }
                         };
                   } else {
                         // If invite not found, checking for a missing (=deleted) invite in newInvites
-                        for (const code of oldInvites.keys()){
+                        for (const code of oldInvites.keys()) {
                               // Differences between old and new invites list is caused by:
                               // Manually deleted invites. They are flagged in cache through the event "inviteDelete" => SKIP AND REMOVE FROM CACHE
                               // Automatically deleted invites. They don't generate an "inviteDelete" event.
@@ -52,14 +52,14 @@ export const event = {
 
                               const deletedAtTimestamp = oldInvites.get(code).deletedAtTimestamp;
                               const _expiresTimestamp = oldInvites.get(code)._expiresTimestamp;
-                              const now = (new Date()).getTime() ;
+                              const now = (new Date()).getTime();
 
-                              if ( deletedAtTimestamp ){ // NOT THIS ONE. Missing from newInvites because invite has been manually deleted
-                                    deletedInvites.push({ code , deletedAtTimestamp }) // => SKIP AND PREPARED TO BE REMOVED FROM CACHE
-                              } else if ( _expiresTimestamp < now ){ // NOT THIS ONE. Missing from newInvites because invite has expired and been automatically deleted
-                                    deletedInvites.push({ code , deletedAtTimestamp: _expiresTimestamp, expired: true }) // => SKIP AND PREPARED TO BE REMOVED FROM CACHE
-                              } else if ( !newInvites.find(i => i.code == code ) ){ // CAN BE ANY OF THESE ONE. Missing from newInvites because (most probable) invite has reached last use and been automatically deleted
-                                    codesUsed.push(code); 
+                              if (deletedAtTimestamp) { // NOT THIS ONE. Missing from newInvites because invite has been manually deleted
+                                    deletedInvites.push({ code, deletedAtTimestamp }) // => SKIP AND PREPARED TO BE REMOVED FROM CACHE
+                              } else if (_expiresTimestamp < now) { // NOT THIS ONE. Missing from newInvites because invite has expired and been automatically deleted
+                                    deletedInvites.push({ code, deletedAtTimestamp: _expiresTimestamp, expired: true }) // => SKIP AND PREPARED TO BE REMOVED FROM CACHE
+                              } else if (!newInvites.find(i => i.code == code)) { // CAN BE ANY OF THESE ONE. Missing from newInvites because (most probable) invite has reached last use and been automatically deleted
+                                    codesUsed.push(code);
                               }
                         };
 
@@ -76,30 +76,30 @@ export const event = {
                         // => Most probable option : invite used is among the expired invites.
                         // => Let's look for the newest expired invite.
 
-                        if ( !codesUsed[0] && deletedInvites[0] ){
-                              deletedInvites.sort( (a,b) => b.deletedAtTimestamp - a.deletedAtTimestamp )
-                              const expiredInvites = deletedInvites.filter( item => item.expired );
-                              if ( expiredInvites[0] ){
+                        if (!codesUsed[0] && deletedInvites[0]) {
+                              deletedInvites.sort((a, b) => b.deletedAtTimestamp - a.deletedAtTimestamp)
+                              const expiredInvites = deletedInvites.filter(item => item.expired);
+                              if (expiredInvites[0]) {
                                     codesUsed.push(expiredInvites[0].code);
                               } else {
                                     codesUsed.push(deletedInvites[0].code); // NOT SURE THIS MAKE SENS
                               }
                         };
-                  }    
-                  
+                  }
+
                   // Log if more than one invite found
-                  if (codesUsed.length < 1){
+                  if (codesUsed.length < 1) {
                         console.log(`ERROR - No invite code found for ${member.user.username} in ${member.guild.name}`)
                   }
 
                   // Deleting obsolete invites from client.invites cache
-                  for (const deletedInvite of deletedInvites){
-                        oldInvites.delete(deletedInvite.code); 
+                  for (const deletedInvite of deletedInvites) {
+                        oldInvites.delete(deletedInvite.code);
                   }
 
                   // Deleting obsolete invites from client.campaign cache
                   try {
-                        cleanCampaignsCache( member.guild );
+                        cleanCampaignsCache(member.guild);
                   } catch (e) {
                         console.log(`error while clean client.campaigns cache for ${member.guild.id}`, e);
                   }
@@ -114,27 +114,19 @@ export const event = {
                   // in the scenario were the user is authenticated, the invites (many!) created have a forJoiner field.
                   // the invites forJoiner are single use => they will be missing from newInvites if used.
 
-                  console.log( 'member joined using invite', codesUsed[0], 'for',  member.user.name )
-
-                  //---------------------------------------------------------------------------------------------------------
-                  //
-                  //              FIRING A GUILD_MEMBER_JOIN GOOGLE ANALYTICS EVENT 
-                  //
-                  //---------------------------------------------------------------------------------------------------------
-
-                  gaGuildMemberJoin( member, codesUsed[0] );
+                  console.log('member joined using invite', codesUsed[0], 'for', member.user.name)
 
                   //---------------------------------------------------------------------------------------------------------
                   //
                   //              SAVING THE NEW MEMBER IN DB 
                   //
                   //---------------------------------------------------------------------------------------------------------
-            
-                  const savedMember = await saveMemberOnJoin( member, codesUsed[0] );
+
+                  const savedMember = await saveMemberOnJoin(member, codesUsed[0]);
 
                   //logChannel.send(`${member.user.tag} joined using invite code ${invite.code} from ${inviter.tag}. Invite was used ${invite.uses} times since its creation.`)
-            
-            } catch(e) {
+
+            } catch (e) {
                   console.warn('Error on join event: ', e);
             }
       },

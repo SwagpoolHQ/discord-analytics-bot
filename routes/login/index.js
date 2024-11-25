@@ -12,6 +12,5 @@ loginRouter.get("/login", async (_, res) => {
 	}
 	const htmlFile = await fs.readFile("routes/login/index.html");
 	let template = htmlFile.toString("utf-8");
-    template = template.replaceAll("%measurementId%", process.env.GA_MEASUREMENT_ID );
 	return res.setHeader("Content-Type", "text/html").status(200).send(template);
 });

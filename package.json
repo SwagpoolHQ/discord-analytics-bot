@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www.js"
+    "start": "node ./bin/www.js",
+    "deploy-commands": "node discord/deploy-commands.js"
   },
   "dependencies": {
     "@lucia-auth/adapter-mongodb": "^1.0.2",

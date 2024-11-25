@@ -1,5 +1,5 @@
 import discordClient from "../../discord/index.js";
-
+import debug from 'debug';
 export default async function getUserRoles(guildId, userId) {
 
     // Check DiscordJS beginners guide => https://anidiots.guide/understanding/roles/

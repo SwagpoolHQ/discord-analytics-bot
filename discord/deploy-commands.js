@@ -1,12 +1,22 @@
 import { REST, Routes } from 'discord.js';
-//require('dotenv').config()
-
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import debug from 'debug';
+// Configure dotenv to load .env file
+dotenv.config();
 
 const token = process.env.DISCORD_BOT_SECRET;
 const clientId = process.env.DISCORD_CLIENT_ID;
+
+// Verify tokens are loaded
+if (!token || !clientId) {
+	console.error('Missing required environment variables:');
+	if (!token) console.error('- DISCORD_BOT_SECRET');
+	if (!clientId) console.error('- DISCORD_CLIENT_ID');
+	process.exit(1);
+}
 
 const commands = [];
 //Create __dirname

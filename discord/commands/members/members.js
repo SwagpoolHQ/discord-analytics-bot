@@ -1,11 +1,11 @@
 import {
-    time, 
-    userMention, 
-    SlashCommandBuilder, 
-    EmbedBuilder, 
-    ActionRowBuilder, 
-    ButtonBuilder, 
-    ButtonStyle, 
+    time,
+    userMention,
+    SlashCommandBuilder,
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
 } from 'discord.js';
 
 import getReferrers from '../../../mongodb/utils/getReferrers.js';
@@ -14,80 +14,81 @@ import getGuildIconURL from '../../utils/getGuildIconURL.js';
 import getSwagpoolIconURL from '../../utils/getSwagpoolIconURL.js';
 import checkBotPermissions from '../../utils/checkBotPermissions.js';
 import permissionsRequired from '../../config/permissionsRequired.js';
+import debug from 'debug';
 
 const commandChoices = [
-        { name: 'Last 1D', value: '1' },
-        { name: 'Last 7D', value: '7' },
-        { name: 'Last 1M', value: '30' },
-        { name: 'Last 3M', value: '90' },
-    ];
+    { name: 'Last 1D', value: '1' },
+    { name: 'Last 7D', value: '7' },
+    { name: 'Last 1M', value: '30' },
+    { name: 'Last 3M', value: '90' },
+];
 
 export const command = {
-	cooldown: 5,
-	data: new SlashCommandBuilder()
-		.setName('members')
-		.setDescription('View community leaderboards')
+    cooldown: 5,
+    data: new SlashCommandBuilder()
+        .setName('members')
+        .setDescription('View community leaderboards')
         //.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-	    .setDMPermission(false)
-        .addSubcommandGroup( subcommandgroup =>
+        .setDMPermission(false)
+        .addSubcommandGroup(subcommandgroup =>
             subcommandgroup
                 .setName('top')
                 .setDescription('select leaderboard')
-                .addSubcommand( subcommand =>
+                .addSubcommand(subcommand =>
                     subcommand
                         .setName('referrers')
                         .setDescription('View referrals leaderboard')
-                        .addStringOption( option =>
+                        .addStringOption(option =>
                             option
                                 .setName('period')
                                 .setDescription('Select a time period')
-                                .addChoices( ...commandChoices )
+                                .addChoices(...commandChoices)
                                 .setRequired(true))
-                        )
-                .addSubcommand( subcommand =>
+                )
+                .addSubcommand(subcommand =>
                     subcommand
                         .setName('contributors')
                         .setDescription('View contributions leaderboard')
-                        .addStringOption( option =>
+                        .addStringOption(option =>
                             option
                                 .setName('period')
                                 .setDescription('Select a time period')
-                                .addChoices( ...commandChoices )
+                                .addChoices(...commandChoices)
                                 .setRequired(true))
-                        )  
-            )
-        ,
-	async execute(interaction) {
+                )
+        )
+    ,
+    async execute(interaction) {
 
         // Checking bot permissions to track invites
-        const permissionsCheck = checkBotPermissions( interaction.guild, permissionsRequired.inviteTracker);
+        const permissionsCheck = checkBotPermissions(interaction.guild, permissionsRequired.inviteTracker);
         let warningMessage = '';
-        if( !permissionsCheck.result) {
-            warningMessage=`WARNING: [${permissionsCheck.missing}] permissions are missing to track member referrals.\n`;
+        if (!permissionsCheck.result) {
+            warningMessage = `WARNING: [${permissionsCheck.missing}] permissions are missing to track member referrals.\n`;
         };
 
         await interaction.deferReply({ ephemeral: true }); // answers within the 3s. Displays: "thinking" 
 
         // Get the period parameter
-        let period = await interaction.options.getString('period') ?? null ;
+        let period = await interaction.options.getString('period') ?? null;
         // Get the guild icon URL
-        const guildIconURL = getGuildIconURL( interaction.guild.id, interaction.guild.icon );
+        const guildIconURL = getGuildIconURL(interaction.guild.id, interaction.guild.icon);
         // Get the swagpool icon URL
         const swagpoolAvatarURL = getSwagpoolIconURL();
 
         // Create function to create the top referrers leaderboard's embed message
         const leaderboardForReferrals = async (periodNbOfDays) => {
 
-            const periodName = commandChoices.find( item => item.value == periodNbOfDays ).name;
+            const periodName = commandChoices.find(item => item.value == periodNbOfDays).name;
 
             // Computing the start & end timestamps for the required period
             const endTimestamp = new Date().getTime(); // this is now
-            const startTimestamp  = endTimestamp - periodNbOfDays * 24 * 60 * 60 * 1000; // The last "period" days in millisecondes from now.
+            const startTimestamp = endTimestamp - periodNbOfDays * 24 * 60 * 60 * 1000; // The last "period" days in millisecondes from now.
             // Convert the startTimestamp to a Date object
-            const startDate = new Date( startTimestamp );
+            const startDate = new Date(startTimestamp);
 
             // get the referralPeriod data
-            const referralPeriod = await getReferrers( interaction.guild.id, startTimestamp, endTimestamp );
+            const referralPeriod = await getReferrers(interaction.guild.id, startTimestamp, endTimestamp);
             const averageReferrals = referralPeriod.totalReferrers ? (referralPeriod.totalJoiners / referralPeriod.totalReferrers).toFixed(1) : '--';
 
             //console.log('referralPeriod', referralPeriod );
@@ -97,12 +98,13 @@ export const command = {
                 .setColor('White')
                 .setTitle(`Top referrers leaderboard`)
                 //.setURL('https://discord.js.org/') // Go to web profile page
-                .setAuthor({ 
-                    name: interaction.guild.name, 
-                    iconURL: guildIconURL, 
-                    /*url: 'https://discord.js.org'*/ }) // Go to private channel chat for team members
+                .setAuthor({
+                    name: interaction.guild.name,
+                    iconURL: guildIconURL,
+                    /*url: 'https://discord.js.org'*/
+}) // Go to private channel chat for team members
                 .setDescription(`${periodName} period ( started ${time(startDate, 'd')} ) \n\n-`)
-                .setThumbnail( guildIconURL )
+                .setThumbnail(guildIconURL)
                 .addFields(
                     { name: 'Players', value: `${referralPeriod.totalReferrers}\n------------------\n`, inline: true },
                     { name: 'Joiners', value: `${referralPeriod.totalJoiners}\n------------------\n`, inline: true },
@@ -171,27 +173,27 @@ export const command = {
                     const channel = await interaction.client.channels.fetch(clickedButton.channelId);
                     // CREATE A WEBHOOK TO SEND MESSAGE AS THE USER --> https://discordjs.guide/popular-topics/webhooks.html#using-webhooks
 
-                    await clickedButton.update({ 
-                        content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}`, 
+                    await clickedButton.update({
+                        content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}`,
                         embeds: [],
                         components: []
                     });
-                    await channel.send({ 
+                    await channel.send({
                         content: `Sent by ${userMention(interaction.user.id)}`,
                         embeds: [activeEmbed],
                         components: [],
                     });
                 } else {
-                    activeEmbed =  await leaderboardForReferrals(clickedButton.customId);
-                    newMessageSent = await clickedButton.update({ 
+                    activeEmbed = await leaderboardForReferrals(clickedButton.customId);
+                    newMessageSent = await clickedButton.update({
                         content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
-                        embeds: [ activeEmbed ],
-                        components: [ await actionRow(clickedButton.customId) ],
+                        embeds: [activeEmbed],
+                        components: [await actionRow(clickedButton.customId)],
                     });
                     await waitingForClick(newMessageSent);
-                } 
+                }
             } catch (e) {
-                await interaction.editReply({ content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}\n💡 Buttons deactivate after 1 minute`,embeds: [activeEmbed], components: [] });
+                await interaction.editReply({ content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}\n💡 Buttons deactivate after 1 minute`, embeds: [activeEmbed], components: [] });
             }
         }
 
@@ -199,18 +201,18 @@ export const command = {
         let messageSent;
         let activeEmbed;
         if (interaction.options.getSubcommand() === 'referrers') {
-            activeEmbed =  await leaderboardForReferrals(period);
+            activeEmbed = await leaderboardForReferrals(period);
             messageSent = await interaction.editReply({
                 content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
-                embeds: [ activeEmbed ],
-                components: [ await actionRow(period) ],
+                embeds: [activeEmbed],
+                components: [await actionRow(period)],
             }); // edit the 1st response message
 
             // Start listening to clicks
             await waitingForClick(messageSent);
 
-		} else if (interaction.options.getSubcommand() === 'contributors') {
+        } else if (interaction.options.getSubcommand() === 'contributors') {
             await interaction.editReply(`Coming soon. You will be able to view the top contributors leaderboard.`);
-		}
-	},
+        }
+    },
 };

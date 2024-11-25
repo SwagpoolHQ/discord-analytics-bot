@@ -1,8 +1,8 @@
+import debug from 'debug';
 
-
-export default async function gaBrowser ( measurementIds, eventsRawModel ) {
-    // 	console.log(props);
-    // APP+WEB Endpoint
+export default async function gaBrowser(measurementIds, eventsRawModel) {
+	// 	console.log(props);
+	// APP+WEB Endpoint
 	const endPoint = 'https://www.google-analytics.com/g/collect';
 
 	// Base Event Model for Web Hit
@@ -25,7 +25,7 @@ export default async function gaBrowser ( measurementIds, eventsRawModel ) {
 		_fv: false,
 		seg: '1',
 	}
-	
+
 	// A queue to batch our events
 	const events = [];
 
@@ -58,18 +58,18 @@ export default async function gaBrowser ( measurementIds, eventsRawModel ) {
 		if (events.length === 1) {
 			Object.assign(eventModel, events[0]);
 		} else {
-			requestBody = events.map(function(e) {
-				return (Object.keys(e).map(key=>key + '=' + e[key]).join('&'));
+			requestBody = events.map(function (e) {
+				return (Object.keys(e).map(key => key + '=' + e[key]).join('&'));
 			}).join("\n");
 		}
-		const requestQueryString = Object.keys(eventModel).map(key=>key + '=' + encodeURIComponent(eventModel[key])).join('&');
-		
+		const requestQueryString = Object.keys(eventModel).map(key => key + '=' + encodeURIComponent(eventModel[key])).join('&');
+
 		fetch(endPoint + '?' + requestQueryString, {
-		    method: "POST",
+			method: "POST",
 			headers: {
-		    	"Content-Type": "application/x-www-form-url	encoded"
-		  	},
-		    body: requestBody || undefined
-		}).then(()=> console.log(endPoint + '?' + requestQueryString))
+				"Content-Type": "application/x-www-form-url	encoded"
+			},
+			body: requestBody || undefined
+		}).then(() => console.log(endPoint + '?' + requestQueryString))
 	}
 }

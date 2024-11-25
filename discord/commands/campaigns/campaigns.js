@@ -1,10 +1,10 @@
 import {
-    time, 
-    userMention, 
-    SlashCommandBuilder, 
-    EmbedBuilder, 
-    ActionRowBuilder, 
-    ButtonBuilder, 
+    time,
+    userMention,
+    SlashCommandBuilder,
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
     ButtonStyle,
     PermissionFlagsBits,
 } from 'discord.js';
@@ -15,6 +15,7 @@ import checkBotPermissions from '../../utils/checkBotPermissions.js';
 import permissionsRequired from '../../config/permissionsRequired.js';
 import getCampaignsData from '../../../mongodb/utils/getCampaignsData.js';
 import campaignsList from './messages/campaignsList.js';
+import debug from 'debug';
 
 const commandChoices = [
     { name: 'Last 1D', value: '1' },
@@ -24,90 +25,91 @@ const commandChoices = [
 ];
 
 export const command = {
-	cooldown: 5,
-	data: new SlashCommandBuilder()
-		.setName('campaigns')
-		.setDescription("View campaigns' dashboard")
+    cooldown: 5,
+    data: new SlashCommandBuilder()
+        .setName('campaigns')
+        .setDescription("View campaigns' dashboard")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-	    .setDMPermission(false)
-        .addSubcommandGroup( subcommandgroup =>
+        .setDMPermission(false)
+        .addSubcommandGroup(subcommandgroup =>
             subcommandgroup
                 .setName('top')
                 .setDescription("View top campaigns' dashboard")
-                .addSubcommand( subcommand =>
+                .addSubcommand(subcommand =>
                     subcommand
                         .setName('traffic')
                         .setDescription("View top performing campaigns' dashboard")
-                        .addStringOption( option =>
+                        .addStringOption(option =>
                             option
                                 .setName('period')
                                 .setDescription('Select a time period')
-                                .addChoices( ...commandChoices )
+                                .addChoices(...commandChoices)
                                 .setRequired(true))
-                        )  
-            )
-        ,
-	async execute(interaction) {
+                )
+        )
+    ,
+    async execute(interaction) {
 
         // Checking bot permissions to track invites
-        const permissionsCheck = checkBotPermissions( interaction.guild, permissionsRequired.inviteTracker);
+        const permissionsCheck = checkBotPermissions(interaction.guild, permissionsRequired.inviteTracker);
         let warningMessage = '';
-        if( !permissionsCheck.result) {
-            warningMessage=`WARNING: [${permissionsCheck.missing}] permissions are missing to track joiners.\n Campaigns have been switched to authentication required mode\n Referrals are not tracked`;
+        if (!permissionsCheck.result) {
+            warningMessage = `WARNING: [${permissionsCheck.missing}] permissions are missing to track joiners.\n Campaigns have been switched to authentication required mode\n Referrals are not tracked`;
         };
 
         await interaction.deferReply({ ephemeral: true }); // answers within the 3s. Displays: "thinking" 
 
         // Get the parameters
-        const period = await interaction.options.getString('period') ?? { name: null } ;
+        const period = await interaction.options.getString('period') ?? { name: null };
         // Get the guild icon URL
-        const guildIconURL = getGuildIconURL( interaction.guild.id, interaction.guild.icon );
+        const guildIconURL = getGuildIconURL(interaction.guild.id, interaction.guild.icon);
         // Get the swagpool icon URL
         const swagpoolAvatarURL = getSwagpoolIconURL();
 
         // Create function to create the top campaigns leaderboard's embed message
         const campaignsLeaderboard = async (periodNbOfDays) => {
 
-        const periodName = commandChoices.find( item => item.value == periodNbOfDays ).name;
-        const periodWindow = commandChoices.find( item => item.value == periodNbOfDays ).value; // Make sure periodWindow is one of predefined values (avoid injections)
+            const periodName = commandChoices.find(item => item.value == periodNbOfDays).name;
+            const periodWindow = commandChoices.find(item => item.value == periodNbOfDays).value; // Make sure periodWindow is one of predefined values (avoid injections)
 
-        // Computing the start & end timestamps for the required period
-        const endTimestamp = new Date().getTime(); // this is now
-        const startTimestamp  = endTimestamp - periodWindow * 24 * 60 * 60 * 1000; // The last "period" days in millisecondes from now.
-        // Convert the startTimestamp to a Date object
-        const startDate = new Date( startTimestamp );
-////
-        // get the acquisitionPeriod data
-        const acquisitionPeriod = await getCampaignsData( interaction.guild.id, startTimestamp, endTimestamp );
-        console.log('acquisitionPeriod', acquisitionPeriod);
-        const averageAcquisition = acquisitionPeriod.totalCampaigns ? (acquisitionPeriod.totalJoiners / acquisitionPeriod.totalCampaigns).toFixed(1) : '--';
-        //console.log('acquisitionPeriod', acquisitionPeriod );
-////
-        
-        // Create the user profile embed message
-        const campaignsLeaderboardEmbed = new EmbedBuilder()
-            .setColor('White')
-            .setTitle(`Top campaigns`)
-            //.setURL('https://discord.js.org/') // Go to web profile page
-            .setAuthor({ 
-                name: interaction.guild.name, 
-                iconURL: guildIconURL, 
-                /*url: 'https://discord.js.org'*/ }) // Go to private channel chat for team members
-            .setDescription(`${periodName} period ( started ${time(startDate, 'd')} ) \n\n-`)
-            .setThumbnail( guildIconURL )
-            .addFields(
-                { name: 'Campaigns', value: `${acquisitionPeriod.totalCampaigns}\n------------------\n`, inline: true },
-                { name: 'Joiners', value: `${acquisitionPeriod.totalJoiners}\n------------------\n`, inline: true },
-                { name: 'Average', value: `${averageAcquisition}\n------------------\n`, inline: true },
+            // Computing the start & end timestamps for the required period
+            const endTimestamp = new Date().getTime(); // this is now
+            const startTimestamp = endTimestamp - periodWindow * 24 * 60 * 60 * 1000; // The last "period" days in millisecondes from now.
+            // Convert the startTimestamp to a Date object
+            const startDate = new Date(startTimestamp);
+            ////
+            // get the acquisitionPeriod data
+            const acquisitionPeriod = await getCampaignsData(interaction.guild.id, startTimestamp, endTimestamp);
+            console.log('acquisitionPeriod', acquisitionPeriod);
+            const averageAcquisition = acquisitionPeriod.totalCampaigns ? (acquisitionPeriod.totalJoiners / acquisitionPeriod.totalCampaigns).toFixed(1) : '--';
+            //console.log('acquisitionPeriod', acquisitionPeriod );
+            ////
 
-                { name: '\u200B', value: '\u200B' },
-                { name: `Top campaigns`, value: campaignsList(acquisitionPeriod.campaigns) },
+            // Create the user profile embed message
+            const campaignsLeaderboardEmbed = new EmbedBuilder()
+                .setColor('White')
+                .setTitle(`Top campaigns`)
+                //.setURL('https://discord.js.org/') // Go to web profile page
+                .setAuthor({
+                    name: interaction.guild.name,
+                    iconURL: guildIconURL,
+                    /*url: 'https://discord.js.org'*/
+}) // Go to private channel chat for team members
+                .setDescription(`${periodName} period ( started ${time(startDate, 'd')} ) \n\n-`)
+                .setThumbnail(guildIconURL)
+                .addFields(
+                    { name: 'Campaigns', value: `${acquisitionPeriod.totalCampaigns}\n------------------\n`, inline: true },
+                    { name: 'Joiners', value: `${acquisitionPeriod.totalJoiners}\n------------------\n`, inline: true },
+                    { name: 'Average', value: `${averageAcquisition}\n------------------\n`, inline: true },
 
-                { name: '\u200B', value: '\u200B' },
-            )
-            //.setImage('swagpoolAvatarURL') // Graph here
-            .setTimestamp()
-            .setFooter({ text: 'Powered by Swagpool', iconURL: swagpoolAvatarURL });
+                    { name: '\u200B', value: '\u200B' },
+                    { name: `Top campaigns`, value: campaignsList(acquisitionPeriod.campaigns) },
+
+                    { name: '\u200B', value: '\u200B' },
+                )
+                //.setImage('swagpoolAvatarURL') // Graph here
+                .setTimestamp()
+                .setFooter({ text: 'Powered by Swagpool', iconURL: swagpoolAvatarURL });
 
             return campaignsLeaderboardEmbed
         }
@@ -150,7 +152,7 @@ export const command = {
 
             return actionRow;
         }
-        
+
         // Create function to react to clicks
         const waitingForClick = async (messageSent) => {
             const collectorFilter = i => i.user.id === interaction.user.id;
@@ -163,27 +165,27 @@ export const command = {
                     const channel = await interaction.client.channels.fetch(clickedButton.channelId);
                     // CREATE A WEBHOOK TO SEND MESSAGE AS THE USER --> https://discordjs.guide/popular-topics/webhooks.html#using-webhooks
 
-                    await clickedButton.update({ 
-                        content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}`, 
+                    await clickedButton.update({
+                        content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}`,
                         embeds: [],
                         components: []
                     });
-                    await channel.send({ 
+                    await channel.send({
                         content: `Sent by ${userMention(interaction.user.id)}`,
                         embeds: [activeEmbed],
                         components: [],
                     });
                 } else {
-                    activeEmbed =  await campaignsLeaderboard(clickedButton.customId);
-                    newMessageSent = await clickedButton.update({ 
+                    activeEmbed = await campaignsLeaderboard(clickedButton.customId);
+                    newMessageSent = await clickedButton.update({
                         content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
-                        embeds: [ activeEmbed ],
-                        components: [ await actionRow(clickedButton.customId) ],
+                        embeds: [activeEmbed],
+                        components: [await actionRow(clickedButton.customId)],
                     });
                     await waitingForClick(newMessageSent);
-                } 
+                }
             } catch (e) {
-                await interaction.editReply({ content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}\n💡 Buttons deactivate after 1 minute`,embeds: [activeEmbed], components: [] });
+                await interaction.editReply({ content: `❤️ Thank you for using ${userMention(interaction.client.user.id)}\n💡 Buttons deactivate after 1 minute`, embeds: [activeEmbed], components: [] });
             }
         }
 
@@ -191,18 +193,18 @@ export const command = {
         let messageSent;
         let activeEmbed;
         if (interaction.options.getSubcommand() === 'traffic') {
-            activeEmbed =  await campaignsLeaderboard(period);
+            activeEmbed = await campaignsLeaderboard(period);
             messageSent = await interaction.editReply({
                 content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
-                embeds: [ activeEmbed ],
-                components: [ await actionRow(period) ],
+                embeds: [activeEmbed],
+                components: [await actionRow(period)],
             }); // edit the 1st response message
 
             // Start listening to clicks
             await waitingForClick(messageSent);
 
-		} else {
+        } else {
             await interaction.editReply(`Weird command.`);
-		}
-	},
+        }
+    },
 };
