@@ -1,8 +1,8 @@
+![Github Cover - GA - card](https://github.com/user-attachments/assets/264a1ed7-767a-44c3-ab9f-264e68de5c02)
 
-![Github Cover - GA - card](https://github.com/SwagpoolHQ/Google-analytics-bot/assets/112695921/4a691ab9-cced-4618-a024-b8653c58ea6d)
 
 # About
-Open-source alternative to Invite Tracker.
+Open-source alternative to Invite Tracker bot.
 
 
 ## Documentation
