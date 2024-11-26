@@ -109,7 +109,7 @@ export const command = {
                 )
                 //.setImage('swagpoolAvatarURL') // Graph here
                 .setTimestamp()
-                .setFooter({ text: 'Powered by Swagpool', iconURL: swagpoolAvatarURL });
+                .setFooter({ text: '⚡️ Powered by Discordlinks', iconURL: swagpoolAvatarURL });
 
             return campaignsLeaderboardEmbed
         }
