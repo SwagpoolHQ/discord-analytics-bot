@@ -6,6 +6,7 @@ import Invite from '../models/invites.js';
 import mongoToDiscordId from './idConversion/mongoToDiscordId.js';
 import saveInvite from './saveInvite.js';
 import debug from 'debug';
+
 export default async function getInvite(campaignCode, user) {
 
     if (!campaignCode) {

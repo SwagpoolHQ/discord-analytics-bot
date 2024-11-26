@@ -6,7 +6,7 @@ A bot to add Google Analytics on your Discord server.
 
 
 ## Documentation
-https://docs.discordlinks.com
+https://discordlinks.com/docs
 
 ## Todo
 
@@ -19,4 +19,4 @@ https://docs.discordlinks.com
 
 ## Contact
 
-Support and feedback : [join our Discord](https://discordlinks.me/gSojUYBK)
+Made by [Arthur Blanchon](https://x.com/ArthurOnTime)

@@ -102,7 +102,7 @@ export const command = {
                     name: interaction.guild.name,
                     iconURL: guildIconURL,
                     /*url: 'https://discord.js.org'*/
-}) // Go to private channel chat for team members
+                }) // Go to private channel chat for team members
                 .setDescription(`${periodName} period ( started ${time(startDate, 'd')} ) \n\n-`)
                 .setThumbnail(guildIconURL)
                 .addFields(
@@ -117,7 +117,7 @@ export const command = {
                 )
                 //.setImage('swagpoolAvatarURL') // Graph here
                 .setTimestamp()
-                .setFooter({ text: 'Powered by Swagpool', iconURL: swagpoolAvatarURL });
+                .setFooter({ text: 'Powered by Discord Links', iconURL: swagpoolAvatarURL });
 
             return leaderboardForReferralsEmbed
         }
@@ -186,7 +186,7 @@ export const command = {
                 } else {
                     activeEmbed = await leaderboardForReferrals(clickedButton.customId);
                     newMessageSent = await clickedButton.update({
-                        content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
+                        content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
                         embeds: [activeEmbed],
                         components: [await actionRow(clickedButton.customId)],
                     });
@@ -203,7 +203,7 @@ export const command = {
         if (interaction.options.getSubcommand() === 'referrers') {
             activeEmbed = await leaderboardForReferrals(period);
             messageSent = await interaction.editReply({
-                content: `💡 Support, install and feedback links are in ${userMention(interaction.client.user.id)}'s bio\n${warningMessage}|`,
+                content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
                 embeds: [activeEmbed],
                 components: [await actionRow(period)],
             }); // edit the 1st response message
