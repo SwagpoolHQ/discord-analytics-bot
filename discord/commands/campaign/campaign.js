@@ -95,7 +95,7 @@ export const command = {
                         name: interaction.guild.name,
                         iconURL: guildIconURL,
                         /*url: 'https://discord.js.org'*/
-}) // Go to private channel chat for team members
+                    }) // Go to private channel chat for team members
                     .setDescription(`Campaign stats\n\n-`)
                     .setThumbnail(guildIconURL)
                     .addFields(
@@ -110,7 +110,7 @@ export const command = {
                     )
                     //.setImage('swagpoolAvatarURL') // Graph here
                     .setTimestamp()
-                    .setFooter({ text: 'Powered by Discord Links', iconURL: swagpoolAvatarURL });
+                    .setFooter({ text: '⚡️ Powered by Discordlinks', iconURL: swagpoolAvatarURL });
 
                 return campaignAnalytics
             }

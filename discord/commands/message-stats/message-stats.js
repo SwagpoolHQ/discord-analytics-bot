@@ -73,7 +73,7 @@ export const command = {
 				{ name: '\u200B', value: '\u200B' },
 			)
 			.setTimestamp()
-			.setFooter({ text: 'Powered by Discord Links', iconURL: swagpoolAvatarURL });
+			.setFooter({ text: '⚡️ Powered by Discordlinks', iconURL: swagpoolAvatarURL });
 
 		// Send the result
 		const sentMessage = await interaction.editReply({

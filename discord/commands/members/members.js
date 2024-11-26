@@ -117,7 +117,7 @@ export const command = {
                 )
                 //.setImage('swagpoolAvatarURL') // Graph here
                 .setTimestamp()
-                .setFooter({ text: 'Powered by Discord Links', iconURL: swagpoolAvatarURL });
+                .setFooter({ text: '⚡️ Powered by Discordlinks', iconURL: swagpoolAvatarURL });
 
             return leaderboardForReferralsEmbed
         }
@@ -186,7 +186,7 @@ export const command = {
                 } else {
                     activeEmbed = await leaderboardForReferrals(clickedButton.customId);
                     newMessageSent = await clickedButton.update({
-                        content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                        content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                         embeds: [activeEmbed],
                         components: [await actionRow(clickedButton.customId)],
                     });
@@ -203,7 +203,7 @@ export const command = {
         if (interaction.options.getSubcommand() === 'referrers') {
             activeEmbed = await leaderboardForReferrals(period);
             messageSent = await interaction.editReply({
-                content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                 embeds: [activeEmbed],
                 components: [await actionRow(period)],
             }); // edit the 1st response message

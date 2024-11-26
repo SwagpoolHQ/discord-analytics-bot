@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Discord Links is still in Alpha.
+Discordlinks is still in Alpha.
 All security vulnerability reports are welcome.
 
 ## Reporting a Vulnerability

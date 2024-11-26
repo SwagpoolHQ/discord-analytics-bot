@@ -112,7 +112,7 @@ export const command = {
                 )
                 //.setImage('swagpoolAvatarURL') // Graph here
                 .setTimestamp()
-                .setFooter({ text: 'Powered by Discord Links', iconURL: swagpoolAvatarURL });
+                .setFooter({ text: '⚡️ Powered by Discordlinks', iconURL: swagpoolAvatarURL });
 
             // Create the user referrals embed message
             const userReferrals = new EmbedBuilder()
@@ -139,7 +139,7 @@ export const command = {
                 )
                 //.setImage('swagpoolAvatarURL') // Graph here
                 .setTimestamp()
-                .setFooter({ text: 'Powered by Discord Links', iconURL: swagpoolAvatarURL });
+                .setFooter({ text: '⚡️ Powered by Discordlinks', iconURL: swagpoolAvatarURL });
 
             // Create the buttons
             const referralsButton = new ButtonBuilder()
@@ -178,7 +178,7 @@ export const command = {
                 activeEmbed = userProfile;
 
                 messageSent = await interaction.editReply({
-                    content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                    content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                     embeds: [activeEmbed],
                     components: [profileButtonsRow],
                     ephemeral: true,
@@ -189,7 +189,7 @@ export const command = {
                 activeEmbed = userReferrals;
 
                 messageSent = await interaction.editReply({
-                    content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                    content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                     embeds: [activeEmbed],
                     components: [referralsButtonsRow],
                     ephemeral: true,
@@ -206,7 +206,7 @@ export const command = {
                     if (clickedButton.customId === 'referrals') {
                         activeEmbed = userReferrals;
                         newMessageSent = await clickedButton.update({
-                            content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                            content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                             embeds: [activeEmbed],
                             components: [referralsButtonsRow],
                         });
@@ -214,7 +214,7 @@ export const command = {
                     } else if (clickedButton.customId === 'profile') {
                         activeEmbed = userProfile;
                         newMessageSent = await clickedButton.update({
-                            content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                            content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                             embeds: [activeEmbed],
                             components: [profileButtonsRow],
                         });

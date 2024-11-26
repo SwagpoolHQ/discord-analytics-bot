@@ -178,7 +178,7 @@ export const command = {
                 } else {
                     activeEmbed = await campaignsLeaderboard(clickedButton.customId);
                     newMessageSent = await clickedButton.update({
-                        content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                        content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                         embeds: [activeEmbed],
                         components: [await actionRow(clickedButton.customId)],
                     });
@@ -195,7 +195,7 @@ export const command = {
         if (interaction.options.getSubcommand() === 'traffic') {
             activeEmbed = await campaignsLeaderboard(period);
             messageSent = await interaction.editReply({
-                content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}|`,
+                content: `⚡️ Powered by ${userMention(interaction.client.user.id)}\n${warningMessage}`,
                 embeds: [activeEmbed],
                 components: [await actionRow(period)],
             }); // edit the 1st response message
