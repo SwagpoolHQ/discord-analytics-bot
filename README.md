@@ -4,9 +4,44 @@
 # About
 Open-source alternative to Invite Tracker bot.
 
-
+Built with : 
+- ⚙️ Express.js
+- ⚡️ Discord.js
+- 🔐 Lucia Auth
+- 🌱 MongoDB
+- ⏱️ Rate-limiter-flexible
+   
 ## Documentation
 https://discordlinks.com/docs
+
+## Features
+
+### 📤 Links
+- Create branded links.
+- Measure acquisition by links.
+- Rank best performing links.
+
+### 📣 Ambassadors
+- Create an ambassador program.
+- Measure acquisition by ambassadors
+- Rank best performing ambassadors.
+
+### 🤝 Referrals
+- Create a referrals program.
+- Measure acquisition by members.
+- Rank best performing members.
+
+### 👤 Members profiles
+- View members contributions
+- Explore members history
+- Rank best performing contributors
+
+### 📈 Post performance
+- Measure reactions by post (ongoing)
+
+### ⚙️ Customisation
+- Set your onboarding channel
+
 
 ## Todo
 
@@ -15,8 +50,10 @@ https://discordlinks.com/docs
 - [ ] Check member permissions function  
 - [ ] Track reactions  
 - [ ] Members interaction score  
-- [ ] Community managers leaderboard  
+- [ ] Community managers leaderboard
 
 ## Contact
 
-Made by [Arthur Blanchon](https://x.com/ArthurOnTime)
+You can reach out using [Discussions](https://github.com/ArthurBlanchon/discordlinks/discussions)
+  
+Made by [Arthur Blanchon](https://twitter.com/ArthurOnTime) 
