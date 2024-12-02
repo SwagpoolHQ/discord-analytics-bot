@@ -18,7 +18,7 @@ https://discordlinks.com/docs
 
 ## Features
 
-### Track and rank your Discord links.
+### 1. Track and rank your Discord links.
 - Never hit the Discord limits. Create an unlimited number of links.
 - Leaderboard and stats for :
   - 📣 your marketing campaigns,
@@ -27,17 +27,17 @@ https://discordlinks.com/docs
  - Performance over ⏱️ 1 day, 7 days, 1 month, 3 months.
  - Minimal permissions required (ongoing).
 
-### View your Members profiles
+### 2. View your Members profiles
 - Understand your Members. Referrer, Account's age, number of message sent...
 - Rank your members by :
    - 👤 referrals.
    - 💎 contributions. (ongoing)
 - Performance over ⏱️ last day, last week, last month.
 
-### Measure Posts performance
+### 3. Measure Posts performance
 - Measure reactions by post (ongoing).
 
-### Customisation
+### 4. Customisation
 - Set your onboarding channel.
 
 
