@@ -18,31 +18,27 @@ https://discordlinks.com/docs
 
 ## Features
 
-### 📤 Links
-- Create branded links.
-- Measure acquisition by links.
-- Rank best performing links.
+### Track and rank your Discord links.
+- Never hit the Discord limits. Create an unlimited number of links.
+- Leaderboard and stats for :
+  - 📣 your marketing campaigns,
+  - 🤝 your ambassador programs,
+  - 👤 your referrer member.
+ - Performance over ⏱️ 1 day, 7 days, 1 month, 3 months.
+ - Minimal permissions required (ongoing).
 
-### 📣 Ambassadors
-- Create an ambassador program.
-- Measure acquisition by ambassadors
-- Rank best performing ambassadors.
+### View your Members profiles
+- Understand your Members. Referrer, Account's age, number of message sent...
+- Rank your members by :
+   - 👤 referrals.
+   - 💎 contributions. (ongoing)
+- Performance over ⏱️ last day, last week, last month.
 
-### 🤝 Referrals
-- Create a referrals program.
-- Measure acquisition by members.
-- Rank best performing members.
+### Measure Posts performance
+- Measure reactions by post (ongoing).
 
-### 👤 Members profiles
-- View members contributions
-- Explore members history
-- Rank best performing contributors
-
-### 📈 Post Analytics
-- Measure reactions by post (ongoing)
-
-### ⚙️ Customisation
-- Set your onboarding channel
+### Customisation
+- Set your onboarding channel.
 
 
 ## Todo
