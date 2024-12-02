@@ -13,10 +13,10 @@ Built with :
 - 🌱 MongoDB
 - ⏱️ Rate-limiter-flexible
    
-## Documentation
+# Documentation
 https://discordlinks.com/docs
 
-## Features
+# Features
 
 ### 1. Track and rank your Discord links.
 - Never hit the Discord limits. Create an unlimited number of links.
@@ -41,7 +41,7 @@ https://discordlinks.com/docs
 - Set your onboarding channel.
 
 
-## Todo
+# Todo
 
 - [ ] Health route for deployments  
 - [ ] Check bot permissions function  
@@ -50,7 +50,7 @@ https://discordlinks.com/docs
 - [ ] Members interaction score  
 - [ ] Community managers leaderboard
 
-## Contact
+# Contact
 
 You can reach out using [Discussions](https://github.com/ArthurBlanchon/discordlinks/discussions)
   
