@@ -1,4 +1,5 @@
-![Github-cover-green](https://github.com/user-attachments/assets/8702ba84-330f-4d77-905b-0ac12ca99a9e)
+![Github-cover-green (1)](https://github.com/user-attachments/assets/e05c6aac-222d-47ce-8658-f1d84fec41de)
+
 ![HERO_image](https://github.com/user-attachments/assets/1cc34b0e-557e-45bf-9fb5-6787f973a5cb)
 
 
@@ -37,7 +38,7 @@ https://discordlinks.com/docs
 - Explore members history
 - Rank best performing contributors
 
-### 📈 Post performance
+### 📈 Post Analytics
 - Measure reactions by post (ongoing)
 
 ### ⚙️ Customisation
