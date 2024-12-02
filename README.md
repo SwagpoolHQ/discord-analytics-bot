@@ -25,7 +25,7 @@ https://discordlinks.com/docs
   - 🤝 your ambassador programs,
   - 👤 your referrer member.
  - Performance over ⏱️ 1 day, 7 days, 1 month, 3 months.
- - Minimal permissions required (ongoing).
+ - 🏰 Minimal permissions required (ongoing).
 
 ### 2. View your Members profiles
 - Understand your Members. Referrer, Account's age, number of message sent...
