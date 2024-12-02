@@ -1,10 +1,10 @@
-![Github-cover-green (1)](https://github.com/user-attachments/assets/e05c6aac-222d-47ce-8658-f1d84fec41de)
 
+![Github-cover-green](https://github.com/user-attachments/assets/8d74ef1b-7054-4c38-a1cd-0e5f38c4309d)
 ![HERO_image](https://github.com/user-attachments/assets/1cc34b0e-557e-45bf-9fb5-6787f973a5cb)
 
 
 # About
-Open-source alternative to Invite Tracker bot.
+Open-source Invite Tracker alternative for your marketing campaigns, ambassador programs and referrals.
 
 Built with : 
 - ⚙️ Express.js
