@@ -1,4 +1,5 @@
-![Github Cover - GA - card](https://github.com/user-attachments/assets/264a1ed7-767a-44c3-ab9f-264e68de5c02)
+![Github-cover-green](https://github.com/user-attachments/assets/8702ba84-330f-4d77-905b-0ac12ca99a9e)
+![HERO_image](https://github.com/user-attachments/assets/1cc34b0e-557e-45bf-9fb5-6787f973a5cb)
 
 
 # About
