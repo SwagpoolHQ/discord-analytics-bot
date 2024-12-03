@@ -43,12 +43,15 @@ https://discordlinks.com/docs
 
 # Todo
 
-- [ ] Health route for deployments  
-- [ ] Check bot permissions function  
-- [ ] Check member permissions function  
-- [ ] Track reactions  
-- [ ] Members interaction score  
-- [ ] Community managers leaderboard
+- [ ] Create minimal permissions flow (ongoing)
+- [ ] Rank members by contributions (ongoing)
+- [ ] Measure posts performance (ongoing)
+- [ ] Track members permissions
+- [ ] Score members based on their contributions
+- [ ] Rank community manager by activity
+- [ ] Create a push messaging protocol
+- [ ] Create a post scheduler
+- [ ] Health route for deployments
 
 # Contact
 
